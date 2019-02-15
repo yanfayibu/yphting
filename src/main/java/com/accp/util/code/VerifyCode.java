@@ -26,4 +26,5 @@ public class VerifyCode {
 		}
 		return code;
 	}
+	
 }
