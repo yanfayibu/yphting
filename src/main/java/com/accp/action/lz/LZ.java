@@ -12,6 +12,6 @@ public class LZ {
 	//测试页面
 	@RequestMapping("hello")
 	public  String  view() {
-		return  "/lz/Html/Member_Center";
+		return  "/ydk/Html/login";
 	}
 }

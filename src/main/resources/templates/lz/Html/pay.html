@@ -24,10 +24,76 @@
 		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css"/>
 		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-		<style type="text/css">
+		<style>
+			.navbar-brand {
+				float: left;
+				height: auto;
+			}
 			
 			
-		
+			
+			.navbar-default .navbar-nav>.active>a,
+			.navbar-default .navbar-nav>.active>a:focus,
+			.navbar-default .navbar-nav>.active>a:hover {
+				color: white;
+				background-color: palevioletred;
+				border-radius: 10%;
+			}
+			/*>=820的设备*/
+			
+			@media (min-width:820px) {
+				.navbar-nav {
+					float: left;
+					font-size: 15px;
+					margin: 50px;
+				}
+			}
+			
+			.navbar-nav {
+				float: left;
+				margin: 50px;
+				/*font-size:15px;*/
+			}
+			/*<=423的设备*/
+			
+			@media (max-width:423px) {
+				.head a {
+					font-size: 10px;
+				}
+			}
+			/*>=1260的设备*/
+			
+			@media (min-width:1260px) {
+				.navbar-nav>li>a {
+					margin: 0px 50px;
+				}
+				.navbar-nav {
+					float: left;
+					margin: 50px;
+					font-size: 20px;
+				}
+			}
+			
+			.list-unstyled {
+				margin: 0;
+				border-bottom: solid 1px #e6e6e6;
+			}
+			
+			.list-unstyled li {
+				padding: 8px
+			}
+			
+			.list-unstyled li>a {
+				color: #666464;
+				line-height: 34px;
+				font-size: 16px;
+				letter-spacing: 2px
+			}
+			
+			.list-unstyled li>a:hover {
+				text-decoration: none;
+				color: #91b001;
+			}
 		</style>
 	</head>
 
