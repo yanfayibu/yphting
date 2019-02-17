@@ -47,10 +47,10 @@ $(document).ready(function() {
 		//confirm
 		function Confirm() {
 			qikoo.dialog.confirm('确定要退出吗？', function() {
-				alert("退出啦！");
+				window.location="login.html"
 
 			}, function() {
-				alert("取消啦！");
+				//alert("取消啦！");
 			});
 		}
 function Confirm_2() {

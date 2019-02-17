@@ -1,4 +1,4 @@
-// star choose
+// 评价star choose
 jQuery.fn.rater	= function(options) {
 		
 	// 默认参数

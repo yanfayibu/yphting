@@ -548,7 +548,11 @@
 	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
 	<script src="../Public/js/common.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="../Public/js/cropper.min.js" ></script>
+	<script src="../Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
 	<script>
+		
+		
+		
 		
     //弹出框水平垂直居中
     (window.onresize = function () {
@@ -569,6 +573,7 @@
         }
     })();
 
+$.messager.show('<font color=red>你有一条新的消息</font>', '<font color=green style="font-size:14px;font-weight:bold;">张三给你发了一条信息</font>');
     //弹出图片裁剪框
     $("#replaceImg").on("click",function () {
         $(".tailoring-container").toggle();
