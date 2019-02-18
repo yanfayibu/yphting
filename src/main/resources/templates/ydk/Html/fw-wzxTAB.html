@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>微整形_韩汀社区</title>
+		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
+		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
+
+韩汀宗旨:“崇尚以人为本、客户第一的服务宗旨。热诚为广大客户提供良好的售后服务和技术支持, 保障客户的投资得到良好的回报。”
+
+企业口号：“韩汀—带给你看得到的未来,说不出的精彩!”。
+
+企业理念：”诚信为本,惠于顾客,奉于社会”
+
+企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
+<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
+		<link rel="stylesheet" href="../Public/css/common.css" />
+			<link rel="stylesheet" href="../Public/css/commonstyle.css" />
+		<style type="text/css">
+			.tubiao img{
+				height: 18px;
+			    width: 18px;
+			    margin-right: 19px;
+			}
+			.footerinfoTop a{color: #337ab7;}
+			.footerinfoTop a:hover{color: #cb22a1;}
+		</style>
+	</head>
+	<body>
+		<iframe name="topost" id="topost" style="display:none;"></iframe>
+		<!--header-->
+		<div class="header" id="botop">
+				<div class="h_top">
+				<div class="b_box">
+					<div class="top_nav"><a href="/index.php/">首页</a><span class="ht_line"></span><a href="#">商家入驻</a><span class="ht_line"></span><a href="/index.php/Home/About/help.html">帮助中心</a><span class="ht_line"></span><a href="/index.php/Home/About/index.html">关于韩汀</a><span class="ht_line"></span><a href="/index.php/Home/About/contact.html">联系我们</a></div>
+					<div class="top_right login_right">
+						<a href="/index.php/Home/Seller/index.html">透</a>			<span class="ht_line"></span><a href="/index.php/Home/Member/logout.html">退出</a>
+		            	<span class="ht_line"></span><a href="/index.php/Home/Member/sms.html"><img src="../Public/images/e_i.png" alt="">
+		            	<span class="e_if"></span>
+		            	</a>
+					</div>
+				</div>
+			</div>
+		    <div class="b_box nav_header community_header">
+				<a href="/index.php/" class="logo logo_community">御品韩汀.社区</a>
+				<ul class="nav_ul">
+					<li><a href="/c/lsm/serviceUrl?htmlUrl=fw-zjyTAB&stid=1"><span class="community_sp csp1"></span><br>自驾游</a></li>
+					<li class="cur"><a href="/c/lsm/serviceUrl?htmlUrl=fw-wzxTAB&stid=2"><span class="community_sp csp2"></span><br>微整形</a></li>
+					<li><a href="/c/lsm/serviceUrl?htmlUrl=fw-lxzjTAB&stid=3"><span class="community_sp csp3"></span><br>留学中介</a></li>
+					<li><a href="/c/lsm/serviceUrl?htmlUrl=fw-hyfyTAB&stid=4"><span class="community_sp csp4"></span><br>韩语翻译</a></li>
+					<li><a href="/c/lsm/serviceUrl?htmlUrl=fw-xxzyTAB&stid=5"><span class="community_sp csp5"></span><br>学习资源</a></li>
+					<li><a href="#"><span class="community_sp csp6"></span><br>韩汀物流</a></li>
+					<li><a href="/c/sxy/column?pid=1&page=1&orderId=1&essence=0"><span class="community_sp csp7"></span><br>韩汀·论坛 中文</a></li>
+				</ul>
+			</div>     
+		</div>
+
+		<!--banner-->
+		<div class="other_banner banner_1" style="background:url(../Uploads/desc/2017-01/20170125010031-42965.jpg) center center"></div>
+		<!--banner end-->
+
+		<a href="/index.php/Home/About/help.html" target="_blank" class="zy_box">预定流程指引</a>
+
+		<div class="bg_c2 pt1" id="vmCnt">
+			<div class="b_box">
+				<dl class="community_dl">
+					<dt>韩汀微整形，开启您的美</dt>
+					<dd>
+						<div class="search_sec">
+							<form method="post" action="/index.php/Home/Service/learning.html"><input type="text" name="findkey" placeholder="微整形搜索" class="s_sec_input"><input type="button" class="s_sec_btn" @click="queryServices(1)"><input type="hidden" name="__hash__" value="d2d1b9e1875b57e5099abeb8716d7882_a89ff3f6a76adff42855327dbb39b670"></form>
+						</div>
+					</dd>
+				</dl>
+		
+				<div class="sel_box">
+					<dl class="sel_dl_box">
+						<dt><span class="sel_sp ss1"></span>时间</dt>
+						<dd>
+							<form method="post" action="#" onsubmit="">
+								<input name="startDate" type="date" /><span class="z_span">至</span><input name="endDate" type="date"/>
+								<input type="button" value="搜索" class="submit_c" name="timeSel">
+							</form>
+						</dd>
+					</dl>
+					<dl class="sel_dl_box" style="display:block;" >
+						<dt><span class="sel_sp ss4"></span>国家</dt>
+						<dd>
+							<a class="cur" href="javascript:void(0);" id="countryAll"> 全部</a>
+							<a href="javascript:void(0);">中国</a>
+						</dd>
+						<dd>
+						</dd>
+					</dl>
+					<dl class="sel_dl_box" id="city" style="display:none;">
+						<dt><span class="sel_sp ss2"></span>城市</dt>
+						<dd>
+							<a class="cur" href="javascript:void(0);" id="cityAll">全部</a>
+							<a href="javascript:void(0);" >首尔特别市</a>
+						</dd>
+					</dl>
+					<dl class="sel_dl_box tubiao">
+						<dt><span><img src="../Public/images/fenlei.png"></span>类别</dt>
+						<dd>
+							<a class="cur" href="javascript:void(0);" id="typeAll">全部</a>
+							<a href="javascript:void(0);">英语资料</a>
+						</dd>
+					</dl>
+					<dl class="sel_dl_box sonType" style="display:none;">
+						<dt><span><img src="/Public/Wap/images/zilei.png"></span>子类别</dt>
+						<dd>
+							<a  href="javascript:void(0);"  >韩语初级资料</a>			
+						</dd>
+					</dl>
+					<dl class="sel_dl_box">
+						<dt><span class="sel_sp ss3"></span>级别</dt>
+						<dd>
+							<a class="cur" href="javascript:void(0);" id="levelAll">全部</a>
+							<a href="javascript:void(0);">韩汀童生</a>
+						</dd>
+					</dl>
+					<dl class="sel_dl_box">
+						<dt><span class="sel_sp ss4"></span>鉴定</dt>
+						<dd data-id="0"><a class="cur" href="javascript:void(0);" id="authenticationAll" data-id="0">全部</a>
+						<a href="javascript:void(0);" data-id="1">官方鉴定</a>
+						<a href="javascript:void(0);" data-id="2">商家自营</a></dd>
+					</dl>
+				</div>
+				
+				<ul class="rank_ul">
+					<li class="cur" id="synthesizeOrderBy"><a href="javascript:void(0);">综合排序</a></li>
+		            <li id="pop"><a href="javascript:void(0);">人气<span class="rank_i"></span></a></li>
+		            <li id="price"><a href="javascript:void(0);">价格<span class="rank_i"></span></a></li>
+				</ul>
+				
+		        <div class="rank_box">
+		        	<ul class="rank_list_ul">
+						<li >
+		                	<a href="" class="rank_one_a">
+			                    <div class="star_img">
+			                    	<img style="z-index:3;position: absolute;" src="../Public/images/tj.png" width="50" height="50"> 
+			                    	<img src="../Uploads/images/章若楠6.jpg"  alt="temp.serviceTitle" width="380" height="254">
+			                    </div>
+			                    <dl class="rank_text_dl">
+			                    	<dt >测试资源主标题</dt>
+			                        <dd>
+			                        	<div class="i_3" >100</div>
+			                        	<div class="star_pl"><span class="star_pl_sp" style="width:60%;"></span></div>
+			                        </dd>
+			                    </dl>
+							</a>
+							<a href="javascript:void(0);" class="rank_sec_a">
+			                    <dl class="star_user_dl">
+			                        <dt>
+			                        	<img src="../Public/images/mz_img_1.jpg" alt="" class="star_user_photo">
+		                        		<img src="../Public/images/hg_i.png" alt="" class="hg_i l_hi">   
+			                        </dt>
+			                        <dd>
+			                            <div class="star_user_name_s">
+			                            	<h3 class="star_user_name">小明同学</h3>
+			                            </div>
+			                            <p class="star_user_text"></p>
+			                        </dd>
+			                    </dl>
+		                    </a>
+		                </li>
+		            </ul>
+		            
+		            <!--page-->
+		            <div class="page_w">
+		            	<div class="page">
+							<div class="nav">
+								<a  class="page_prev prevdisabled" href="javascript:void(0);" >上一页</a>
+									<span class="cur" >1</span>
+									<a  class="num"  >2</a> 
+								<a  class="page_next" href="javascript:void(0);"  >下一页</a>
+							</div>                
+						</div>
+		            </div>
+		            <!--page end-->
+		        </div>
+				
+					<!--ad-->
+				<div class="ad_box2">
+				<a href=""><img src="../Uploads/images/20180414123932-28064.jpg" alt="底部广告 说吧"></a>	</div>
+				<!--ad end-->
+			</div>
+		</div>
+
+
+<div class="b_box"></div>
+
+
+<div class="footer" style="margin-top: 150px;">
+					<div class="footerinner">
+						<ul class="share">
+							<li>
+								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+							</li>
+							<li>
+								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+							</li>
+							<li>
+								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+							</li>
+							<li>
+								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+							</li>
+						</ul>
+						<div class="code_wrap">
+							<ul class="code">
+								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+							</ul>
+						</div>
+						<div class="footerinfo" >
+							<div class="footerinfoTop" style="margin: 0;">
+
+								<p>
+									
+										
+											<a href="">商家入驻</a>
+										
+										
+											<a href="">帮助中心</a>
+										
+											<a href="">人才招聘</a>
+										
+											<a href="">联系我们</a>
+										
+											<a href="">网站地图</a>
+										
+											<a href="">使用条款</a>
+										
+								</p>
+								<p>湘ICP备16017200号-2 | 地址：湖南省株洲市天元区丽景滨江二栋2502号 |网站负责人：夏先生 | 邮编：412000</p>
+								<p>官方QQ：3119683838 | 微信公众号：御品韩汀 | 官网邮箱：3119683838@qq.com | 官方热线电话：0731-2286-7673</p>
+							</div>
+							<div class="footerinfoBottom">
+								<p class="min" >Copyright &copy;2019 - 2020 yphting.com 版权所有</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+<!--右侧固定栏-->
+
+		<div class="suspension" style="margin-top:50px;">
+			<div class="suspension-box">
+				<a href="#" class="a a-service "><i class="i"></i></a>
+				<a href="javascript:;" class="a a-service-phone "><i class="i"></i></a>
+				<a href="javascript:;" class="a a-qrcode"><i class="i"></i></a>
+				<a href="javascript:;" class="a a-top"><i class="i"></i></a>
+				<div class="d d-service">
+					<i class="arrow"></i>
+					<div class="inner-box">
+						<div class="d-service-item clearfix">
+							<a href="http://wpa.qq.com/msgrd?v=3&uin=1239071811&site=qq&menu=yes" target="_blank" class="clearfix"><span class="circle"><i class="i-qq"></i></span>
+								<h3 style="margin:5px;">咨询在线客服</h3></a>
+						</div>
+					</div>
+				</div>
+				<div class="d d-service-phone">
+					<i class="arrow"></i>
+					<div class="inner-box">
+						<div class="d-service-item clearfix">
+							<span class="circle"><i class="i-tel"></i></span>
+							<div class="text">
+								<p>服务热线</p>
+								<p class="red number">4001-021-758</p>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="d d-qrcode">
+					<i class="arrow"></i>
+					<div class="inner-box">
+						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<p>微信服务号</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+</body>
+<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+<script src="../Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="../Public/js/qikoo.js"></script>
+</html>
