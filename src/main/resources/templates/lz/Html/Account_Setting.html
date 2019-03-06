@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>个人资料_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" th:href="@{/Public/images/favicon.ico}" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,27 +16,27 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/cropper.min.css"/>
-		<link rel="stylesheet" type="text/css" href="../Public/css/ImgCropping.css"/>
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-			<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
-	<script type="text/javascript" src="../Public/js/cropper.min.js" ></script>
-	<script src="../Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" th:href="@{/Public/css/store.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/Public/css/style.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/Public/css/base.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/Public/css/qikoo.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/Public/css/bootstrap.min.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/Public/css/cropper.min.css}"/>
+		<link rel="stylesheet" type="text/css" th:href="@{/Public/css/ImgCropping.css}"/>
+		<link rel="stylesheet" th:href="@{/Public/css/commonstyle.css}" />
+			<script th:src="@{/Public/js/jquery-1.12.4.js}" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" th:src="@{/Public/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/Public/js/qikoo.js}"></script>
+	<script type="text/javascript" th:src="@{/Public/js/cropper.min.js}" ></script>
+	<script th:src="@{/Public/js/jquery.messager.js}" type="text/javascript" charset="utf-8"></script>
+	
 		<style type="text/css">
 			
 			.form-group{margin-top: 20px;}
 			.control-label{font-size: 14px;}
 			.member_system_ul .msp2 {
-				background-image: url(../Public/images/ac_i.png);
+				background-image: url(/Public/images/ac_i.png);
 			}
 			
 			.member_system_ul li a:hover .pre_c1,
@@ -148,7 +148,7 @@
 		
 	</head>
 
-	<body>
+	<body id="userupdate">
 		<!--head-->
 		<div class="container-fluid" style="background-color: #FFFAE1;">
 
@@ -172,12 +172,12 @@
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
 					<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -199,7 +199,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -212,15 +212,15 @@
 							<a href="">商家中心</a>
 						</li>
 						<li>
-							<a href="Member_Center.html">个人中心</a>
+							<a href="/api/Forward_view/user/center">个人中心</a>
 
 						</li>
 						<li class="active">
-							<a href="Account_Setting.html">账户设置</a>
+							<a href="/api/Forward_view/user/center">账户设置</a>
 							<span class="my_nav_i"></span>
 						</li>
 						<li>
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;">11</span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
 						</li>
 
 					</ul>
@@ -243,16 +243,16 @@
 
 							<ul class="list-unstyled member_system_ul">
 								<li class="cur">
-									<a href="Account_Setting.html"><span class="msp2 pre_c1"></span>个人资料</a>
+									<a href="/api/Forward_view/user/Modifydata"><span class="msp2 pre_c1"></span>个人资料</a>
 								</li>
 								<li>
-									<a href="UpdatePwd.html"><span class="msp2 pre_c2"></span>修改密码</a>
+									<a href="/api/Forward_view/user/updatePwd"><span class="msp2 pre_c2"></span>修改密码</a>
 								</li>
 								<li>
-									<a href="Account_Manage.html"><span class="msp2 pre_c4"></span>帐号管理</a>
+									<a href="/api/Forward_view/user/Accountmanage"><span class="msp2 pre_c4"></span>帐号管理</a>
 								</li>
 								<li>
-									<a href="Shop_Manage.html"><span class="msp2 pre_c3"></span>店铺信息</a>
+									<a href="/api/Forward_view/user/Shop"><span class="msp2 pre_c3"></span>店铺信息</a>
 								</li>
 							</ul>
 						</div>
@@ -272,11 +272,12 @@
 								<h3 style="font-size:16px;background-color: #f9f3f4;padding: 15px 20px;">修改个人头像</h3>
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12  hidden-xs">
+							<form action="/c/lz/user/updateUserImg" method="POST" enctype="multipart/form-data" id="updateUserImg">
 								<div class="media">
   <div class="media-left">
-   <button id="replaceImg" class="l-btn">更换图片</button>
+   <button id="replaceImg" class="l-btn" type="button">更换图片</button>
 <div style="width: 320px;height: 320px;border: solid 1px #555;padding: 5px;margin-top: 10px">
-    <img id="finalImg" src="" width="100%">
+    <img id="finalImg" th:src="${session.userinfo.userimgpath}" width="100%" >
 </div>
 
 
@@ -302,10 +303,10 @@
                 </div>
             </div>
             <div class="tailoring-content-three">
-                <button class="l-btn cropper-reset-btn">复位</button>
-                <button class="l-btn cropper-rotate-btn">旋转</button>
-                <button class="l-btn cropper-scaleX-btn">换向</button>
-                <button class="l-btn sureCut" id="sureCut">确定</button>
+                <button class="l-btn cropper-reset-btn" type="button">复位</button>
+                <button class="l-btn cropper-rotate-btn" type="button">旋转</button>
+                <button class="l-btn cropper-scaleX-btn" type="button">换向</button>
+                <button class="l-btn sureCut" id="sureCut" type="button">确定</button>
             </div>
         </div>
 </div>
@@ -317,6 +318,7 @@
 
   </div>
 </div>
+</form>
 							</div>
 							<div class="col-lg-12 col-md-12 col-sm-12  hidden-xs">
 								<h3 style="font-size:16px;background-color: #f9f3f4;padding: 15px 20px;">修改资料</h3>
@@ -329,18 +331,18 @@
 					<div class="row">
 						<div class="col-lg-10 col-md-9 col-sm-9  hidden-xs" style="margin-left: 2%;">
 						
-						<form class="form-horizontal">
+						<form class="form-horizontal" method="POST" action="/c/lz/user/updateUserInfo" id="updauser">
   <div class="form-group">
     <label for="name" class="col-lg-1 col-md-2 col-sm-3 hidden-xs control-label">用户名:</label>
     <div class="col-lg-6 col-md-9 col-sm-9 hidden-xs">
-    <input type="text" class="form-control" id="name"  value="@荔枝" readonly="readonly" disabled="disabled">
+    <input type="text" class="form-control" id="name"  th:value="${session.userinfo.username}" readonly="readonly" disabled="disabled" name="username" >
     </div>
   </div>
   
    <div class="form-group">
     <label for="email" class="col-lg-1 col-md-2 col-sm-3 hidden-xs control-label">邮箱:</label>
     <div class="col-lg-6 col-md-9 col-sm-9 hidden-xs  ">
-    <input type="email" class="form-control" id="email"  value="122@qq.com" readonly="readonly" disabled="disabled">
+    <input type="email" class="form-control" id="email"  th:value="${logininfo.useremail}"  th:disabled="${logininfo.useremail ne null and logininfo.useremail ne ''}" name="useremail">
     </div>
   </div>
 
@@ -348,7 +350,7 @@
 <div class="form-group">
     <label for="username" class="col-lg-1 col-md-2 col-sm-3 hidden-xs control-label">真实姓名:</label>
     <div class="col-lg-6 col-md-9 col-sm-9 hidden-xs  ">
-    <input type="text" class="form-control" id="username"  value="张三" >
+    <input type="text" class="form-control" id="username"  th:value="${session.userinfo.userrealname}"  name="userrealname">
     </div>
   </div>
   
@@ -356,10 +358,10 @@
     <label  class="col-lg-1 col-md-2 col-sm-3 hidden-xs control-label">性别:</label>
     <div class="col-lg-6 col-md-9 col-sm-9 hidden-xs ">
    <label class="radio-inline">
-  <input type="radio" name="sex" id="nan" value="0" checked="checked"> 男
+  <input type="radio" name="usersex" id="nan" value="1"  th:checked="${session.userinfo.usersex==1}"> 男
 </label>
 <label class="radio-inline">
-  <input type="radio" name="sex" id="nv" value="1"> 女
+  <input type="radio" name="usersex" id="nv" value="2" th:checked="${session.userinfo.usersex==2}"> 女
 </label>
 
     </div>
@@ -368,7 +370,7 @@
 <div class="form-group">
     <label for="username" class="col-lg-1 col-md-2 col-sm-3 hidden-xs control-label">联系电话:</label>
     <div class="col-lg-6 col-md-9 col-sm-9 hidden-xs  ">
-    <input type="tel" class="form-control" id="username"  value="1511269821" >
+    <input type="tel" class="form-control" id="userPhone"  th:value="${session.userinfo.userphone}"  name="userphone">
     </div>
   </div>
 
@@ -376,21 +378,18 @@
 <div class="form-group">
     <label for="address" class="col-lg-1 col-md-2 col-sm-3 hidden-xs control-label">联系地址:</label>
     <div class="col-lg-2  col-md-3 col-sm-3 hidden-xs">
-   <select class="form-control">
-  <option>湖南省</option>
-
+   <select class="form-control" name="country">
+  <option th:if="${session.userinfo.country}==null" value='0'>请选择</option>
 </select>
     </div>
     <div class="col-lg-2 col-md-3 col-sm-3 hidden-xs">
-   <select class="form-control">
-  <option>郴州市</option>
- 
+   <select class="form-control" name="provincialid">;
+ <option th:if="${session.userinfo.provincialid}==null" value='0'>请选择</option>
 </select>
     </div>
     <div class="col-lg-2  col-md-3 col-sm-3 hidden-xs">
-   <select class="form-control">
-  <option>桂东县</option>
-  
+   <select class="form-control" name="cityid">
+<option th:if="${session.userinfo.cityid}==null" value='0'>请选择</option>
 </select>
     </div>
   </div>
@@ -399,12 +398,12 @@
   <div class="form-group">
     <label for="xiangxidizhi" class="col-lg-1 col-md-2 col-sm-3 hidden-xs  control-label"></label>
     <div class="col-lg-6 col-md-9 col-sm-9 hidden-xs ">
-    <input type="text" class="form-control" id="xiangxi"  value="沙田镇大河村" >
+    <input type="text" class="form-control" id="xiangxi"  th:value="${session.userinfo.addetail}"  name="addetail">
     </div>
   </div>
    <div class="form-group">
   <div class="col-lg-2 col-lg-offset-1 col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-2">
-  	 <input type="submit" id="" name=""  class="form-control btn btn-danger"/>
+  	 <input type="button" id="oks" name=""  class="form-control btn btn-danger" value="修改资料" onclick="updauser()"/>
   </div>
   </div>
 
@@ -428,24 +427,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -540,22 +539,26 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
 
 			</div>
 		</div>
+<!--提示框-->
 
+    <div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 	</body>
 
-	<script src="../Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+	<script th:src="@{/Public/js/footer_suspend.js}" type="text/javascript" charset="utf-8"></script>
+	<script th:src="@{/Public/js/vue.min.js}" type="text/javascript" charset="utf-8"></script>
+	<script th:src="@{/Public/js/showTool.js}" type="text/javascript" charset="utf-8"></script>
 	
-	<script>
-		
-		
-		
+	<script th:inline="javascript">
+	
+	
+	
 		
     //弹出框水平垂直居中
     (window.onresize = function () {
@@ -576,6 +579,10 @@
         }
     })();
 
+	
+	
+    
+    
 $.messager.show('<font color=red>你有一条新的消息</font>', '<font color=green style="font-size:14px;font-weight:bold;">张三给你发了一条信息</font>');
     //弹出图片裁剪框
     $("#replaceImg").on("click",function () {
@@ -593,7 +600,7 @@ $.messager.show('<font color=red>你有一条新的消息</font>', '<font color=
             $('#tailoringImg').cropper('replace', replaceSrc,false);//默认false，适应高度，不失真
         }
         reader.readAsDataURL(file.files[0]);
-        //alert(file.files[0].name)
+        
     }
     
     //cropper图片裁剪
@@ -612,6 +619,7 @@ $.messager.show('<font color=red>你有一条新的消息</font>', '<font color=
         rotatable: true,  //是否允许旋转图片
         crop: function(e) {
             // 输出结果数据裁剪图像。
+         
             
         }
     });
@@ -640,12 +648,17 @@ $.messager.show('<font color=red>你有一条新的消息</font>', '<font color=
     //裁剪后的处理
     $("#sureCut").on("click",function () {
         if ($("#tailoringImg").attr("src") == null ){
+        	qikoo.dialog.alert("请选择图片！");
             return false;
         }else{
             var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
             var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
             $("#finalImg").prop("src",base64url);//显示为图片的形式
+           
+            showTool("更换图片成功");
+        	   $("#updateUserImg").submit();
 
+            
             //关闭裁剪框
             closeTailor();
         }
@@ -654,9 +667,195 @@ $.messager.show('<font color=red>你有一条新的消息</font>', '<font color=
     function closeTailor() {
         $(".tailoring-container").toggle();
     }
+    
+    
+    var provincialID="[[${session.userinfo.provincialid}]]";
+	var cityID="[[${session.userinfo.cityid}]]";
+	var country="[[${session.userinfo.country}]]";
+    //国家
+    function countrys(){
+    
+			$.getJSON("/c/lz/user/querySharea",function(data){
+				$.each(data,function(i,obj){
+					if(obj.pid==0 && obj.level==0 ){
+						
+						var option=$("<option value='"+obj.areaid+"'>"+obj.mergername+"</option>");
+						$("[name=country]").append(option);
+						
+					}
+					
+				})
+				
+				//默认选中
+				$("[name=country] option").each(function(){
+					if($(this).val()==country){
+						$(this).attr("selected","selected");
+					}
+				})
+				
+				//获取国家
+				province($("[name=country]").children("option:selected").val());
+				
+				
+			})
+		}
+    
+  //省
+	function province(areaid){
+		if(provincialID!=null && $("[name=country] option:selected").text()!="请选择"){
+		$.getJSON("/c/lz/user/querySharea",function(data){
+			
 		
-		//初始化图片src
-$("#finalImg").attr("src","../Uploads/images/章若楠6.jpg");
+				$.each(data,function(i,obj){
+					
+					if(obj.pid==areaid){
+						
+						var option=$("<option value='"+obj.areaid+"'>"+obj.mergername+"</option>");
+						$("[name=provincialid]").append(option);
+						
+					}
+				});
+				
+				
+					
+				
+				//默认选中
+				$("[name=provincialid] option").each(function(){
+					if($(this).val()==provincialID){
+						$(this).attr("selected","selected");
+					}
+				})
+				
+				//获取省份
+				city($("[name=provincialid]").children("option:selected").val());
+				
+				
+			
+		})
+		}
+	}
+  
+  
+	//市区
+	function city(areaid){
+		if(cityID!=null && $("[name=country] option:selected").text()!="请选择"){
+		$.getJSON("/c/lz/user/querySharea",function(data){
+			
+				$.each(data,function(i,obj){
+					
+					if(obj.pid==areaid){
+						
+						var option=$("<option value='"+obj.areaid+"'>"+obj.mergername+"</option>");
+						$("[name=cityid]").append(option);
+						
+					}
+				});
+				
+				//默认选中
+				$("[name=cityid] option").each(function(){
+					if($(this).val()==cityID){
+						$(this).attr("selected","selected");
+					}
+				})
+				
+				
+					
+				
+				
+			
+		});
+		}
+	}
+		
+		//国省改变事件
+		$("[name=country]").on("change",function(){	
+			country=$(this).val();
+			$("[name=provincialid]").html("");
+			$("[name=cityid]").html("");
+			province(country);
+		
+		})
+		$("[name=provincialid]").on("change",function(){
+			  provincialID=$(this).val();
+			  $("[name=cityid]").html("");
+			  cityID=$(this).val();
+			city(provincialID);
+		})
+		
+		
+		// 验证手机号
+function isPhoneNo(phone) {  
+    var pattern = /^1[34578]\d{9}$/;  
+    return pattern.test(phone);  
+}
+		
+		var yzemail=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+		var reg = /^[\u4E00-\u9FA5]{2,4}$/;	
+  
+		
+		//提交验证
+	function  updauser(){
+			
+		if($("#email").val()==""){
+			showTool("邮箱不能为空！");
+			return ;
+		}
+			if($("#username").val()==""){
+				showTool("真实姓名不能为空！");
+				return ;
+			}
+			
+			if($("#userPhone").val()==""){
+				showTool("联系电话不能为空！");
+				return ;
+			}
+			
+			if(yzemail.test($("#email").val())){
+				
+				if(reg.test($("#username").val())){
+					
+					if(isPhoneNo($("#userPhone").val())){
+						
+						if($("#email").attr("disabled")=="disabled"){
+							$("#updauser").submit();
+							return;
+						}
+					
+						$.ajax("/c/lz/user/queryvftemail/"+$("#email").val(),{
+							type:"GET",
+							dataType:"json",
+							success:function(json){
+								if(json.code==200){
+									$("#updauser").submit();
+								}
+								else{
+									
+									showTool("该邮箱已被注册，请更换其他邮箱");
+								}
+							}
+						});
+					}
+					else{
+						showTool("手机格式有误！");
+					}
+				}
+				else{
+					showTool("逗我吧，你这确定是姓名？");
+				}
+			}
+			else{
+				showTool("邮箱格式有误！");
+			}
+			
+			
+		
+	}
+	
+	countrys();
+		
+		
+			
+		
 	</script>
 
 </html>

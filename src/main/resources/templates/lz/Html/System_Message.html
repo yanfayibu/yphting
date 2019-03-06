@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>系统消息_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,24 +16,24 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
+		<link rel="stylesheet" href="/Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/cropper.min.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/ImgCropping.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-			<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
+		<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/cropper.min.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/ImgCropping.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
+			<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
 
 		<style type="text/css">
 			.btn{margin: 20px 3px;}
 			.member_system_ul .msp2 {
-				background-image: url(../Public/images/ac_i.png);
+				background-image: url(/Public/images/ac_i.png);
 			}
 			
 			.member_system_ul li a:hover,
@@ -163,12 +163,12 @@
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
 					<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -190,7 +190,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -203,15 +203,15 @@
 							<a href="">商家中心</a>
 						</li>
 						<li>
-							<a href="Member_Center.html">个人中心</a>
+							<a href="/api/Forward_view/user/center">个人中心</a>
 
 						</li>
 						<li>
-							<a href="Account_Setting.html">账户设置</a>
+							<a href="/api/Forward_view/user/Modifydata">账户设置</a>
 							
 						</li>
 						<li class="active">
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;margin-left: 5px;">9</span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;margin-left: 5px;" th:text="${session.instationunread}"></span></a>
 							<span class="my_nav_i"></span>
 						</li>
 
@@ -235,10 +235,10 @@
 
 							<ul class="list-unstyled member_system_ul">
 								<li class="cur">
-									<a href="System_Message.html"><span class="msp mss1"></span>系统消息(<span>9</span>)</a>
+									<a href="/api/Forward_view/user/Offsiteinfo"><span class="msp mss1"></span>系统消息(<span th:text="${session.systemunread}">9</span>)</a>
 								</li>
 								<li>
-									<a href="Instation_Message.html"><span class="msp mss2"></span>站内信(<span style="color: red;font-weight: bold;">9</span>)</a>
+									<a href="/api/Forward_view/user/Stationinfo"><span class="msp mss2"></span>站内信(<span style="color: red;font-weight: bold;" th:text="${session.instationunread}"></span>)</a>
 							</li>
 							</ul>
 						</div>
@@ -250,93 +250,38 @@
 
 					<div class="row">
 						<div class="col-lg-10" style="border-bottom: solid 1px #e6e6e6;padding: 10px;margin-left: 1%;">
-							<h2 style="letter-spacing: 2px;font-size: 20px;">系统消息(未读<span style="color: red;">18</span>)</h2>
+							<h2 style="letter-spacing: 2px;font-size: 20px;">系统消息(未读<span style="color: red;" th:text="${session.systemunread}"></span>)</h2>
 						</div>
-						<div class="col-lg-10" style="padding: 10px;margin-left: 1%;">
+						<div class="col-lg-10" style="padding: 10px;margin-left: 1%;" id="new">
 
 							<!--
                             	开始
                             -->
-							<div class="media">
-								<div class="media-left">
-									<a href="#">
-										<img class="media-object imgmax" src="../Public/images/sms_sys.png" alt="...">
-									</a>
-								</div>
-								<div class="media-body" style="border-bottom: dashed 1px #d5d5d5;">
-									<p>
-										<a href=""><span>御品韩汀</span> <label>(0)</label></a><span class="pull-right">2019-02-05</span></p>
-									<p>
-										<a href="">您好，您预订的订单号 15465152378271，1 ，商家已提供服务，您可以到个人中心的我预定的服务中查看，请至如有其他疑问，可以站内信商家或联系我们。订单号：15465152378271</a><input type="checkbox" value="" class="pull-right"></p>
+							
 
-								</div>
-							</div>
-
-							<div class="media">
-								<div class="media-left">
-									<a href="#">
-										<img class="media-object imgmax" src="../Public/images/sms_sys.png" alt="...">
-									</a>
-								</div>
-								<div class="media-body" style="border-bottom: dashed 1px #d5d5d5;">
-									<p>
-										<a href=""><span>御品韩汀</span> <label>(0)</label></a><span class="pull-right">2019-02-05</span></p>
-									<p>
-										<a href="">您好，您预订的订单号 15465152378271，1 ，商家已提供服务，您可以到个人中心的我预定的服务中查看，请至如有其他疑问，可以站内信商家或联系我们。订单号：15465152378271</a><input type="checkbox" value="" class="pull-right"></p>
-
-								</div>
-							</div>
-
-							<div class="media">
-								<div class="media-left">
-									<a href="#">
-										<img class="media-object imgmax" src="../Public/images/sms_sys.png" alt="...">
-									</a>
-								</div>
-								<div class="media-body" style="border-bottom: dashed 1px #d5d5d5;">
-									<p>
-										<a href=""><span>御品韩汀</span> <label>(0)</label></a><span class="pull-right">2019-02-05</span></p>
-									<p>
-										<a href="">您好，您预订的订单号 15465152378271，1 ，商家已提供服务，您可以到个人中心的我预定的服务中查看，请至如有其他疑问，可以站内信商家或联系我们。订单号：15465152378271</a><input type="checkbox" value="" class="pull-right"></p>
-
-								</div>
-							</div>
+							
 
 							<!--end-->
 
 						</div>
 						
 						<!--底部分页-->
-							<div class="col-lg-10 text-center" style="padding: 10px;margin-left: 1%;">
+							<div class="col-lg-10 text-center" style="padding: 10px;margin-left: 1%;" id="info">
 
 								<nav>
-									<ul class="pagination">
-										<li>
-											<a href="#" aria-label="Previous">
-												<span aria-hidden="true">&laquo;</span>
-											</a>
-										</li>
-										<li class="active">
-											<a href="#">1</a>
-										</li>
-										<li>
-											<a href="#">2</a>
-										</li>
-										<li>
-											<a href="#">3</a>
-										</li>
-										<li class="disabled">
-											<a href="#" aria-label="Next">
-												<span aria-hidden="true">&raquo;</span>
-											</a>
-										</li>
-										
-									</ul>
-<button class="btn btn-danger  pull-right">删除</button>
-<button class="btn btn-danger pull-right">置为已读</button>
+								
+  <ul class="pager">
+    <li onclick="up(this)"><a href="javascript:void(0)">上一页</a></li>
+    <li  onclick="next(this)"><a href="javascript:void(0)">下一页</a></li>
+     <li><span style="border: none;padding:5px 5px" id="num">第1页</span><span style="border: none;padding:5px 5px">/</span><span style="border: none;padding:5px 5px" id="total">共5页</span></li>
+  </ul>
+									
+									<label class="checkbox-inline pull-right"  style="margin: 25px;">
+  <input type="checkbox"  id="all">全选</label>
+<button class="btn btn-danger  pull-right" type="button" id="dell">删除</button>
+<button class="btn btn-danger pull-right" type="button" id="read" >置为已读</button>
 
 								</nav>
-
 							</div>
 					</div>
 
@@ -353,24 +298,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -465,16 +410,164 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
 
 			</div>
 		</div>
-
+<div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 	</body>
 
-	<script src="../Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
 
+<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	 
+	//分页对象
+	var pageInfo=null;	
+	//读取全部
+	function getNewsPage(type,pageNum, pageSize) {
+		
+		$.ajax("/c/lz/user/searchNewpage"+"/"+type+"/"+pageNum+"/"+pageSize,{
+		type:"GET",
+		dataType:"json",
+		success:function(result){
+			pageInfo=result;
+			$("#num").text("第"+pageInfo.pageNum+"页");
+			$("#total").text("共"+pageInfo.pages+"页");
+			var div="";
+			//循环	
+			$("#new").html("");
+			$.each(result.list,function(i,obj){
+var color="green";
+				
+				if(obj.readstate==0){
+					color="red";
+				
+				}
+div=$('<div class="media" style="color:'+color+'"><div class="media-left"><a href="javascript:void(0)"><img class="media-object imgmax" src="/Public/images/sms_sys.png" alt="..."></a></div><div class="media-body" style="border-bottom: dashed 1px #d5d5d5;"><p><a href="" style="color:'+color+'"><span >御品韩汀</span> <label>(0)</label></a><span class="pull-right" >'+obj.sendingtime+'</span></p><p><a href="" style="color:'+color+'">'+obj.content+'</a><input type="checkbox" value='+obj.newsid+' class="pull-right"></p></div></div>');
+				
+				
+			$("#new").append(div);		
+						
+			
+
+			});
+			
+		}
+	});
+	}
+	//初始化数据
+	getNewsPage(1,1,4);
+	//全选
+	$("#all").on("click",function(){
+		 if(this.checked){    
+		        $(":checkbox").prop("checked", true);   
+		    }
+		 else{
+			 $(":checkbox").prop("checked", false); 
+		 }
+	})
+	
+	
+	//上一页
+	function up(obj) {
+		
+		if(pageInfo.hasPreviousPage){
+			$("#num").text("第"+pageInfo.pageNum+"页");
+			$("#total").text("共"+pageInfo.pages+"页");
+			
+			getNewsPage(1,pageInfo.prePage,pageInfo.pageSize);
+		}else{
+			showTool("已经是第一页");
+		}
+	}
+	//下一页
+	function next(obj) {
+		
+		if(pageInfo.hasNextPage){
+			
+			$("#num").text("第"+pageInfo.pageNum+"页");
+			$("#total").text("共"+pageInfo.pages+"页");
+			getNewsPage(1,pageInfo.nextPage,pageInfo.pageSize);
+		}else{
+			showTool("已经是最后一页");
+		}
+		
+	}
+	
+	//置为已读
+	$("#read").on("click",function(){
+		var ar=new Array();
+		$("p>input[type='checkbox']:checked").each(function(i, n){ 
+			ar.push($(this).val()) 
+		})
+		
+		
+		if(ar==""){
+			showTool("请选择置为已读的消息");
+		}
+		else{
+			//执行
+			$.ajax("/c/lz/user/meassage/read/"+ar.join(","),{
+				type:"PUT",
+				dataType:"json",
+				success:function(result){
+					
+					if(result.code==200){
+						showTool("已置为已读");
+						$(":checkbox").prop("checked", false); 
+						setTimeout(function(){
+							window.location.href="/api/Forward_view/user/Offsiteinfo";
+						},1000);
+					}
+					else if(result.code==500){
+						showTool("置为已读失败");
+					}
+					
+					
+				}
+			});
+		}
+        });
+	
+	//删除
+	$("#dell").on("click",function(){
+		var ar=new Array();
+		$("p>input[type='checkbox']:checked").each(function(i, n){ 
+			ar.push($(this).val()) 
+		})
+		
+		
+		if(ar==""){
+			showTool("请选择你要删除的消息");
+		}
+		else{
+			
+			//执行
+			$.ajax("/c/lz/user/meassage/del/"+ar.join(","),{
+				type:"DELETE",
+				dataType:"json",
+				success:function(result){
+					
+					if(result.code==200){
+						showTool("删除成功");
+						setTimeout(function(){
+							window.location.href="/api/Forward_view/user/Offsiteinfo";
+						},1000);
+					}
+					else if(result.code==500){
+						showTool("删除失败");
+					}
+					
+					
+				}
+			});
+		}
+		
+        });
+    
+	</script>
 </html>

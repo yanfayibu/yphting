@@ -1,6 +1,8 @@
 package com.accp.pojo;
 
 import java.util.Date;
+
+import com.alibaba.fastjson.annotation.JSONField;
 /**
  *积分流向操作记录表
  */
@@ -8,7 +10,7 @@ public class Integralrecord {
     private Integer irid;            //记录编号
 
     private Integer userid;          //用户编号
-
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date irdate;             //记录日期
  
     private String irdescribe;       //记录描述

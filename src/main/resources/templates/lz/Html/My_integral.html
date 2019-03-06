@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>我的积分_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,18 +16,18 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
+		<link rel="stylesheet" href="/Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap-datetimepicker.min.css"/>
-			<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
+		<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap-datetimepicker.min.css"/>
+			<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
 		<style type="text/css">
 			
 			
@@ -146,12 +146,12 @@
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
 					<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -173,7 +173,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -183,20 +183,22 @@
 					<ul class="nav navbar-nav ">
 
 						<li>
-							<a href="#">商家中心</a>
+							<a href="">商家中心</a>
 						</li>
 						<li class="active">
-							<a href="Member_Center.html">个人中心</a>
-							<span class="my_nav_i"></span>
+							<a href="/api/Forward_view/user/center">个人中心</a>
+<span class="my_nav_i"></span>
+						</li>
+						<li >
+						<a href="/api/Forward_view/user/Modifydata">账户设置</a>
+							
 						</li>
 						<li>
-							<a href="Account_Setting.html">账户设置</a>
-						</li>
-						<li>
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;">11</span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
 						</li>
 
 					</ul>
+
 
 				</div>
 				<!-- /.navbar-collapse -->
@@ -205,7 +207,7 @@
 		</nav>
 
 		<!--左边菜单 -->
-		<div class="container-fluid">
+		<div class="container-fluid" id="listVMintegral">
 
 			<div class="rwo">
 				<div class="col-lg-2 col-md-3 col-sm-3  col-xs-12  " style="border-right:  1px #e6e6e6 solid;overflow: hidden;min-height: 700px;">
@@ -216,7 +218,7 @@
 
 							<ul class="list-unstyled member_system_ul">
 								<li>
-									<a href="My_reservation.html"><span class="msp2 pre_c1"></span>我预订的服务</a>
+									<a href="/c/lz/dsd/user/queryMyreservationservice"><span class="msp2 pre_c1"></span>我预订的服务</a>
 								</li>
 								<li>
 									<a href=""><span class="msp2 pre_c2"></span>我的下载</a>
@@ -225,19 +227,19 @@
 									<a href=""><span class="msp2  pre_c7"></span>我的帖子</a>
 								</li>
 								<li>
-									<a href="My_collect.html"><span class="msp2 pre_c3"></span>我的收藏</a>
+									<a href="/api/Forward_view/user/mycollection"><span class="msp2 pre_c3"></span>我的收藏</a>
 								</li>
 								<li >
-									<a href="My_gold.html"><span class="msp2 pre_c4"></span>我的金币</a>
+									<a href="/api/Forward_view/user/goldcoinrecord"><span class="msp2 pre_c4"></span>我的金币</a>
 								</li>
 								<li class="cur">
-									<a href="My_integral.html"><span class="msp2 pre_c5"></span>我的积分</a>
+									<a href="/api/Forward_view/user/pointrecord"><span class="msp2 pre_c5"></span>我的积分</a>
 								</li>
 								<li>
-									<a href="My_evaluate.html"><span class="msp2 pre_c6"></span>我的评价</a>
+									<a href="/api/Forward_view/user/myreview"><span class="msp2 pre_c6"></span>我的评价</a>
 								</li>
 								<li>
-									<a href="My_refund.html"><span class="msp2 pre_c7"></span>我的退款</a>
+									<a href="/api/Forward_view/user/myrefund"><span class="msp2 pre_c7"></span>我的退款</a>
 								</li>
 								<li>
 									<a href=""><span class="msp2 pre_c9"></span>帮助中心</a>
@@ -259,7 +261,7 @@
 
 										
 											<h3 style="display: inline-block;font-size: 20px;letter-spacing: 3px;">我的积分</h3>
-											<span style="letter-spacing: 3px;color: #959595;"><img src="../Public/images/point_i.png"/> 可用积分</span>&nbsp;<span style="font-weight: bolder;font-size: 15px;">100</span>
+											<span style="letter-spacing: 3px;color: #959595;"><img src="/Public/images/point_i.png"/> 可用积分</span>&nbsp;<span style="font-weight: bolder;font-size: 15px;" th:text="${session.userinfo.userintegral}"></span>
 										
 										<a href="" class="pull-right" style="color: #cb22a1;padding: 15px;">怎么赚积分？</a>
 										
@@ -275,7 +277,7 @@
   <div class="form-group">
   <label for="start">开始日期：</label>
     <div id="startdiv" class="input-group date">
-		<input id="start" name="start" class="form-control" type="text" value=""  readonly="readonly" >
+		<input id="start" name="start" class="form-control" type="text" value=""  readonly="readonly"  v-model="starts">
 		<span class="input-group-addon"> <span
                                                 class="glyphicon glyphicon-remove"></span>
 						</span> <span class="input-group-addon"> <span
@@ -290,7 +292,7 @@
     <div id="endDiv" class="input-group date " >
                                      <input id="end"
                                                 name="end" class="form-control" type="text"
-                                                value=""  readonly="readonly" v-model="endtime"> <span
+                                                value=""  readonly="readonly" v-model="ends"> <span
                                                 class="input-group-addon"> <span
                                                 class="glyphicon glyphicon-remove"></span>
                                             </span> <span class="input-group-addon"> <span
@@ -298,8 +300,8 @@
                                             </span>
                                         </div> 
   </div>
-  <button type="submit" class="btn btn-success" style="padding: 6px 50px;">查询</button>
-  <a href="integral_draw.html"  class="btn btn-danger" style="padding: 6px 50px;">积分抽奖</a>
+  <button type="button" class="btn btn-success" style="padding: 6px 50px;" @click="querys()">查询</button>
+  <a href="/api/Forward_view/user/Pointsdraw"  class="btn btn-danger" style="padding: 6px 50px;">积分抽奖</a>
 </form>
 									</div>
 								</div>
@@ -324,40 +326,11 @@
    	
    </thead>
    <tbody>
-   	<tr>
-   		<td style="color: #959595;">2019-02-05</td>
-   		<td style="color: #33c506;">+10.00</td>
-   		<td>签到</td>
-   	</tr>
-   	<tr>
-   		<td style="color: #959595;">2019-02-05</td>
-   		<td style="color: #33c506;">+10.00</td>
-   		<td>签到</td>
-   	</tr>
-   	<tr>
-   		<td style="color: #959595;">2019-02-05</td>
-   		<td style="color: #33c506;">+10.00</td>
-   		<td>签到</td>
-   	</tr>
-   	<tr>
-   		<td style="color: #959595;">2019-02-05</td>
-   		<td style="color: #33c506;">+10.00</td>
-   		<td>签到</td>
-   	</tr>
-   	<tr>
-   		<td style="color: #959595;">2019-02-05</td>
-   		<td style="color: #33c506;">+10.00</td>
-   		<td>签到</td>
-   	</tr>
-   	<tr>
-   		<td style="color: #959595;">2019-02-05</td>
-   		<td style="color: #33c506;">+10.00</td>
-   		<td>签到</td>
-   	</tr>
-   	<tr>
-   		<td style="color: #959595;">2019-02-05</td>
-   		<td style="color: #33c506;">+10.00</td>
-   		<td>签到</td>
+   	<tr v-for="(temp,index) in pageInfo.list">
+   		<td style="color: #959595;" v-text="temp.irdate"></td>
+   		<td style="color: #33c506;" v-if="temp.recordinandout>0" v-text="'+'+temp.recordinandout"></td>
+		<td style="color: #AC2925;" v-else-if="temp.recordinandout<0" v-text="temp.recordinandout"></td>
+   		<td v-text="temp.irdescribe"></td>
    	</tr>
    </tbody>
   </table>
@@ -370,38 +343,11 @@
 								<div class="row">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 										<nav>
-									<ul class="pagination">
-										<li>
-											<a href="#" aria-label="Previous">
-												<span aria-hidden="true">«</span>
-											</a>
-										</li>
-										<li class="active">
-											<a href="#">1</a>
-										</li>
-										<li>
-											<a href="#">2</a>
-										</li>
-										<li>
-											<a href="#">3</a>
-										</li>
-										<li>
-											<a href="#">4</a>
-										</li>
-										<li>
-											<a href="#">5</a>
-										</li>
-										<li>
-											<a href="#">6</a>
-										</li>
-										<li class="disabled">
-											<a href="javascript:void(0)" aria-label="Next">
-												<span aria-hidden="true">»</span>
-											</a>
-										</li>
-										
-									</ul>
-
+									  <ul class="pager">
+    <li @click="goToPre()"><a href="javascript:void(0)">上一页</a></li>
+    <li  @click="goToNext()"><a href="javascript:void(0)">下一页</a></li>
+    <li><span style="border: none;padding:5px 5px" id="num" v-text="'第'+pageInfo.pageNum+'页'"></span><span style="border: none;padding:5px 5px">/</span><span style="border: none;padding:5px 5px" id="total" v-text="'共'+pageInfo.pages+'页'"></span></li>
+  </ul>
 								</nav>
 									</div>
 								</div>
@@ -425,24 +371,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -533,7 +479,7 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
@@ -541,11 +487,90 @@
 			</div>
 		</div>
 
-
+<div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 	</body>
 
-	<script type="text/javascript" src="../Public/js/footer_suspend.js"></script>
-	<script src="../Public/js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../Public/js/date.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/footer_suspend.js"></script>
+	<script src="/Public/js/bootstrap-datetimepicker.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/date.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
 	
+	var  listVMintegral = new Vue({
+		el: "#listVMintegral",
+		data: {
+			starts:"",
+			ends:"",
+			pageInfo:{}
+		},
+		methods: {
+			//初始化
+			initializations:function(start,end,pageNum){
+				
+				
+				if(start==""){
+					start=null;
+				}
+				if(end==""){
+					end=null;
+				}
+				
+				if(start==null && end!=null){
+					showTool("开始日期不能为空") 
+					return;
+				}
+				if(start!=null && end==null){
+					showTool("结束日期不能为空") 
+					return;
+				}
+				
+			
+				$.getJSON("/c/lz/user/queryintegralpage/"+start+"/"+end+"/"+pageNum,function(json){
+					listVMintegral.pageInfo=json;
+					
+				});	
+			},
+			//上一页
+			goToPre:function(){
+				if(this.pageInfo.hasPreviousPage){
+					
+					this.initializations(this.starts,this.ends,this.pageInfo.prePage);	
+				}
+				else{
+					
+					showTool("已经是第一页了") 
+				}
+			},
+			//下一页
+			goToNext:function(){
+				
+				if(this.pageInfo.hasNextPage){
+				
+					this.initializations(this.starts,this.ends,this.pageInfo.nextPage);	
+				}
+				else{
+					showTool("已经是最后一页了") 
+				}
+			}
+			,
+			//查询
+			querys:function(){
+				this.initializations(this.starts,this.ends,this.pageInfo.pageNum)
+			}
+		},
+		created:function(){
+			this.initializations(null,null,1);
+			
+		}
+	});
+		
+	$("#start").on("change",function(){
+		listVMintegral.starts=$(this).val();
+	})
+	
+	$("#end").on("change",function(){
+		listVMintegral.ends=$(this).val();
+	})
+	</script>
 </html>

@@ -76,5 +76,16 @@ public class Login {
 	public Login() {
 		super();
 	}
+
+	/**   
+	 * @Title:  Login   
+	 * @Description:    TODO(这里用一句话描述这个方法的作用)   
+	 * @param:  @param useremail  
+	 * @throws   
+	 */
+	public Login(String useremail) {
+		super();
+		this.useremail = useremail;
+	}
     
 }

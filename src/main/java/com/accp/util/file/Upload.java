@@ -16,7 +16,7 @@ import com.accp.util.DateTime;
  */
 public class Upload {
 	// 文件上传文件夹
-	public final static String UPLOADED_FOLDER = "C://Upload/";
+	public final static String UPLOADED_FOLDER = "D:\\myfile\\images\\";
 
 	/**
 	 * 上传文件

@@ -10,7 +10,6 @@ public class User {
 	private String userimgpath;                 //用户头像地址(第三方注册成功后复制过来)
 
 	private String username;                    //用户名(第三方注册成功后复制过来)
-
 	private String userrealname;                //用户真实姓名
 
 	private Integer usersex;                    //用户性别，1：男，2：女

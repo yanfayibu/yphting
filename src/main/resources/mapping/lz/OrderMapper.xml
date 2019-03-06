@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.accp.dao.lz.IOrderDao">
+ 
+ 
+
+ 
+<!-- map映射 -->
+ 	<resultMap type="OrderVO" id="OrdersMap">
+	
+		<id column="orderID" property="orderid"/>
+		<result column="userID" property="userid"/>
+		<result column="serviceID" property="serviceid"/>
+		
+		<result column="orderType" property="ordertype"/>
+		<result column="orderTime" property="ordertime"/>
+		<result column="paymentTime" property="paymenttime"/>
+		<result column="receiptTime" property="receipttime"/>
+		<result column="provideServicesTime" property="provideservicestime"/>
+		<result column="completeTime" property="completetime"/>
+		<result column="remarks" property="remarks"/>
+		<result column="population" property="population"/>
+		<result column="number" property="number"/>
+		<result column="smallPlan" property="smallplan"/>
+		<result column="totalPrice" property="totalprice"/>
+		<result column="uploadPath" property="uploadpath"/>
+		<result column="orderStatus" property="orderstatus"/>
+		<result column="commentstatus" property="commentstatus"/>
+		<result column="refundstatus" property="refundstatus"/>
+		<result column="filesatus" property="filesatus"/>
+		<result column="documentpath" property="documentpath"/>
+		<result column="scheduledStartTime" property="scheduledstarttime"/>
+		
+		
+		
+		<association property="thisuser" javaType="user">
+		<id column="auserid" property="userid"/>
+		</association>
+		
+		
+		
+		<association property="service" javaType="Services">
+		<id column="serviceID" property="serviceid"/>
+		<result column="serviceTitle" property="servicetitle"/>
+		<result column="serviceFuTitle" property="servicefutitle"/>
+		<result column="servicePrice" property="serviceprice"/>
+		<result column="serviceCoverImg" property="servicecoverimg"/>
+		<result column="serviceCostTypeID" property="servicecosttypeid"/>
+		<result column="serviceHour" property="servicehour"/>
+		</association>
+		
+		
+		<association property="user" javaType="user">
+		<id column="cuserid" property="userid"/>
+		<result column="userImgPath" property="userimgpath"/>
+		<result column="shopName" property="shopname"/>
+		<result column="userName" property="username"/>
+		<result column="shopImg" property="shopimg"/>
+		<result column="businessState" property="businessstate"/>
+		</association>
+		
+		
+		<association property="servicetype" javaType="Servicetype">
+		<result column="stName" property="stname"/>
+		<result column="advertisement" property="advertisement"/>
+		</association>
+	</resultMap>
+	
+
+
+
+<!--我的预定查询 -->
+<select id="queryMyreservationservice" resultMap="OrdersMap">
+	
+SELECT a.`scheduledStartTime`, a.`userID` AS auserid, a.`orderID` , a.`orderType`  , a.`orderTime` ,a.`paymentTime`,
+a.`receiptTime` , a.`provideServicesTime` ,a.`completeTime`,a.`remarks`,
+a.`population`,a.`number`,a.`smallPlan`,a.`totalPrice`,a.`uploadPath`,a.`orderStatus`,
+a.`commentstatus`,a.`refundstatus`,a.`filesatus`,a.`documentpath`,b.`serviceTitle`,b.`serviceFuTitle`,b.`servicePrice`,b.`serviceCoverImg`,
+b.`serviceCostTypeID`,b.`serviceHour`,b.`serviceID`,c.`userID` as cuserid,c.`userName`,c.`userImgPath`,c.`shopName`,c.`shopImg`,c.`businessState`,d.`stName`,d.`advertisement`
+ FROM  `orders` a
+ LEFT JOIN  `services` b   ON  a.`serviceID`=b.`serviceID`
+ LEFT JOIN `user` c  ON b.`userID`=c.`userID`
+ LEFT JOIN `servicetype` d ON b.`stid`=d.`stid`
+WHERE a.`userID`=#{ordervo.userid}
+		<if test="ordervo.orderid!=null">
+			and (a.orderid=#{ordervo.orderid} or a.serviceid in(select
+			serviceid
+			from services where servicetitle like '%${ordervo.orderid}%'))
+		</if>
+
+		<if test="ordervo.orderstatus!=null">
+			and a.orderstatus=#{ordervo.orderstatus}
+		</if>
+		
+		<if test="ordervo.commentstatus!=null">
+			and a.commentstatus=#{ordervo.commentstatus}
+		</if>
+			order by a.orderid desc
+	</select>
+	
+	<!--添加评价 -->
+	<insert id="addEvaluation">
+	INSERT INTO  `evaluationservice`(`serviceID`,`userID`,`serviceAppraiseContent`,`serviceAppraiseDate`,`serviceAppraiseLevel`,`serviceAppraisePID`)
+	VALUES(#{evalua.serviceid},#{evalua.userid},#{evalua.serviceappraisecontent},NOW(),#{evalua.serviceappraiselevel},#{evalua.serviceappraisepid});
+	</insert>
+	
+	
+	<!-- 修改订单状态 -->
+	<update id="updateOrderstatus">
+	UPDATE `orders` 
+	<set>
+	<if test="order.orderstatus!=null">
+	 `orderStatus`=#{order.orderstatus}, 
+	</if>
+	<if test="order.commentstatus!=null">
+	`commentstatus`=#{order.commentstatus},
+	</if>
+	<if test="order.refundstatus!=null">
+	`refundstatus`=#{order.refundstatus},
+	</if>
+	<if test="order.filesatus!=null">
+	`filesatus`=#{order.filesatus},
+	</if>
+	
+	<if test="order.paymenttime!=null">
+	`paymentTime`=#{order.paymenttime},
+	</if>
+	<if test="order.completetime!=null">
+	`completeTime`=#{order.completetime},
+	</if>
+	
+	</set>
+	WHERE `orderID`=#{order.orderid}
+	</update>
+	
+	
+	<!-- 查询我的退款 -->
+	<select id="queryMyrefund" resultMap="Myrefund">
+	SELECT A.`refundID` ,A.`point`,A.`refundReason`,A.`refundExplain`,A.`refundImg`,
+A.`applyRefundMoney`,A.`ActualRefundMoney`,A.`applicationTime`,A.`businessRemarks`,A.`auditTime`,A.`auditStatus`,
+A.`adminRemarks`,`adminTime`,`adminStatus`,
+B.`orderID` ,B.`refundstatus`,B.`scheduledStartTime`,B.`population`,B.`number`,B.`smallPlan`
+,
+C.`userID`,C.`userName`,C.`userImgPath`
+,D.`serviceID`,D.`serviceTitle`,D.`serviceFuTitle`,D.`serviceCoverImg`,D.`servicePrice`
+,E.`userID` AS sduserid,E.`shopName` AS sdname,E.`userImgPath` AS sdimg,E.`userName` AS sduname
+ FROM `refund` A
+LEFT JOIN   `orders` B ON A.`orderID`=B.`orderID`
+LEFT JOIN  `user` C ON A.`userID`=C.`userID`
+LEFT JOIN `services` D ON  B.`serviceID`=D.`serviceID`
+LEFT JOIN  `user` E ON B.`userID`=E.`userID`
+
+<where>
+<if test="userid!=0">A.`userID`=#{userid}</if>
+<if test="orderid!='null' and orderid!=null">AND   A.`orderID`=#{orderid} </if>
+<if test="start!='null' and  start!=null">
+	AND `applicationTime` BETWEEN #{start}  AND  #{end}
+</if>
+</where>
+ORDER BY A.`refundID` DESC
+</select>
+	
+	<!-- 我的退款映射map -->
+	<resultMap type="RefundVO" id="Myrefund">
+	<id column="refundID" property="refundid"/>
+	<result column="point" property="point"/>
+	<result column="refundReason" property="refundreason"/>
+	<result column="refundExplain" property="refundexplain"/>
+	<result column="refundImg" property="refundimg"/>
+	<result column="applyRefundMoney" property="applyrefundmoney"/>
+	<result column="ActualRefundMoney" property="actualrefundmoney"/>
+	<result column="applicationTime" property="applicationtime"/>
+	<result column="businessRemarks" property="businessremarks"/>
+	<result column="auditTime" property="audittime"/>
+	<result column="auditStatus" property="auditstatus"/>
+	<result column="adminRemarks" property="adminstatus"/>
+	<result column="adminTime" property="admintime"/>
+	<result column="adminStatus" property="adminstatus"/>
+	
+	<association property="order" javaType="Orders">
+	<id column="orderID" property="orderid"/>
+	<result column="refundstatus" property="refundstatus"/>
+	<result column="scheduledStartTime" property="scheduledstarttime"/>
+	<result column="population" property="population"/>
+	<result column="number" property="number"/>
+	<result column="smallPlan" property="smallplan"/>
+	</association>
+	
+	<association property="service" javaType="Services">
+	<id column="serviceID" property="serviceid"/>
+	<result column="serviceTitle" property="servicetitle"/>
+	<result column="serviceFuTitle" property="servicefutitle"/>
+	<result column="serviceCoverImg" property="servicecoverimg"/>
+	<result column="servicePrice" property="serviceprice"/>
+	</association>
+	
+	
+	<association property="user" javaType="User">
+	<id column="userID" property="userid"/>
+	<result column="userName" property="username"/>
+	<result column="userImgPath" property="userimgpath"/>
+	</association>
+	
+	
+	
+	<association property="merchant" javaType="User">
+	<id column="sduserid" property="userid"/>
+	<result column="sduname" property="username"/>
+	<result column="sdname" property="shopname"/>
+	<result column="sdimg" property="userimgpath"/>
+	</association>
+	</resultMap>
+	
+	
+	<!-- 新增我的退款 -->
+	<insert id="addRefund">
+		insert into
+		refund(point,orderid,userid,refundimg,applyrefundmoney,applicationtime,refundreason,refundexplain)
+		values(#{refund.point},#{refund.orderid},#{refund.userid},#{refund.refundimg},#{refund.applyrefundmoney},#{refund.applicationtime,jdbcType=TIMESTAMP},#{refund.refundreason},#{refund.refundexplain})
+	</insert>
+	
+	
+	
+	<!-- 修改退款状态 -->
+	<update id="updateRefund">
+		update refund
+		<set>
+			<if test="refund.actualrefundmoney!=null">
+				actualrefundmoney=#{refund.actualrefundmoney},
+			</if>
+			<if test="refund.audittime!=null">
+				audittime=#{refund.audittime},
+			</if>
+			<if test="refund.auditstatus!=null">
+				auditstatus=#{refund.auditstatus},
+			</if>
+			<if test="refund.admintime!=null">
+				admintime=#{refund.admintime},
+			</if>
+			<if test="refund.adminstatus!=null">
+				adminstatus=#{refund.adminstatus},
+			</if>
+			<if test="refund.businessremarks!=null">
+				businessremarks=#{refund.businessremarks},
+			</if>
+			<if test="refund.adminremarks!=null">
+				adminremarks=#{refund.adminremarks},
+			</if>
+		</set>
+		where orderid=#{refund.orderid}
+	</update>
+	
+	
+	<!-- 银行类别 -->
+	<select id="queryBanktype" resultType="Banktype">
+	SELECT  * FROM  `banktype`
+	</select>
+	<!--添加提现表 -->
+	<insert id="addwithdraw">
+	INSERT INTO`putforward`(`userID`,`putName`,`bankID`,`bankAccount`,`openBankName`,`submitTime`,`auditTime`,`money`,`auditStatus`)
+VALUES(#{put.userid},#{put.putname},#{put.bankid},#{put.bankaccount},#{put.openbankname},#{put.submittime,jdbcType=TIMESTAMP},#{put.audittime,jdbcType=TIMESTAMP},#{put.money},#{put.auditstatus})
+	</insert>
+ </mapper>

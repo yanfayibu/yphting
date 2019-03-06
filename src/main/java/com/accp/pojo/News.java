@@ -98,6 +98,20 @@ public class News {
 		this.content = content;
 	}
 
+	
+	/**   
+	 * @Title:  News   
+	 * @Description:    TODO(这里用一句话描述这个方法的作用)   
+	 * @param:  @param addressee
+	 * @param:  @param newstype  
+	 * @throws   
+	 */
+	public News(Integer addressee, Integer newstype) {
+		super();
+		this.addressee = addressee;
+		this.newstype = newstype;
+	}
+
 	public News() {
 		super();
 	}

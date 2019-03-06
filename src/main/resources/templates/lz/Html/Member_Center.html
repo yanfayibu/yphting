@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>会员中心_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,17 +16,17 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
+		<link rel="stylesheet" href="/Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-		<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
+		<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
+		<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
 		<style type="text/css">
 			
 
@@ -137,12 +137,12 @@
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
 					<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -164,7 +164,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -177,14 +177,14 @@
 							<a href="#">商家中心</a>
 						</li>
 						<li class="active">
-							<a href="Member_Center.html">个人中心</a>
+							<a href="/api/Forward_view/user/center">个人中心</a>
 							<span class="my_nav_i"></span>
 						</li>
 						<li>
-							<a href="Account_Setting.html">账户设置</a>
+							<a href="/api/Forward_view/user/Modifydata">账户设置</a>
 						</li>
 						<li>
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;">11</span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
 						</li>
 
 					</ul>
@@ -207,7 +207,7 @@
 
 							<ul class="list-unstyled member_system_ul">
 								<li>
-									<a href="My_reservation.html"><span class="msp2 pre_c1"></span>我预订的服务</a>
+									<a th:href="@{/c/lz/dsd/user/queryMyreservationservice}"><span class="msp2 pre_c1"></span>我预订的服务</a>
 								</li>
 								<li>
 									<a href=""><span class="msp2 pre_c2"></span>我的下载</a>
@@ -216,19 +216,19 @@
 									<a href=""><span class="msp2  pre_c7"></span>我的帖子</a>
 								</li>
 								<li>
-									<a href="My_collect.html"><span class="msp2 pre_c3"></span>我的收藏</a>
+									<a href="/api/Forward_view/user/mycollection"><span class="msp2 pre_c3"></span>我的收藏</a>
 								</li>
 								<li>
-									<a href="My_gold.html"><span class="msp2 pre_c4"></span>我的金币</a>
+									<a href="/api/Forward_view/user/goldcoinrecord"><span class="msp2 pre_c4"></span>我的金币</a>
 								</li>
 								<li>
-									<a href="My_integral.html"><span class="msp2 pre_c5"></span>我的积分</a>
+									<a href="/api/Forward_view/user/pointrecord"><span class="msp2 pre_c5"></span>我的积分</a>
 								</li>
 								<li>
-									<a href="My_evaluate.html"><span class="msp2 pre_c6"></span>我的评价</a>
+									<a href="/api/Forward_view/user/myreview"><span class="msp2 pre_c6"></span>我的评价</a>
 								</li>
 								<li>
-									<a href="My_refund.html"><span class="msp2 pre_c7"></span>我的退款</a>
+									<a href="/api/Forward_view/user/myrefund"><span class="msp2 pre_c7"></span>我的退款</a>
 								</li>
 								<li>
 									<a href=""><span class="msp2 pre_c9"></span>帮助中心</a>
@@ -251,20 +251,20 @@
 							<div class="media">
   <div class="imgyuan media-left ">
     <a href="#">
-      <img class="media-object" src="../Uploads/images/章若楠6.jpg" alt="...">
+      <img class="media-object" th:src="${session.userinfo.userimgpath}" alt="...">
     </a>
   </div>
   <div class="media-body media-middle" >
-    <h4 class="media-heading"><span>巨蟹boy7730</span>&nbsp;&nbsp;&nbsp;<a href="Account_Setting.html" class="btn btn-success">更改资料</a></h4>
+    <h4 class="media-heading"><span th:text="'@'+${session.userinfo.username}"></span>&nbsp;&nbsp;&nbsp;<a href="/api/Forward_view/user/Modifydata" class="btn btn-success">更改资料</a></h4>
     
   		
   	<p style="margin-top: 10px;">
-  		<img src="../Public/images/point_i.png"/>&nbsp;
+  		<img src="/Public/images/point_i.png"/>&nbsp;
   		<span style="color: #959595;">积分</span>
-  		&nbsp;<label>100</label>
-  		<img src="../Public/images/i_3.png" style="margin-left: 10px;"/>
-  		<span style="color: #959595;">金币</span>
-  		&nbsp;<label>5000</label>
+  		&nbsp;<label th:text="${session.userinfo.userintegral}">0</label>
+  		<img src="/Public/images/i_3.png" style="margin-left: 10px;"/>
+  		<span style="color: #959595;" >金币</span>
+  		&nbsp;<label th:text="${session.userinfo.usermoney}">0</label>
   		
   	</p>
   </div>
@@ -276,7 +276,7 @@
 			<span>每天签到领取积分</span>
 		</div>
 		<div class="singer_r_r">
-			<a class="singer_r_img" href="#" style="text-decoration: none;">		
+			<a class="singer_r_img" href="javascript:void(0)" style="text-decoration: none;">		
 				<span id="sing_for_number"></span>
 			</a>
 		</div>
@@ -289,10 +289,10 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<ul class=" predetermine list-inline" style="margin-left:0.1%;" >
 	
-	<li><a href="">待付款&nbsp;<span>0</span></a></li>
-	<li><a href="">商家接单&nbsp;<span>0</span></a></li>
-	<li><a href="">待确认&nbsp;<span>0</span></a></li>
-	<li><a href="">待评价&nbsp;<span>0</span></a></li>
+	<li><a th:href="@{/c/lz/dsd/user/queryMyreservationservice(status=1)}">待付款&nbsp;<span th:text="${prepayment}">0</span></a></li>
+	<li><a th:href="@{/c/lz/dsd/user/queryMyreservationservice(status=3)}">商家接单&nbsp;<span  th:text="${Waitingorder}">0</span></a></li>
+	<li><a th:href="@{/c/lz/dsd/user/queryMyreservationservice(status=4)}">待确认&nbsp;<span th:text="${confirmed}">0</span></a></li>
+	<li><a th:href="@{/c/lz/dsd/user/queryMyreservationservice(status=5,commentstatus=1)}">待评价&nbsp;<span th:text="${comment}">0</span></a></li>
 </ul>
 				</div>
 				
@@ -310,66 +310,32 @@
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					
 					<!--start-->
-				<div class="media">
+				<div class="media" th:each="temp,iterStat:${pageOrderList.list}">
   <div class="media-left">
     <a href="#">
-      <img class="media-object" src="../Uploads/images/20181230062054-40654.jpg" alt="..." width="135px" height="90px">
+      <img class="media-object"  th:src="${temp.service.servicecoverimg}" th:alt="${temp.service.servicetitle}" width="135px" height="90px">
     </a>
   </div>
   <div class="media-body">
 
 
 
-    <h4 class="media-heading">我爱你中国 <a href="" class="btn_a_yyd">查看详细</a></h4>
- 	<p>我亲爱的母亲</p>
- 	<p><img src="../Public/images/i_3.png" />
+    <h4 class="media-heading" th:text="${temp.service.servicetitle}"> <a href="" class="btn_a_yyd">查看详细</a></h4>
+ 	<p th:text="${temp.service.servicefutitle}">我亲爱的母亲</p>
+ 	<p><img src="/Public/images/i_3.png" />
   		<span style="color: #959595;">金币</span>
-  		&nbsp;<label>5000</label>
+  		&nbsp;<label th:text="${temp.service.serviceprice}">0</label><label th:text="|/${temp.service.servicecosttypeid}|"></label>
  	</p>
- 	<p>1人</p>
+ 	<p th:if="${temp.population}!=null and ${temp.population}!=''" th:text="|${temp.population}人|"></p>
+ 	<p th:if="${temp.number}!=null and ${temp.number}!=''" th:text="|${temp.number}份|"></p>
   </div>
 </div>
+	
+	
+	
 	<!--end-->
 
-<div class="media">
-  <div class="media-left">
-    <a href="#">
-      <img class="media-object" src="../Uploads/images/20181230062054-40654.jpg" alt="..." width="135px" height="90px">
-    </a>
-  </div>
-  <div class="media-body">
 
-
-
-    <h4 class="media-heading">我爱你中国 <a href="" class="btn_a_yyd">查看详细</a></h4>
- 	<p>我亲爱的母亲</p>
- 	<p><img src="../Public/images/i_3.png" />
-  		<span style="color: #959595;">金币</span>
-  		&nbsp;<label>5000</label>
- 	</p>
- 	<p>1人</p>
-  </div>
-</div>
-
-<div class="media">
-  <div class="media-left">
-    <a href="#">
-      <img class="media-object" src="../Uploads/images/20181230062054-40654.jpg" alt="..." width="135px" height="90px">
-    </a>
-  </div>
-  <div class="media-body">
-
-
-
-    <h4 class="media-heading">我爱你中国 <a href="" class="btn_a_yyd">查看详细</a></h4>
- 	<p>我亲爱的母亲</p>
- 	<p><img src="../Public/images/i_3.png" />
-  		<span style="color: #959595;">金币</span>
-  		&nbsp;<label>5000</label>
- 	</p>
- 	<p>1人</p>
-  </div>
-</div>
 					</div>
 			</div>
 			
@@ -387,7 +353,7 @@
 		<!--广告-->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 80px;">
-			<img src="../Uploads/images/20180414123932-28064.jpg" class="img-responsive center-block img-rounded"/>
+			<img src="/Uploads/images/20180414123932-28064.jpg" class="img-responsive center-block img-rounded"/>
 		</div>
 	</div>
 	<!--end-->
@@ -416,24 +382,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -528,7 +494,7 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
@@ -536,10 +502,11 @@
 			</div>
 		</div>
 	
-
+  <div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 	</body>
 	
-	<script type="text/javascript" src="../Public/js/footer_suspend.js" ></script>
+	<script type="text/javascript" src="/Public/js/footer_suspend.js" ></script>
+		<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 	
 
@@ -578,9 +545,47 @@ function week(){
 
 $(document).ready(function(){
 	week();
+	
+	
+	//查询是否签到
+	$.ajax("/c/lz/user/Querysignin",{
+		type:"get",
+		dataType:"json",
+		timeout: 6000,
+		success:function(json){
+			if(json.code==500){
+				$(".singer_r_img").addClass("current");
+			}
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	//签到
 	$(".singer_r_img").click(function(){
+		if($(this).attr("class")!="singer_r_img current"){
+			
+			$.post("/c/lz/user/addsignin", function(msg) {
+				 if(msg.code==200){
+					 showTool("签到成功+10积分");
+					 setTimeout(function(){
+						 window.location.reload()
+						},1000)
+					
+				 }
+				});
+		}
+		else{
+			 showTool("今天已经签到过啦，明天再来啦！");
+		}
 		$(this).addClass("current");
-	})
+		
+	});
 })
 
 

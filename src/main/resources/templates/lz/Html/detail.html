@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>我的预定服务_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,18 +16,17 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
+		<link rel="stylesheet" href="/Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-		<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
-	<script src="../Public/js/upload.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
+		<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
 		<style type="text/css">
 			.mcd {
 				color: #959595;
@@ -137,12 +136,12 @@
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
 					<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -164,7 +163,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -173,20 +172,18 @@
 				<div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav ">
 
-						<li>
-							<a href="">商家中心</a>
+							<li>
+							<a href="#">商家中心</a>
 						</li>
 						<li class="active">
-							<a href="Member_Center.html">个人中心</a>
+							<a href="/api/Forward_view/user/center">个人中心</a>
 							<span class="my_nav_i"></span>
-
 						</li>
 						<li>
-							<a href="Account_Setting.html">账户设置</a>
-
+							<a href="/api/Forward_view/user/Modifydata">账户设置</a>
 						</li>
-						<li>
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;">11</span></a>
+						<li> 
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
 						</li>
 
 					</ul>
@@ -204,8 +201,8 @@
 
 					<div class="row">
 						<div class="col-lg-6 col-xs-8">
-							<a href="Member_Center.html" style="color: #000000;">个人中心</a><span style="    margin: 0 10px;">-</span>
-							<a href="My_reservation.html" style="color: #000000;">我预订的服务</a>
+							<a th:href="@{/api/Forward_view/user/center}" style="color: #000000;">个人中心</a><span style="    margin: 0 10px;">-</span>
+							<a th:href="@{/c/lz/dsd/user/queryMyreservationservice}" style="color: #000000;">我预订的服务</a>
 						</div>
 						<div class="col-lg-6 col-xs-4 text-right">
 							<a href="" style="color: #b5118c;">交易须知</a>
@@ -219,14 +216,45 @@
 
 									<div style="margin-top: 110px;margin-bottom: 90px;border-right: 3px dotted gainsboro;">
 										<p style="color: #959595;padding: 10px;margin: 10px;">预定服务状态</p>
-										<h3 style="color: #91b001;padding: 10px;">待评价</h3>
-										<a href="" class="btn btn-danger " style="margin: 10px;margin-bottom:20px ;">评价</a>
+										<div th:switch="${orderdetail[0].orderstatus}">
+										<h3 style="color: #91b001;padding: 10px;" th:case="1">待付款</h3>
+										<h3 style="color: #91b001;padding: 10px;" th:case="2">待接单</h3>
+										<h3 style="color: #91b001;padding: 10px;" th:case="3">待提供服务</h3>
+										<h3 style="color: #91b001;padding: 10px;" th:case="4">已提供服务</h3>
+									
+										<h3 style="color: #91b001;padding: 10px;" th:case="6">服务取消</h3>
+										<h3 style="color: #91b001;padding: 10px;" th:case="7">未接单</h3>
+										<h3 style="color: #91b001;padding: 10px;" th:case="8">待评价</h3>
+										
+										</div>
+										<div th:switch="${orderdetail[0].refundstatus}">
+														<h3 th:case="1">退款申请中</h3>
+														<h3 th:case="2">不同意</h3>
+														<h3 th:case="3">申请管理员介入</h3>
+														<h3 th:case="4">管理员拒绝</h3>
+														<h3 th:case="5">退款完成</h3>
+														<h3 th:case="6">退款取消</h3>
+														
+														</div>
+						<h3 th:if="${orderdetail[0].orderstatus==5 and  orderdetail[0].orderstatus<0}">服务完成</h3>
+										
+										
+										<p  th:if="${orderdetail[0].orderstatus==1}">请尽快付款以便商家安排时间</p>
+										<a th:href="@{/api/Forward_view/user/payGold(orderid=${orderdetail[0].orderid})}" class="btn btn-warning " style="margin: 10px;margin-bottom:20px ;" th:if="${orderdetail[0].orderstatus==1}">支付金币</a>
+											<a href="" class="btn btn-danger " style="margin: 10px;margin-bottom:20px ;" th:if="${orderdetail[0].orderstatus==4}">确认完成</a>
+											<a href="" class="btn btn-danger " style="margin: 10px;margin-bottom:20px ;" th:if="${orderdetail[0].orderstatus==5 and orderdetail[0].filesatus==2}">下载</a>
+											<a th:href="@{/api/Forward_view/user/evaluation(orderid=${orderdetail[0].orderid})}" class="btn btn-danger " style="margin: 10px;margin-bottom:20px ;" th:if="${orderdetail[0].orderstatus==5 and orderdetail[0].commentstatus==1}">评价</a>
+											<a href="javascript:void(0)" class="btn btn-danger " style="margin: 10px;margin-bottom:20px ;" th:if="${orderdetail[0].orderstatus==1}" th:onclick="|cancelservice(this)|">取消服务
+											<input type="hidden" th:value="${orderdetail[0].orderid}" />
+											</a>
+											<a href="" class="btn btn-primary " style="margin: 10px;margin-bottom:20px ;" th:if="${orderdetail[0].orderstatus==5 and orderdetail[0].refundstatus==0}">申请退款</a>
+											
 									</div>
 								</div>
 
 								<div class="col-lg-8  col-md-8 col-sm-8 col-xs-6 ">
 									
-									<img src="../Public/images/lc.png" class="img-responsive center-block" style="margin-top: 110px;margin-bottom: 90px;" />
+									<img src="/Public/images/lc.png" class="img-responsive center-block" style="margin-top: 110px;margin-bottom: 90px;" />
 								</div>
 							</div>
 						</div>
@@ -242,53 +270,54 @@
 											<p class="mcd">订单编号</p>
 										</li>
 										<li>
-											<p>15465152378271</p>
+											<p th:text="${orderdetail[0].orderid}"></p>
 										</li>
 										<li>
 											<p class="mcd">下单时间</p>
 										</li>
 										<li>
-											<p>2019-01-03 19:33</p>
+											<p th:text="${#dates.format(orderdetail[0].ordertime,'yyyy-MM-dd HH:mm:ss')}"></p>
 										</li>
-										<li>
+										<li th:if="${orderdetail[0].paymenttime!=null}">
 											<p class="mcd">付款时间</p>
 										</li>
-										<li>
-											<p>2019-01-03 19:34</p>
+										<li th:if="${orderdetail[0].paymenttime!=null}">
+											<p th:if="${orderdetail[0].paymenttime!=null}" th:text="${#dates.format(orderdetail[0].paymenttime,'yyyy-MM-dd HH:mm:ss')}"></p>
 										</li>
-										<li>
+				
+										<li th:if="${orderdetail[0].receipttime!=null}">
 											<p class="mcd">接单时间</p>
 										</li>
-										<li>
-											<p class="mcd">接单时间</p>
-										</li>
-										<li>
-											<p>2019-01-03 19:34</p>
-										</li>
-										<li>
+										<li th:if="${orderdetail[0].receipttime!=null}">
+											<p th:text="${#dates.format(orderdetail[0].receipttime,'yyyy-MM-dd HH:mm:ss')}"></p>
+										</li >
+										<li th:if="${orderdetail[0].provideservicestime!=null}">
 											<p class="mcd">提供服务时间</p>
 										</li>
 
-										<li>
-											<p>2019-01-03 19:34</p>
+										<li th:if="${orderdetail[0].provideservicestime!=null}">
+											<p  th:text="${#dates.format(orderdetail[0].provideservicestime,'yyyy-MM-dd HH:mm:ss')}"></p>
 										</li>
-										<li>
+										<li th:if="${orderdetail[0].completetime!=null}">
 											<p class="mcd">完成时间</p>
 										</li>
-										<li>
-											<p>2019-01-03 19:34</p>
+										<li th:if="${orderdetail[0].completetime!=null}">
+											<p th:text="${#dates.format(orderdetail[0].completetime,'yyyy-MM-dd HH:mm:ss')}"></p>
 										</li>
 										<li>
 											<p class="mcd">商家</p>
 										</li>
 										<li>
 											<p>
-												<a target="_blank" href="" style="color: #000000;">搜索</a>
-												<a href="javascript:void(0);" style="color: #cb22a1;">站内信商家</a>
+												<a target="_blank" href="" style="color: #000000;" th:text="${orderdetail[0].user.shopname}">搜索</a>
+												<a href="javascript:void(0);" style="color: #cb22a1;" onclick="sendmessage(this)">
+												<input type="hidden" th:value="${orderdetail[0].user.userimgpath}">
+												<input type="hidden" th:value="${orderdetail[0].user.userid}" >
+												站内信商家</a>
 											</p>
 										</li>
 										<li>
-											<p class="mcd">总金币 &nbsp;<img src="../Public/images/i_3.png" /><label>1.0</label></p>
+											<p class="mcd">总金币 &nbsp;<img src="/Public/images/i_3.png" /><label th:text="${orderdetail[0].smallplan}">1.0</label></p>
 										</li>
 
 									</ul>
@@ -300,13 +329,14 @@
 											<p class="mcd">类别</p>
 										</li>
 										<li>
-											<p>韩国留学</p>
+											<p th:text="${orderdetail[0].servicetype.stname}">韩国留学</p>
 										</li>
 										<li>
 											<p class="mcd">数量</p>
 										</li>
 										<li>
-											<p>1</p>
+											<p th:if="${orderdetail[0].population ne null}" th:text="|${orderdetail[0].population}人|">1</p>
+											<p th:if="${orderdetail[0].number ne null}" th:text="|${orderdetail[0].number}份|">1</p>
 										</li>
 
 									</ul>
@@ -318,9 +348,9 @@
 										</li>
 										<li>
 											<dl class="dl-horizontal">
-												<dt><img src="../Uploads/images/章若楠6.jpg"  width="135"></dt>
-												<dd> <a href="">哈哈</a>
-													<p style="margin-top: 10px;"><img src="../Public/images/i_3.png" /><label>1.0</label></p>
+												<dt><img th:src="${orderdetail[0].service.servicecoverimg}"  width="135"></dt>
+												<dd> <a href="" th:text="${orderdetail[0].service.servicetitle}"></a>
+													<p style="margin-top: 10px;"><img src="/Public/images/i_3.png" /><label th:text="${orderdetail[0].service.serviceprice}"></label></p>
 												</dd>
 												
 											</dl>
@@ -343,24 +373,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -455,7 +485,7 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
@@ -463,8 +493,112 @@
 			</div>
 		</div>
 
+
+	<!--站内联系-->
+		<div class="modal fade" data-backdrop="static" data-keyboard="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" style="letter-spacing:4px ;color: #959595;">与<span style="color: black;" th:text="${orderdetail[0].user.shopname}">荔枝</span>站内信</h4>
+					</div>
+					<div class="modal-body">
+
+						<img src="" width="60px" height="60px" style="border-radius: 50%;" />
+						<textarea class="form-control" rows="3" style="width: 80%;display: inline-block;vertical-align: middle;"></textarea>
+
+					</div>
+					<div class="modal-footer">
+					
+					<input type="hidden" value="2" id="newstype">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="send()">发送</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 	</body>
 	
-	<script src="../Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+					<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	//站内联系
+	var addressid=0;
+		 function sendmessage(obj){
+		$(".modal-body img").attr("src",$(obj).children("input:eq(0)").val());
+		addressid=$(obj).children("input:eq(1)").val();
+				$(".modal").modal("show");
+		}
+		 //发送
+		 function send(){
+		 	if($("textarea").val()==""){
+		 		alert("请填写信件内容！")
+		 	}
+		 	else{
+		 		
+		 	
+		 		var News={};
+		 	
+		 		News["addressee"]=addressid;
+		 		News["content"]=$("textarea").val();
+		 		News["newstype"]=$("#newstype").val();
+		 		$.ajax("/c/lz/user/Addnews", {
+							type : "POST",
+							dataType : "json",
+							contentType:"application/json",
+							data:JSON.stringify(News),
+							success : function(msg) {
+								if(msg.code==200){
+									$(".modal").modal("hide");
+									$("textarea").val("");
+									showTool("发送成功！");
+									
+									
+								}
+								else{
+									$(".modal").modal("hide");
+									$("textarea").val("");
+									showTool("发送失败！")
+								}
+							}
+						});
+		 		
+		 	}
+		 }
 
+		 
+		 //取消服务
+		 function cancelservice(obj){
+			
+			 qikoo.dialog.confirm('确定要取消服务吗？',function(){
+				 var Orders={};
+				 Orders["orderid"]=$(obj).children("input").val();
+				 Orders["orderstatus"]=6;
+				 
+
+				  $.ajax("/c/lz/dsd/user/order/serve", {
+						type : "PUT",
+						dataType : "json",
+						data:JSON.stringify(Orders),
+						contentType:"application/json",
+						success :function(msg) {
+							if(msg.code==200){
+								
+								showTool("取消成功");
+								setTimeout(function(){
+									window.location.href="/c/lz/dsd/user/queryMyreservationservice";
+							 	},1000)
+							}
+							else{
+								showTool("取消失败");
+							}
+						}
+					}); 
+					 			 
+		        },function(){
+					
+			});
+		 }
+	</script>
 </html>

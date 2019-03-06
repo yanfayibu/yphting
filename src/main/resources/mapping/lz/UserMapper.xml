@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!--Interface name-->
+ <mapper namespace="com.accp.dao.lz.IUserDao">
+ 
+<!--Global -->
+ <sql id="Queryall">
+ SELECT * FROM 
+ </sql>
+ 
+ <!--change Password -->
+ <update id="updatePwd">
+ UPDATE  `login`  SET  `userPwd`=#{userPwd}  WHERE  `userEmail`=#{userEmail}
+ </update>
+ 
+<!--查询登录信息 -->
+<select id="queryLoginInfo" resultType="Login">
+<include refid="Queryall"/> `login` 
+<where>
+<if test="login.useremail!=null">BINARY `userEmail`=#{login.useremail}</if>
+<if test="login.userpwd!=null">AND BINARY `userPwd`=#{login.userpwd}</if>
+<if test="login.userid!=null">AND `userID`=#{login.userid}</if>
+</where>
+</select>
+
+<!--第三方登录没绑定邮箱就可以修改邮箱账号-->
+<update id="updateLoginEmail">
+UPDATE `login`  set `userEmail`=#{login.useremail}  WHERE `userID`=#{login.userid}
+</update>
+
+
+<!--查询地区 -->
+<select id="Queryarea" resultType="Sharea">
+SELECT * FROM `sharea`
+</select>
+
+<!-- 查询用户信息 -->
+<select id="queryUserInfo" resultType="user">
+SELECT * FROM `user` WHERE `userID`=#{userID}
+</select>
+
+
+
+<!--修改用户资料 -->
+<update id="updateUser">
+UPDATE `user` 
+<set>
+<if test="user.userimgpath!=null">`userImgPath`=#{user.userimgpath},</if>
+<if test="user.username!=null">`userName`=#{user.username},</if>
+<if test="user.userrealname!=null">`userRealName`=#{user.userrealname},</if>
+<if test="user.usersex!=null">`userSex`=#{user.usersex},</if>
+<if test="user.userphone!=null">`userPhone`=#{user.userphone},</if>
+<if test="user.country!=null">`country`=#{user.country},</if>
+<if test="user.provincialid!=null">`provincialID`=#{user.provincialid},</if>
+<if test="user.cityid!=null">`cityID`=#{user.cityid},</if>
+<if test="user.countyid!=null">`countyID`=#{user.countyid},</if>
+<if test="user.addetail!=null">`adDetail`=#{user.addetail},</if>
+</set>
+<where>`userID`=#{user.userid}</where>
+</update>
+
+
+<!-- map -->
+<resultMap type="NewVo" id="queryNews">
+		<id column="newsid" property="newsid"/>
+		<result column="thesender" property="thesender"/>
+		<result column="addressee" property="addressee"/>
+		<result column="sendingtime" property="sendingtime"/>
+		<result column="readstate" property="readstate"/>
+		<result column="newstype" property="newstype"/>
+		<result column="messagegroup" property="messagegroup"/>		
+		<result column="content" property="content"/>
+		<association property="sender" javaType="User">
+		<id column="sendID" property="userid"/>
+		<result column="send" property="userrealname"/>
+		<result column="img" property="userimgpath"/>
+		<result column="sendname" property="username"/>
+		</association>
+		<association property="ressee" javaType="User">
+		<id column="userID" property="userid"/>
+		<result column="userRealName" property="userrealname"/>
+		
+		</association>
+	</resultMap>
+
+
+
+<!-- 查询站内信息消息-->
+<select id="searchNew" resultMap="queryNews">
+SELECT b.`userRealName`  ,b.`userID`  , c.`userRealName` AS send ,c.`userName` AS sendname,c.`userID` AS sendID , a.`content` , a.`messageGroup` 
+,a.`newsID`, a.`newsType`,a.`readState`,a.`sendingTime`,c.`userImgPath` AS img
+FROM `news` a
+LEFT JOIN `user` b ON  a.`addRessee`=b.`userID`
+LEFT JOIN `user` c ON  a.`theSender`=c.`userID`
+<where>
+ `newsType`=#{type} AND  a.`addRessee`=#{addRessee}
+GROUP BY a.`newsID`
+ORDER BY `sendingTime` DESC
+</where>
+</select>
+
+<!-- 删除消息 -->
+<delete id="delmessages">
+DELETE FROM `news` WHERE `newsID`=#{newsID}
+</delete>
+
+<!--修改消息-->
+<update id="updatemessages">
+UPDATE `news` SET `readState`=1
+<where>`newsID`=#{news.newsid}</where>
+</update>
+
+<!-- 查询消息站内详情 -->
+<select id="Queryzndetails" resultMap="queryNews">
+SELECT b.`userRealName` AS Recipient ,b.`userID` AS RecipientID , c.`userRealName` AS send ,c.`userName` AS sendname,c.`userID` AS sendID , a.`content` , a.`messageGroup` 
+,a.`newsID`, a.`newsType`,a.`readState`,a.`sendingTime`,c.`userImgPath`
+FROM `news` a
+LEFT JOIN `user` b ON  a.`addRessee`=b.`userID`
+LEFT JOIN `user` c ON  a.`theSender`=c.`userID`
+WHERE  `messageGroup` =#{messageGroup}  AND `newsType`=2
+ORDER BY `sendingTime` DESC
+
+</select>
+<!-- 新增站内信 -->
+<insert id="Addnews">
+INSERT INTO `news`(`theSender`,`addRessee`,`content`,`newsType`,`messageGroup`,`sendingTime`,`readState`)
+VALUE(#{news.thesender},#{news.addressee},#{news.content},#{news.newstype},#{news.messagegroup},NOW(),<if test="#{news.readstate==false}">0</if>)
+</insert>
+
+<!-- 查询服务 -->
+<select id="queryLanguage" resultType="Languagetype">
+SELECT * FROM `languagetype`
+</select>
+
+<!-- 查询专业 -->
+<select id="queryprofession" resultType="majortype">
+SELECT * FROM `majortype`
+</select>
+
+<!--查询韩国地区 -->
+<select id="queryKorean" resultType="Sharea">
+SELECT * FROM `sharea` WHERE `pid`=2
+</select>
+
+<!--查询服务类名称 -->
+<select id="querySerType" resultType="java.lang.String">
+		SELECT stName FROM `servicetype`
+		WHERE stid=#{id}
+</select>
+
+
+
+<!-- 修改店铺信息 -->
+<update id="updateUserShop">
+		UPDATE `user`
+		<set>
+			<if test="u.merchanttype!=null and u.merchanttype!=''">
+				`merchanttype` = #{u.merchanttype},
+			</if>
+			<if test="u.shopname!=null and u.shopname!=''">
+				`shopName` = #{u.shopname},
+			</if>
+			<if test="u.userrealname!=null and u.userrealname!=''">
+				`userrealname` = #{u.userrealname},
+			</if>
+			<if test="u.signature!=null and u.signature!=''">
+				`signature` = #{u.signature},
+			</if>
+			<if test="u.shopimg!=null and u.shopimg!=''">
+				`shopimg` = #{u.shopimg},
+			</if>
+			<if test="u.identitytype!=null and u.identitytype!=''">
+				`identitytype` = #{u.identitytype},
+			</if>
+			<if test="u.identitynumder!=null and u.identitynumder!=''">
+				`identitynumder` = #{u.identitynumder},
+			</if>
+			<if test="u.identityrealname!=null and u.identityrealname!=''">
+				`identityrealname` = #{u.identityrealname},
+			</if>
+			<if test="u.country!=null and u.country!=''">
+				`country` = #{u.country},
+			</if>
+			<if test="u.provincialid!=null and u.provincialid!=''">
+				`provincialid` = #{u.provincialid},
+			</if>
+			<if test="u.cityid!=null and u.cityid!=''">
+				`cityid` = #{u.cityid},
+			</if>
+			<if test="u.countyid!=null and u.countyid!=''">
+				`countyid` = #{u.countyid},
+			</if>
+			<if test="u.addetail!=null and u.addetail!=''">
+				`addetail` = #{u.addetail},
+			</if>
+			<if test="u.identitypositiveimg!=null and u.identitypositiveimg!=''">
+				`identitypositiveimg` = #{u.identitypositiveimg},
+			</if>
+			<if test="u.identitynegativeimg!=null and u.identitynegativeimg!=''">
+				`identitynegativeimg` = #{u.identitynegativeimg},
+			</if>
+			<if test="u.identityhandimg!=null and u.identityhandimg!=''">
+				`identityhandimg` = #{u.identityhandimg},
+			</if>
+			<if test="u.languagenametext!=null and u.languagenametext!=''">
+				`languagenametext` = #{u.languagenametext},
+			</if>
+			<if test="u.majornametext!=null and u.majornametext!=''">
+				`majornametext` = #{u.majornametext},
+			</if>
+			<if test="u.livecityid!=null and u.livecityid!=''">
+				`livecityid` = #{u.livecityid},
+			</if>
+			<if test="u.merchantemail!=null and u.merchantemail!=''">
+				`merchantemail` = #{u.merchantemail},
+			</if>
+			<if test="u.merchantphone!=null and u.merchantphone!=''">
+				`merchantphone` = #{u.merchantphone},
+			</if>
+			<if test="u.qq!=null and u.qq!=''">
+				`qq` = #{u.qq},
+			</if>
+			<if test="u.wechat!=null and u.wechat!=''">
+				`wechat` = #{u.wechat},
+			</if>
+			<if test="u.profession!=null and u.profession!=''">
+				`profession` = #{u.profession},
+			</if>
+			<if test="u.height!=null and u.height!=''">
+				`height` = #{u.height},
+			</if>
+			<if test="u.constellation!=null and u.constellation!=''">
+				`constellation` = #{u.constellation},
+			</if>
+			<if test="u.age!=null and u.age!=''">
+				`age` = #{u.age},
+			</if>
+			<if test="u.selfintroduction!=null and u.selfintroduction!=''">
+				`selfintroduction` = #{u.selfintroduction},
+			</if>
+		</set>
+		<where>
+			`userID` = #{u.userid}
+		</where>
+	</update>
+	
+	<!-- 查询未读站内系统 -->
+	<select id="Queryunreadinformation" resultType="string">
+	SELECT COUNT(*) FROM  `news` 
+	<where>
+	<if test="news.addressee!=null">
+	 AND `addRessee`=#{news.addressee}
+	</if>
+	<if test="news.newstype!=null">
+	AND `newsType`=#{news.newstype}
+	</if>
+	AND `readState`= 0
+	</where>
+
+	</select>
+	
+	<!-- 修改用户金额和积分 -->
+	<update id="UpdateAmountofpoints">
+	UPDATE `user`
+	<set>
+	<if test="u.usermoney!=null">
+	`userMoney`=#{u.usermoney},
+	</if>
+	<if test="u.userintegral!=null">
+	`userIntegral`=#{u.userintegral},
+	</if>
+	</set>
+	where `userID`=#{u.userid}
+	</update>
+	
+	<!-- 查询金币记录 -->
+	<select id="QueryGold" resultType="goldnotes">
+	SELECT * FROM `goldnotes`
+	<where>
+	<if test="userid!=null and userid!=0">
+	 `userID`=#{userid} 
+	</if>
+	<if test="acquisitionmode!=null and acquisitionmode !=0">
+	AND `acquisitionMode`=#{acquisitionmode}
+	</if>
+	
+	<if test="start!='null' and end!='null'">
+	 AND `recordDate` BETWEEN #{start}  AND  #{end}
+	</if>
+	</where>
+	
+	
+	
+	ORDER BY `recordDate` DESC
+	</select>
+	
+	
+	<!-- 查询积分记录 -->
+	<select id="QueryIntegral" resultType="Integralrecord">
+	SELECT * FROM  `integralrecord` WHERE `userID`=#{userid}
+	<if test="start!='null' and end!='null'">
+	AND `IRDate` BETWEEN #{start}  AND  #{end}
+	</if>
+	ORDER BY `IRDate` DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 映射map -->
+	<resultMap type="EvaluationVO" id="myreview">
+	<id column="serviceAppraiseID" property="serviceappraiseid"/>
+	<result column="serviceAppraiseContent" property="serviceappraisecontent"/>
+	<result column="serviceAppraiseDate" property="serviceappraisedate"/>
+	<result column="serviceAppraiseLevel" property="serviceappraiselevel"/>
+	<result column="serviceAppraisePID" property="serviceappraisepid"/>
+	
+	<association property="service" javaType="Services">
+	<id column="serviceID" property="serviceid"/>
+	<result column="serviceTitle" property="servicetitle"/>
+	<result column="serviceCoverImg" property="servicecoverimg"/>
+	
+	</association>
+	
+	<association property="user" javaType="user">
+	<id column="userID" property="userid"/>
+	<result column="userName" property="username"/>
+	</association>
+	<association property="evalua" column="serviceAppraiseID" select="qmyreview"/>
+	</resultMap>
+	
+	<!-- 查询商家回复的评价 -->
+	<select id="qmyreview" resultType="Evaluationservice">
+	SELECT * FROM `evaluationservice` WHERE`serviceAppraisePID`=#{0}
+	</select>
+	
+	
+	<!-- 查询我的评价 -->
+	<select id="Querymyreview" resultMap="myreview">
+SELECT A.`serviceAppraiseID` ,A.`serviceAppraiseContent`,A.`serviceAppraiseDate`,A.`serviceAppraiseLevel`,A.`serviceAppraisePID`,
+B.`serviceID`,B.`serviceTitle`,B.`serviceCoverImg`,C.`userID`,C.`userName`
+FROM `evaluationservice` A
+LEFT JOIN  `services` B ON A.`serviceID`=B.`serviceID`
+LEFT JOIN `user`  C  ON A.`userID`=C.`userID`
+WHERE A.`userID`=#{userid} AND `serviceAppraisePID`=0
+ORDER BY A.`serviceAppraiseDate`  DESC
+	</select>
+	
+	<!-- 查询签到 -->
+	<select id="Querysignin" resultType="java.util.Date">
+	SELECT  `IRDate` FROM `integralrecord` WHERE `userID`=#{userid} AND `IRDescribe`='签到' ORDER BY `IRDate` DESC LIMIT 0,1
+	</select>
+	
+	<!-- 新增积分记录 -->
+	<insert id="addIntegralRecording">
+	INSERT INTO `integralrecord`(`userID`,`IRDate`,`IRDescribe`,`recordInAndOut`,`integralID`,`auditStatus`)
+	VALUES(#{integra.userid},NOW(),#{integra.irdescribe},#{integra.recordinandout},#{integra.integralid},#{integra.auditstatus})
+	</insert>
+	
+	<!-- 新增金币记录 -->
+	<insert id="addGoldRecording">
+	INSERT INTO `goldnotes`(`userID`,`acquisitionMode`,`recordDate`,`recordDescribe`,`recordInAndOut`,`auditStatus`)
+	VALUES(#{gold.userid},#{gold.acquisitionmode},NOW(),#{gold.recorddescribe},#{gold.recordinandout},#{gold.auditstatus})
+	</insert>
+ </mapper>

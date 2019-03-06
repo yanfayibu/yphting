@@ -46,41 +46,10 @@ $(document).ready(function() {
 
 		});
 
-		//confirm
-		function Confirm() {
-			qikoo.dialog.confirm('确定要退出吗？', function() {
-				window.location="login.html"
-
-			}, function() {
-				//alert("取消啦！");
-			});
-		}
-function Confirm_2() {
-			qikoo.dialog.confirm('确认要支付吗？', function() {
-				alert("支付！");
-
-			}, function() {
-				alert("取消！");
-			});
-		}
-	//confirm
-		function Confirm_1() {
-			qikoo.dialog.confirm('确定要取消吗服务？', function() {
-				alert("取消！");
-
-			}, function() {
-				alert("不取消！");
-			});
-		}
 		
-		function Confirm_3() {
-			qikoo.dialog.confirm('确定要删除吗服务？', function() {
-				alert("删除成功！");
 
-			}, function() {
-				alert("取消！");
-			});
-		}
+	
+	
 
 		/*底部二维码*/
 

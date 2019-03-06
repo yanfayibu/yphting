@@ -1,6 +1,8 @@
 package com.accp.pojo;
 
 import java.util.Date;
+
+import com.alibaba.fastjson.annotation.JSONField;
 /**
  *金币流向操作记录表
  */
@@ -11,6 +13,7 @@ public class Goldnotes {
 
     private Integer acquisitionmode;     //(1预定服务2服务收益3取消物流订单4其他5充值6线下充值7退款8提现)
 
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date recorddate;             //记录日期
 
     private String recorddescribe;       //记录描述

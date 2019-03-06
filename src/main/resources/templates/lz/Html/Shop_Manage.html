@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>店铺信息_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,17 +16,17 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
+		<link rel="stylesheet" href="/Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/cropper.min.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/ImgCropping.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/dist/summernote.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/cropper.min.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/ImgCropping.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/dist/summernote.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
 		<style type="text/css">
 			dt,
 			dd {
@@ -34,7 +34,7 @@
 			}
 			
 			.member_system_ul .msp2 {
-				background-image: url(../Public/images/ac_i.png);
+				background-image: url(/Public/images/ac_i.png);
 			}
 			
 			.member_system_ul li a:hover,
@@ -164,12 +164,12 @@
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
 					<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -191,7 +191,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -204,15 +204,15 @@
 							<a href="">商家中心</a>
 						</li>
 						<li>
-							<a href="Member_Center.html">个人中心</a>
+							<a href="/api/Forward_view/user/center">个人中心</a>
 
 						</li>
 						<li class="active">
-							<a href="Account_Setting.html">账户设置</a>
+							<a href="/api/Forward_view/user/Modifydata">账户设置</a>
 							<span class="my_nav_i"></span>
 						</li>
 						<li>
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;">11</span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
 						</li>
 
 					</ul>
@@ -234,17 +234,17 @@
 							<h1 class="member_left_title">账户设置</h1>
 
 							<ul class="list-unstyled member_system_ul">
-								<li>
-									<a href="Account_Setting.html"><span class="msp2 pre_c1"></span>个人资料</a>
+								<li >
+									<a href="/api/Forward_view/user/Modifydata"><span class="msp2 pre_c1"></span>个人资料</a>
 								</li>
-								<li>
-									<a href="UpdatePwd.html"><span class="msp2 pre_c2"></span>修改密码</a>
+								<li >
+									<a href="/api/Forward_view/user/updatePwd"><span class="msp2 pre_c2"></span>修改密码</a>
 								</li>
-								<li>
-									<a href="Account_Manage.html"><span class="msp2 pre_c4"></span>帐号管理</a>
+								<li >
+									<a href="/api/Forward_view/user/Accountmanage"><span class="msp2 pre_c4"></span>帐号管理</a>
 								</li>
 								<li class="cur">
-									<a href="Shop_Manage.html"><span class="msp2 pre_c3"></span>店铺信息</a>
+									<a href="/api/Forward_view/user/Shop"><span class="msp2 pre_c3"></span>店铺信息</a>
 								</li>
 							</ul>
 						</div>
@@ -263,51 +263,95 @@
 
 								<dl class="dl-horizontal">
 									<dt style="text-align: left;">店铺状态</dt>
-									<dd>正常营业</dd>
+									<dd>
+									
+									<div th:switch="${session.userinfo.businessstate}">
+									<span th:case="1">正常营业</span>
+									<span th:case="2">暂停营业</span>
+									<span th:case="3">关闭营业</span>
+									</div>
+									</dd>
 									<dt style="text-align: left;">商家类别</dt>
-									<dd>海外商家用户</dd>
+									<dd>
+									<div th:switch="${session.userinfo.merchanttype}">
+									<span th:case="1">大陆商家用户</span>
+									<span th:case="2">海外商家用户</span>
+									</div>
+									</dd>
 									<dt style="text-align: left;">服务类别</dt>
-									<dd><span>微整形</span>&nbsp;&nbsp;<span>留学中介</span></dd>
+									<dd><span th:text="${FirstName}"></span>&nbsp;&nbsp;<span th:text="${secondName}">留学中介</span></dd>
+									
+									
+									<div th:if="${session.userinfo.hospitalname ne '' and session.userinfo.hospitalname ne null}">
 									<dt style="text-align: left;">医院名称</dt>
-									<dd>瘦瘦瘦</dd>
-									<dt style="text-align: left;">店铺名称</dt>
-									<dd>搜索</dd>
+									<dd th:text="${session.userinfo.hospitalname}"></dd>
+									</div>
+									
+				
+									
+									<dt style="text-align: left;" >店铺名称</dt>
+									<dd th:text="${session.userinfo.shopname}"></dd>
 									<dt style="text-align: left;">真实姓名</dt>
 									<dd>
 										<div class="form-group">
 
-											<input type="text" class="form-control" id="name" placeholder="真实姓名" style="width: 25%;margin-left: 10px;" value="荔枝">
+											<input type="text" class="form-control" id="name" placeholder="真实姓名" style="width: 25%;margin-left: 10px;" th:value="${session.userinfo.userrealname}" name="userrealname">
 										</div>
 									</dd>
 									<dt style="text-align: left;">签名</dt>
 									<dd>
 										<div class="form-group">
 
-											<input type="text" class="form-control " id="qianming" value="颠三倒四多" style="width: 50%;margin-left: 10px;">
+											<input type="text" class="form-control " id="qianming" th:value="${session.userinfo.signature}" style="width: 50%;margin-left: 10px;" name="signature">
 										</div>
 									</dd>
 									<dt style="text-align: left;">店铺保证金</dt>
-									<dd><span>500</span>&nbsp;金币
-										<a href="" style="color:#CB22A1;">退保证金</a>
+									<dd><span th:text="${session.userinfo.guaranteemoney}">0</span>&nbsp;金币
+										<a href="javascript:void(0)" style="color:#CB22A1;" onclick='deposit()'>退保证金</a>
+									</dd>
+<dt th:if="${session.userinfo.identitytype}==null" style="text-align: left;">海外证件号码</dt>
+<dt th:if="${session.userinfo.identitytype}!=null" style="text-align: left;">身份证／护照号码</dt>
+									<dd>
+										<div class="row">
+										<div class="col-lg-3 col-md-3 col-sm-3" style="margin-left: 10px;">
+												<div class="form-group">
+
+										<span th:if="${session.userinfo.identitytype}==1">
+									<select name="identitytype" class="form-control" id="idtype">
+										<option value="1" selected="selected">身份证号码</option>
+										<option value="2">护照号码</option>
+									</select>
+								</span>
+								
+								<span th:if="${session.userinfo.identitytype}==2">
+									<select name="identitytype" class="form-control" id="idtype">
+										<option value="1" >身份证号码</option>
+										<option value="2" selected="selected">护照号码</option>
+									</select>
+								</span>
+												</div>
+											</div>
+											
+											<div class="col-lg-3 col-md-3 col-sm-3" style="margin-left: 10px;">
+											<div class="form-group">
+											
+											<input name="identitynumder" type="text" th:value="${session.userinfo.identitynumder}" id="idcard" class="form-control">
+											</div>
+											</div>
+										</div>
 									</dd>
 
-									<dt style="text-align: left;">外国登入证号码
+									
+									<div th:if="${session.userinfo.merchanttype==2}">
+									<dt style="text-align: left; " >登入证姓名
 </dt>
 									<dd>
 										<div class="form-group">
 
-											<input type="text" class="form-control " id="foreign" value="00151" style="width: 50%;margin-left: 10px;">
+											<input type="text" class="form-control " id="logincardname" th:value="${session.userinfo.identityrealname}" style="width: 50%;margin-left: 10px;" name="identityrealname" >
 										</div>
 									</dd>
-
-									<dt style="text-align: left;">登入证姓名
-</dt>
-									<dd>
-										<div class="form-group">
-
-											<input type="text" class="form-control " id="logincardname" value="4020" style="width: 50%;margin-left: 10px;">
-										</div>
-									</dd>
+									</div>
 
 									<dt style="text-align: left;">身份住址
 </dt>
@@ -316,28 +360,27 @@
 											<div class="col-lg-3 col-md-3 col-sm-3" style="margin-left: 10px;">
 												<div class="form-group">
 
-													<select class="form-control">
-														<option>湖南</option>
-													</select>
+													 <select class="form-control" name="country">
+  <option th:if="${session.userinfo.country}==null" value='0'>请选择</option>
+</select>
 
 												</div>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-3" style="margin-left: 10px;">
 												<div class="form-group">
-
-													<select class="form-control">
-														<option>湖南</option>
-													</select>
-
+ <select class="form-control" name="provincialid">;
+ <option th:if="${session.userinfo.provincialid}==null" value='0'>请选择</option>
+</select>
+													
 												</div>
 											</div>
 											<div class="col-lg-3 col-md-3 col-sm-3" style="margin-left: 10px;">
 												<div class="form-group">
 
-													<select class="form-control">
-														<option>湖南</option>
-													</select>
-
+													
+<select class="form-control" name="cityid">
+<option th:if="${session.userinfo.cityid}==null" value='0'>请选择</option>
+</select>
 												</div>
 											</div>
 										</div>
@@ -345,7 +388,7 @@
 											<div class="col-lg-10 col-md-10 col-sm-10">
 												<div class="form-group">
 
-													<input type="text" class="form-control " id="address" value="" placeholder="详细街道" style="margin-left: 10px;">
+													<input type="text" class="form-control " id="address" th:value="${session.userinfo.addetail}" placeholder="详细街道" style="margin-left: 10px;">
 												</div>
 											</div>
 										</div>
@@ -362,7 +405,7 @@
 										<div id="drop_area" style="margin-top: 10px;"></div>
 									</dd>
 
-									<dt style="text-align: left;">外国登入证件
+									<dt style="text-align: left;">身份证件
 <br/>（正面）
 
 </dt>
@@ -375,7 +418,7 @@
 										<div id="drop_area_1" style="margin-top: 10px;"></div>
 									</dd>
 
-									<dt style="text-align: left;">外国登入证件
+									<dt style="text-align: left;">身份证件
 <br/>（反面）
 
 </dt>
@@ -388,7 +431,7 @@
 										<div id="drop_area_2" style="margin-top: 10px;"></div>
 									</dd>
 
-									<dt style="text-align: left;">手持外国登入证照片<br/>（正面）</dt>
+									<dt style="text-align: left;">手持身份证件照片<br/>（正面）</dt>
 									<dd>
 										<p style="color: #959595;">
 
@@ -401,59 +444,15 @@
 									<dt style="text-align: left;">服务语言</dt>
 									<dd>
 										<div class="row">
-											<div class="col-lg-2 col-md-2 col-sm-2">
+											<div class="col-lg-2 col-md-2 col-sm-2" th:each="temp,iterStat: ${language}">
 												<div class="checkbox">
 													<label>
-    											<input type="checkbox" value="">
-													中文
+    											<input type="checkbox" th:value="${temp.languagename}" name="languagenametext">[[${temp.languagename}]]	
   												</label>
 												</div>
 											</div>
 
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													韩语
-  												</label>
-												</div>
-											</div>
-
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													英语
-  												</label>
-												</div>
-											</div>
-
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													中文
-  												</label>
-												</div>
-											</div>
-
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													德语
-  												</label>
-												</div>
-											</div>
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													法语
-  												</label>
-												</div>
-											</div>
-
+											
 										</div>
 
 									</dd>
@@ -461,58 +460,23 @@
 									<dt style="text-align: left;">擅长专业</dt>
 									<dd>
 										<div class="row">
-											<div class="col-lg-2 col-md-2 col-sm-2">
+											<div class="col-lg-2 col-md-2 col-sm-2" th:each="temp,i:${major}">
 												<div class="checkbox">
 													<label>
-    											<input type="checkbox" value="">
-													视觉设计
+    											<input type="checkbox" th:value="${temp.majorname}" name="major">
+													[[${temp.majorname}]]
   												</label>
 												</div>
 											</div>
 
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													人口学
-  												</label>
-												</div>
-											</div>
+											
 
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													人类学社会学
-  												</label>
-												</div>
-											</div>
+											
 
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													旅游学经营管理
-  												</label>
-												</div>
-											</div>
+											
 
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													其它
-  												</label>
-												</div>
-											</div>
-											<div class="col-lg-2 col-md-2 col-sm-2">
-												<div class="checkbox">
-													<label>
-    											<input type="checkbox" value="">
-													生活科学
-  												</label>
-												</div>
-											</div>
+											
+											
 
 										</div>
 
@@ -525,8 +489,8 @@
 										<div class="col-lg-3 col-md-3 col-sm-3">
 											<div class="form-group">
 
-												<select class="form-control">
-													<option>湖南</option>
+												<select class="form-control" name="livecityid">
+													<option th:each="temp,i:${Koreacity}" th:value="${temp.areaid}" th:text="${temp.mergername}" th:selected="${temp.areaid==session.userinfo.livecityid}"></option>
 												</select>
 
 											</div>
@@ -537,7 +501,7 @@
 									<dd>
 										<div class="form-group">
 
-											<input type="email" class="form-control " id="eamil" value="123@qq.com" style="width:40%;margin-left: 15px;">
+											<input type="email" class="form-control " id="eamil" th:value="${session.userinfo.merchantemail}" style="width:40%;margin-left: 15px;" name="merchantemail">
 										</div>
 									</dd>
 
@@ -546,7 +510,7 @@
 									<dd>
 										<div class="form-group">
 
-											<input type="text" class="form-control" id="phone" placeholder="" style="width: 25%;margin-left: 15px;" value="15112697371">
+											<input type="text" class="form-control" id="phone" placeholder="" style="width: 25%;margin-left: 15px;" th:value="${session.userinfo.merchantphone}" name="merchantphone">
 										</div>
 									</dd>
 
@@ -557,7 +521,7 @@
 										<div class="form-group">
 
 											<input type="text" class="form-control" id="QQ
-" placeholder="" style="width: 25%;margin-left: 15px;" value="15112697371">
+" placeholder="" style="width: 25%;margin-left: 15px;" th:value="${session.userinfo.qq}" name="qq">
 										</div>
 									</dd>
 
@@ -569,7 +533,7 @@
 										<div class="form-group">
 
 											<input type="text" class="form-control" id="weixin
-" placeholder="" style="width: 25%;margin-left: 15px;" value="256526">
+" placeholder="" style="width: 25%;margin-left: 15px;" th:value="${session.userinfo.wechat}" name="wechat">
 										</div>
 									</dd>
 
@@ -582,7 +546,7 @@
 										<div class="form-group">
 
 											<input type="text" class="form-control" id="zhiwei
-" placeholder="" style="width: 25%;margin-left: 15px;" value="老师">
+" placeholder="" style="width: 25%;margin-left: 15px;" th:value="${session.userinfo.profession}" name="profession">
 										</div>
 									</dd>
 
@@ -593,7 +557,7 @@
 										<div class="form-group" style="position: relative;">
 
 											<input type="text" class="form-control" id="shengao
-" placeholder="" style="width: 25%;margin-left: 15px;" value="256526"><span style="position: absolute;left:23%;top:8px;color: #959595;">CM</span>
+" placeholder="" style="width: 25%;margin-left: 15px;" th:value="${session.userinfo.height}" name="height"><span style="position: absolute;left:23%;top:8px;color: #959595;">CM</span>
 										</div>
 									</dd>
 
@@ -606,8 +570,19 @@
 										<div class="col-lg-3 col-md-3 col-sm-3">
 											<div class="form-group">
 
-												<select class="form-control">
-													<option>巨蟹座</option>
+												<select class="form-control" name="constellation">
+									<option value="白羊座">白羊座</option>
+									<option value="金牛座">金牛座</option>
+									<option value="双子座">双子座</option>
+									<option value="巨蟹座">巨蟹座</option>
+									<option value="狮子座">狮子座</option>
+									<option value="处女座">处女座</option>
+									<option value="天秤座">天秤座</option>
+									<option value="天蝎座">天蝎座</option>
+									<option value="射手座">射手座</option>
+									<option value="摩羯座">摩羯座</option>
+									<option value="水瓶座">水瓶座</option>
+									<option value="双鱼座">双鱼座</option>
 												</select>
 
 											</div>
@@ -624,11 +599,11 @@
 										<div class="form-group">
 
 											<input type="text" class="form-control" id="age
-" placeholder="" style="width: 25%;margin-left: 15px;" value="22">
+" placeholder="" style="width: 25%;margin-left: 15px;" th:value="${session.userinfo.age}" name="age">
 										</div>
 									</dd>
 
-									<dt style="text-align: left;">信息查看金额
+									<!-- <dt style="text-align: left;">信息查看金额
 
 
 
@@ -653,7 +628,7 @@
 
 											</div>
 										</div>
-									</dd>
+									</dd> -->
 
 									<dt style="text-align: left;">自我介绍
 
@@ -664,7 +639,7 @@
 									<dd style="border-bottom: 1px #E6E6E6 solid;">
 										<div class="row">
 											<div class="col-lg-7 col-md-7 col-sm-8">
-												<div class="summernote">Hello</div>
+												<div class="summernote" th:text="${session.userinfo.selfintroduction}" id="selfintroduction"></div>
 											</div>
 										</div>
 									</dd>
@@ -673,7 +648,7 @@
 								<!--更新 -->
 								<div class="col-lg-1 col-lg-offset-2" style="padding: 10px">
 									<div class="form-group">
-										<input type="submit" id="" name=""  class="btn-danger btn form-control" value="更新"/>
+										<input type="button" id="update" name=""  class="btn-danger btn form-control" value="更新"/>
 									</div>
 								</div>
 							</form>
@@ -695,24 +670,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -807,7 +782,7 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
@@ -815,16 +790,54 @@
 			</div>
 		</div>
 
-	</body>
-	<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
-	<script src="../Public/js/upload.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+<!--提示框-->
 
-	<script src="../Public/dist/summernote.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../Public/dist/lang/summernote-zh-CN.js" type="text/javascript" charset="utf-8"></script>
+    <div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
+	</body>
+	<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
+	<script src="/Public/js/upload.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/dist/summernote.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/dist/lang/summernote-zh-CN.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+	
+	//语言
+	var yy="[[${session.userinfo.languagenametext}]]";
+	var arr=yy.split(" ");
+	$("input[name=languagenametext]").each(function(index,obj){
+		
+		$.each(arr,function(i,o){
+			if($(obj).val()==o){
+				$(obj).prop("checked",true);
+			}
+		});
+		
+	});
+	
+	
+	
+	//专业
+	var zy="[[${session.userinfo.majornametext}]]";
+	var arr1=zy.split(" ");
+	$("input[name=major]").each(function(index,obj){
+		
+		$.each(arr1,function(i,o){
+			if($(obj).val()==o){
+				$(obj).prop("checked",true);
+			}
+		});
+		
+	});
+	
+	
+	$("select[name=constellation] option").each(function(){
+		if($(this).val()=="[[${session.userinfo.constellation}]]"){
+			$(this).attr("selected",true);
+		}
+	})
 		//文本编辑插件
 		$(function() {
 			$('.summernote').summernote({
@@ -834,47 +847,327 @@
 			});
 		});
 
+	
+	var User={
+		"userrealname":"",
+		"signature":"",
+		"identitytype":0,
+		"country":0,
+		"provincialid":0,
+		"cityid":0,
+		"addetail":"",
+		"shopimg":"",
+		"identitypositiveimg":"",
+		"identitynegativeimg":"",
+		"identityhandimg":"",
+		"languagenametext":"",
+		"majornametext":"",
+		"livecityid":0,
+		"merchantemail":"",
+		"merchantphone":"",
+		"qq":"",
+		"wechat":"",
+		"profession":"",
+		"height":0,
+		"constellation":"",
+		"age":0,
+		"selfintroduction":"",
+		"identityrealname":""
+	};
+		
 		//商家店铺图片
 		var dragImgUpload = new DragImgUpload("#drop_area", {
 			callback: function(files) {
-				//回调函数，可以传递给后台等等
+				var fr = new FileReader();//读取文件
 				var file = files[0];
-				console.log(file.name);
+				fr.readAsDataURL(file);//读取文件
+				
+				fr.onload = function() {
+								var base64Data = this.result;//获得base编码字符串格式
+								User["shopimg"]=base64Data;
+								
+								
+							};
+				
 			}
 		})
-		$(".preview:eq(0) img").attr("src", "../Public/images/side_con_icon03.png")
+		$(".preview:eq(0) img").attr("src", "[[${session.userinfo.shopimg}]]")
 
-		//外国登入证件 （正面）
+		//身份证件证件 （正面）
 		var dragImgUpload = new DragImgUpload("#drop_area_1", {
 			callback: function(files) {
-				//回调函数，可以传递给后台等等
+				var fr = new FileReader();//读取文件
 				var file = files[0];
-				console.log(file.name);
+				fr.readAsDataURL(file);//读取文件
+				
+				fr.onload = function() {
+								var base64Data = this.result;//获得base编码字符串格式
+								User["identitypositiveimg"]=base64Data;
+								
+								
+							};
 			}
 		})
-		$(".preview:eq(1) img").attr("src", "../Public/images/share2.png")
+		$(".preview:eq(1) img").attr("src", "[[${session.userinfo.identitypositiveimg}]]")
 
-		//外国登入证件（反面）
+		//身份证件证件（反面）
 
 		var dragImgUpload = new DragImgUpload("#drop_area_2", {
 			callback: function(files) {
-				//回调函数，可以传递给后台等等
+				var fr = new FileReader();//读取文件
 				var file = files[0];
-				console.log(file.name);
+				fr.readAsDataURL(file);//读取文件
+				
+				fr.onload = function() {
+								var base64Data = this.result;//获得base编码字符串格式
+								User["identitynegativeimg"]=base64Data;
+								
+								
+							};
 			}
 		})
-		$(".preview:eq(2) img").attr("src", "../Public/images/side_con_icon03.png")
+		$(".preview:eq(2) img").attr("src", "[[${session.userinfo.identitynegativeimg}]]")
 
-		//手持外国登入证照片（正面）
+		//手持身份证件证照片（正面）
 
 		var dragImgUpload = new DragImgUpload("#drop_area_3", {
 			callback: function(files) {
-				//回调函数，可以传递给后台等等
+				var fr = new FileReader();//读取文件
 				var file = files[0];
-				console.log(file.name);
+				fr.readAsDataURL(file);//读取文件
+				
+				fr.onload = function() {
+								var base64Data = this.result;//获得base编码字符串格式
+								User["identityhandimg"]=base64Data;
+								
+								
+							};
 			}
 		})
-		$(".preview:eq(3) img").attr("src", "../Public/images/side_con_icon03.png")
+		$(".preview:eq(3) img").attr("src", "[[${session.userinfo.identityhandimg}]]")
+		
+		
+		
+		
+		
+		
+		
+		var provincialID="[[${session.userinfo.provincialid}]]";
+	var cityID="[[${session.userinfo.cityid}]]";
+	var country="[[${session.userinfo.country}]]";
+    //国家
+    function countrys(){
+    
+			$.getJSON("/c/lz/user/querySharea",function(data){
+				$.each(data,function(i,obj){
+					if(obj.pid==0 && obj.level==0 ){
+						
+						var option=$("<option value='"+obj.areaid+"'>"+obj.mergername+"</option>");
+						$("[name=country]").append(option);
+						
+					}
+					
+				})
+				
+				//默认选中
+				$("[name=country] option").each(function(){
+					if($(this).val()==country){
+						$(this).attr("selected","selected");
+					}
+				})
+				
+				//获取国家
+				province($("[name=country]").children("option:selected").val());
+				
+				
+			})
+		}
+    
+  //省
+	function province(areaid){
+		if(provincialID!=null && $("[name=country] option:selected").text()!="请选择"){
+		$.getJSON("/c/lz/user/querySharea",function(data){
+			
+		
+				$.each(data,function(i,obj){
+					
+					if(obj.pid==areaid){
+						
+						var option=$("<option value='"+obj.areaid+"'>"+obj.mergername+"</option>");
+						$("[name=provincialid]").append(option);
+						
+					}
+				});
+				
+				
+					
+				
+				//默认选中
+				$("[name=provincialid] option").each(function(){
+					if($(this).val()==provincialID){
+						$(this).attr("selected","selected");
+					}
+				})
+				
+				//获取省份
+				city($("[name=provincialid]").children("option:selected").val());
+				
+				
+			
+		})
+		}
+	}
+  
+  
+	//市区
+	function city(areaid){
+		if(cityID!=null && $("[name=country] option:selected").text()!="请选择"){
+		$.getJSON("/c/lz/user/querySharea",function(data){
+			
+				$.each(data,function(i,obj){
+					
+					if(obj.pid==areaid){
+						
+						var option=$("<option value='"+obj.areaid+"'>"+obj.mergername+"</option>");
+						$("[name=cityid]").append(option);
+						
+					}
+				});
+				
+				//默认选中
+				$("[name=cityid] option").each(function(){
+					if($(this).val()==cityID){
+						$(this).attr("selected","selected");
+					}
+				})
+				
+				
+					
+				
+				
+			
+		});
+		}
+	}
+		
+		//国省改变事件
+		$("[name=country]").on("change",function(){	
+			country=$(this).val();
+			$("[name=provincialid]").html("");
+			$("[name=cityid]").html("");
+			province(country);
+		
+		})
+		$("[name=provincialid]").on("change",function(){
+			  provincialID=$(this).val();
+			  $("[name=cityid]").html("");
+			  cityID=$(this).val();
+			city(provincialID);
+		});
+		
+		
+		countrys();
+		
+	
+		//update
+		$("#update").click(function(){
+		User["userrealname"]=$("input[name=userrealname]").val();
+		User["signature"]=$("input[name=signature]").val();
+		User["identitytype"]=$("select[name=identitytype] option:selected").val();
+		User["identitynumder"]=$("input[name=identitynumder]").val();
+		User["country"]=$("select[name=country] option:selected").val();
+		User["provincialid"]=$("select[name=provincialid] option:selected").val();
+		User["cityid"]=$("select[name=cityid] option:selected").val();
+		User["livecityid"]=$("select[name=livecityid] option:selected").val();
+		User["merchantemail"]=$("input[name=merchantemail]").val();
+		User["merchantphone"]=$("input[name=merchantphone]").val();
+		User["qq"]=$("input[name=qq]").val();
+		User["wechat"]=$("input[name=wechat]").val();
+		User["profession"]=$("input[name=profession]").val();
+		User["height"]=$("input[name=height]").val();
+		User["constellation"]=$("select[name=constellation] option:selected").val();
+		User["age"]=$("input[name=age]").val();
+		User["selfintroduction"]=$(".note-editable ").text();
+		if($("input[name=identityrealname]").val()!="undefined"){
+			User["identityrealname"]=$("input[name=identityrealname]").val();
+		}
+		
+		var zhuanye="";
+		var languages="";
+		//专业
+		$("input[name=major]").each(function(index,obj){
+			
+			if($(this).prop("checked")){
+				zhuanye+=$(this).val()+" ";
+			}
+			});
+		
+		//语言
+		$("input[name=languagenametext]").each(function(index,obj){
+			
+			if($(this).prop("checked")){
+				languages+=$(this).val()+" ";
+			}
+			});
+		User["majornametext"]=zhuanye;
+		User["languagenametext"]=languages;
+		
+		if(zhuanye==""){
+			showTool("至少选择1项专业");
+			return;
+		}
+		if(languages==""){
+			showTool("至少选择1项语言");
+			return;
+		}
+		
+		if($("input[name=userrealname]").val()==""){
+			showTool("真实姓名不能为空！");
+			return ;
+		}
+		
+		if($(".note-editable ").text()==""){
+			showTool("自我介绍不能为空！");
+			return ;
+		}
+		
+		
+		$.ajax("/c/lz/user/updateshop",{
+			type:"post",
+			contentType:"application/json",//非常重要
+			data:JSON.stringify(User),//非常重要
+			dataType:"json",
+			
+			success:function(data){
+				if(data.code==200){
+					qikoo.dialog.alert("更新成功！");	
+					
+					$(".console-btn-confirm").on("click",function(){
+						 window.location.href="center";
+					})
+					 
+				}else{
+					qikoo.dialog.alert("更新失败！");	
+				}
+			}
+		});
+		
+		
+		
+		});
+		
+		//Withdrawal deposit
+		
+		function deposit(){
+			var userid="[[${session.userinfo.userid}]]";
+			qikoo.dialog.confirm('确定要退保证金吗？',function(){
+				alert("确定啦！");
+				 			 
+	        },function(){
+				alert("取消啦！");
+		});
+		}
+		
 	</script>
 
 </html>

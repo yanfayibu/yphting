@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>账户充值_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,18 +16,18 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
+		<link rel="stylesheet" href="/Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap-datetimepicker.min.css" />
-		<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
+		<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap-datetimepicker.min.css" />
+		<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
 		<style type="text/css">
 			.navbar-brand {
 				float: left;
@@ -114,8 +114,8 @@
 			.drawings li p{margin: 0;}
 			.pay_ul li{padding: 5px;}
 			.pay_ul li a{ display:block; border: 1.5px solid rgb(206,206,206); background-position:0 0; background-repeat:no-repeat; -moz-border-radius:5px; -ms-border-radius:5px; -o-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; height:50px; width:120px;}
-			.pay_1{ background-image:url(../Public/images/pay_1.png);}
-			.pay_3{ background-image:url(../Public/images/pay_3.png);}
+			.pay_1{ background-image:url(/Public/images/pay_1.png);}
+			.pay_3{ background-image:url(/Public/images/pay_3.png);}
 		</style>
 	</head>
 
@@ -142,13 +142,13 @@
 				</div>
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
-					<ul class="list-inline head">
+				<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -170,7 +170,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -180,17 +180,18 @@
 					<ul class="nav navbar-nav ">
 
 						<li>
-							<a href="#">商家中心</a>
+							<a href="">商家中心</a>
 						</li>
 						<li class="active">
-							<a href="Member_Center.html">个人中心</a>
+							<a href="/api/Forward_view/user/center">个人中心</a>
 							<span class="my_nav_i"></span>
 						</li>
-						<li>
-							<a href="Account_Setting.html">账户设置</a>
+						<li >
+						<a href="/api/Forward_view/user/Modifydata">账户设置</a>
+							
 						</li>
 						<li>
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;">11</span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
 						</li>
 
 					</ul>
@@ -210,10 +211,9 @@
 					<div class="row">
 						<div class="col-lg-9 col-lg-offset-3 col-md-10 col-md-offset-2  col-sm-11  col-sm-offset-1 col-xs-12">
 							<h1 class="member_left_title">个人中心</h1>
-
-							<ul class="list-unstyled member_system_ul">
+<ul class="list-unstyled member_system_ul">
 								<li>
-									<a href="My_reservation.html"><span class="msp2 pre_c1"></span>我预订的服务</a>
+									<a href="/c/lz/dsd/user/queryMyreservationservice"><span class="msp2 pre_c1"></span>我预订的服务</a>
 								</li>
 								<li>
 									<a href=""><span class="msp2 pre_c2"></span>我的下载</a>
@@ -222,19 +222,19 @@
 									<a href=""><span class="msp2  pre_c7"></span>我的帖子</a>
 								</li>
 								<li>
-									<a href="My_collect.html"><span class="msp2 pre_c3"></span>我的收藏</a>
-								</li>
-								<li>
-									<a href="My_gold.html"><span class="msp2 pre_c4"></span>我的金币</a>
+									<a href="/api/Forward_view/user/mycollection"><span class="msp2 pre_c3"></span>我的收藏</a>
 								</li>
 								<li class="cur">
-									<a href="My_integral.html"><span class="msp2 pre_c5"></span>我的积分</a>
+									<a href="/api/Forward_view/user/goldcoinrecord"><span class="msp2 pre_c4"></span>我的金币</a>
 								</li>
 								<li>
-									<a href="My_evaluate.html"><span class="msp2 pre_c6"></span>我的评价</a>
+									<a href="/api/Forward_view/user/pointrecord"><span class="msp2 pre_c5"></span>我的积分</a>
 								</li>
 								<li>
-									<a href="My_refund.html"><span class="msp2 pre_c7"></span>我的退款</a>
+									<a href="/api/Forward_view/user/myreview"><span class="msp2 pre_c6"></span>我的评价</a>
+								</li>
+								<li>
+									<a href="/api/Forward_view/user/myrefund"><span class="msp2 pre_c7"></span>我的退款</a>
 								</li>
 								<li>
 									<a href=""><span class="msp2 pre_c9"></span>帮助中心</a>
@@ -256,7 +256,7 @@
 
 										<h3 style="display: inline-block;font-size: 20px;letter-spacing: 3px;">账户充值</h3>
 
-										<a href="My_gold.html" class="pull-right" style="color: #cb22a1;padding: 15px;font-size: 14px;letter-spacing: 3px;">返回我的金币<span>&gt;&gt;</span></a>
+										<a href="/api/Forward_view/user/goldcoinrecord" class="pull-right" style="color: #cb22a1;padding: 15px;font-size: 14px;letter-spacing: 3px;">返回我的金币<span>&gt;&gt;</span></a>
 
 									</div>
 								</div>
@@ -266,7 +266,7 @@
 
 										<ul class="drawings list-unstyled ">
 											<li><label>金币余额 ：</label>
-												<img src="../Public/images/i_3.png" /> <span style="font-size: 19px;color: #d95c97;vertical-align: middle;font-weight: bold;">50000.00</span> 
+												<img src="/Public/images/i_3.png" /> <span style="font-size: 19px;color: #d95c97;vertical-align: middle;font-weight: bold;">50000.00</span> 
 											</li>
 											<li>
 												<label>充值：</label>
@@ -316,24 +316,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -424,7 +424,7 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
@@ -435,8 +435,10 @@
 		
 	</body>
 	
-	<script type="text/javascript" src="../Public/js/footer_suspend.js"></script>
-	<script src="../Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/footer_suspend.js"></script>
+	<script src="/Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/vue.js" type="text/javascript" charset="utf-8"></script>
     <script>
     	$(function(){
     	$.messager.show('<font color=red>你有一条新的消息</font>', '<font color=green style="font-size:14px;font-weight:bold;">张三给你发了一条信息</font>');

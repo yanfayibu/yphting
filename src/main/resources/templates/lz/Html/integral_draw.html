@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>积分抽奖_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -15,18 +15,18 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-<link rel="stylesheet" type="text/css" href="../Public/css/rotate.css"/>
-<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css"/>
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
-			<script type="text/javascript" src="../Public/js/qikoo.js"></script>
-	<script src="../Public/js/jquery-1.12.4.js"></script>
-	<script src="../Public/js/rem.js"></script>
-	<script src="../Public/js/rotate.js"></script>
-		<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/css/rotate.css"/>
+<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/base.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css"/>
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
+			<script type="text/javascript" src="/Public/js/qikoo.js"></script>
+	<script src="/Public/js/jquery-1.12.4.js"></script>
+	<script src="/Public/js/rem.js"></script>
+	<script src="/Public/js/rotate.js"></script>
+		<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
 	<style>
 		
 			
@@ -117,12 +117,12 @@ body{
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
 					<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -131,7 +131,7 @@ body{
 
 		</div>
 		
-		<h1 style="text-align: center;color: white;">中奖名单 <a href="Member_Center.html" class="btn btn-primary">返回个人中心</a> </h1>
+		<h1 style="text-align: center;color: white;">中奖名单 <a href="/api/Forward_view/user/center" class="btn btn-primary">返回个人中心</a> </h1>
 			<div class=" fg-box" id="box">
 	<div class="fg-line"></div>
 	<dl> 
@@ -193,7 +193,7 @@ body{
                         1金币
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="item i2">
@@ -203,7 +203,7 @@ body{
                         10积分
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="item i3">
@@ -213,7 +213,7 @@ body{
                         5金币
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="item i4">
@@ -223,7 +223,7 @@ body{
                     20积分
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="item i5">
@@ -233,7 +233,7 @@ body{
                      30积分
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="item i6">
@@ -243,7 +243,7 @@ body{
                        8金币
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="item i7">
@@ -253,7 +253,7 @@ body{
                         再来一次
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="item i8">
@@ -263,7 +263,7 @@ body{
                         50金币
                     </div>
                 </div>
-                <div class="back"><img src="../Public/images/a1.png" style="width: 100%;height: 100%"></div>
+                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
         <div class="selectBox" >
@@ -304,24 +304,24 @@ body{
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -428,7 +428,7 @@ body{
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
@@ -458,22 +458,10 @@ body{
      
 	</body>
 	
-	<script src="../Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
-
+	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+				<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-    //提示框
-    function showTool(str){
-        var ele =  document.getElementById("tooltip");
-        ele.innerHTML = str;
-        ele.style.display="";
-        setTimeout(hideTool,3000);
-    }
-    function hideTool(str){
-        var ele =  document.getElementById("tooltip");
-        ele.innerHTML = str;
-        ele.style.display="none";
-    }
-
+    
     window.onload = function(){
       var obj =   $("#allParent").rotateEx({
             maxNumCall:function(){

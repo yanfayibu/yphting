@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 	<head>
 		<meta charset="utf-8" />
 		<title>我的退款_韩汀社区</title>
-		<link rel="icon" href="../Public/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/Public/images/favicon.ico" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="御品韩汀，韩汀社区，韩汀，湖南韩汀电子商务有限公司" />
 		<meta name="description" content="湖南韩汀电子商务有限公司主要服务范围有海外自驾游，微整形，留学中介，翻译，学习资源，国际物流等项目，主要以大陆国人和海外同胞为服务对象。商家可入驻社区开店，用户可在平台内快速的找到自己需要的服务项目。海外商家对国内用户以及海外同胞开放服务，双方各持所需，互利互惠，是一款海外华人生活，兼职向导平台。 
@@ -16,14 +16,14 @@
 企业理念：”诚信为本,惠于顾客,奉于社会”
 
 企业目标：”建设海外一流社区平台，与广大合作伙伴与时俱进,互利互惠!”。" />
-		<link rel="stylesheet" href="../Public/css/base.css" />
+		<link rel="stylesheet" href="/Public/css/base.css" />
 
-		<link rel="stylesheet" type="text/css" href="../Public/css/store.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/element.min.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/qikoo.css" />
-		<link rel="stylesheet" type="text/css" href="../Public/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="../Public/css/commonstyle.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/store.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/style.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/element.min.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+		<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/Public/css/commonstyle.css" />
 
 		<style type="text/css">
 			.t a {
@@ -102,6 +102,7 @@
 			
 			.sjinfo li{margin-top: 5px;}
 			.sjinfo li a{padding: 0px;color:#cb22a1 ;}
+			
 		</style>
 	</head>
 
@@ -128,13 +129,13 @@
 				</div>
 
 				<div class="col-md-3 col-sm-4 col-xs-7 hidden-xs">
-					<ul class="list-inline head">
+				<ul class="list-inline head">
+	<li>
+							<a href="/api/Forward_view/user/center" th:text="'@'+${session.userinfo.username}">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">巨蟹boy7730</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="javascript:void(0)" onclick="Confirm()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
-						<li>
-							<a href="" style="position: relative;"><img src="../Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
 						</li>
 
 					</ul>
@@ -156,7 +157,7 @@
         <span class="icon-bar"></span>
       </button>
 					<a class="navbar-brand" href="#">
-						<img alt="Brand" src="../Public/images/my_logo.png">
+						<img alt="Brand" src="/Public/images/my_logo.png">
 					</a>
 
 				</div>
@@ -169,16 +170,15 @@
 							<a href="">商家中心</a>
 						</li>
 						<li class="active">
-							<a href="Member_Center.html">个人中心</a>
+							<a href="/api/Forward_view/user/center">个人中心</a>
+
+						</li>
+						<li >
+						<a href="/api/Forward_view/user/Modifydata">账户设置</a>
 							<span class="my_nav_i"></span>
-
 						</li>
 						<li>
-							<a href="Account_Setting.html">账户设置</a>
-
-						</li>
-						<li>
-							<a href="Instation_Message.html">消息<span class="label label-danger" style="vertical-align: top;">11</span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
 						</li>
 
 					</ul>
@@ -190,16 +190,16 @@
 		</nav>
 
 		<!--内容-->
-		<div class="container-fluid">
+		<div class="container-fluid" id="listVMrefddetails">
 			<div class="row">
 				<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1">
 
 					<div class="row">
 						<div class="col-lg-12  t" style="padding: 10px;border-bottom: 1px #e6e6e6 solid;">
-							<a href="Member_Center.html">个人中心</a><span style="    margin: 0 10px;">-</span>
-							<a href="My_refund.html">我的退款</a>
-							<span style="    margin: 0 10px;">-</span>
-							<span>退款编号 <label>100112</label></span>
+							<a href="/api/Forward_view/user/center">个人中心</a><span style="    margin: 0 10px;">-</span>
+							<a href="/api/Forward_view/user/myrefund">我的退款</a>
+							<span style="margin: 0 10px;">-</span>
+							<span>退款编号 <label v-text="RefundVO.refundid"></label></span>
 							<div class="pull-right hidden-xs">
 
 								<a href="javascript:void(0)" style="color: #b5118c;">交易须知</a>
@@ -211,13 +211,13 @@
 
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 50px;border-bottom: 1px #e6e6e6 solid;">
-							<div id="myVue">
+						
 								<el-steps :active="stepVal2" align-center>
 									<el-step title="买家提交申请" description="服务单已申请成功，待商家处理中"></el-step>
 									<el-step title="商家 处理退款申请" description="商家不同意退款"></el-step>
 									<el-step title="完成" description="退款成功"></el-step>
 								</el-steps>
-							</div>
+							
 						</div>
 					</div>
 
@@ -230,19 +230,26 @@
 										<a href="javascript:void(0)" class="pull-right"  onclick="sendmessage()">站内信商家</a><span class="pull-right" style="color:#959595 ;">|</span>
 										<a href="javascript:void(0)" class="pull-right" >申请管理员介入</a>
 									</p>
-									<p><label style="font-weight: 500;">状态：</label><span>不同意</span></p>
+									<p><label style="font-weight: 500;">状态：</label>
+									<span v-if="RefundVO.order.refundstatus==1">退款申请中</span>
+									<span v-else-if="RefundVO.order.refundstatus==2">不同意</span>
+									<span v-else-if="RefundVO.order.refundstatus==3">申请管理员介入</span>
+									<span v-else-if="RefundVO.order.refundstatus==4">管理员拒绝</span>
+									<span v-else-if="RefundVO.order.refundstatus==5">退款完成</span>
+									<span v-else-if="RefundVO.order.refundstatus==6">退款取消</span>
+									</p>
 								</li>
 
 								<li>
-									<p><label>商家</label><a href="">巨蟹boy7730</a><span>2019-01-03 16:10</span></p>
-									<p style="color: #959595;"><label>商家</label><span>（巨蟹boy7730）</span> <label>不同意退款部分金币</label></p>
-									<p style="color: #959595;"><label>退款金币：</label><span>1</span>金币</p>
-									<p style="color: #959595;"><label>退款说明：</label><span>不同意</span></p>
-										<p><a href="../Uploads/images/章若楠6.jpg" target="_blank"><img src="../Uploads/images/章若楠6.jpg" width="150px"/></a></p>
+									<p><label>商家</label><a href="" v-text="RefundVO.merchant.username">巨蟹boy7730</a><span v-text="RefundVO.audittime">2019-01-03 16:10</span></p>
+									<p style="color: #959595;"><label>商家</label><span  v-text="RefundVO.merchant.username">（巨蟹boy7730）</span> <label  v-text="RefundVO.businessremarks">不同意退款部分金币</label></p>
+									<p style="color: #959595;"><label>退款金币：</label><span v-text="RefundVO.actualrefundmoney"></span>金币</p>
+									<p style="color: #959595;"><label>退款说明：</label><span v-text="RefundVO.refundexplain">不同意</span></p>
+										<p><a :href="RefundVO.refundimg" target="_blank"><img :src="RefundVO.refundimg" width="150px"/></a></p>
 								</li>
 								<li>
-									<p><label>买家</label><a href="">@Mr. Li</a><span>2019-01-03 16:09</span></p>
-									<p style="color: #959595;"><label>买家</label><span>（@Mr. Li）</span> 于<label>2019-01-03 16:09</label>创建
+									<p><label>买家</label><a href="" v-text="RefundVO.user.username">@Mr. Li</a><span v-text="RefundVO.merchant.username">2019-01-03 16:09</span></p>
+									<p style="color: #959595;"><label>买家</label><span v-text="RefundVO.user.username">（@Mr. Li）</span> 于<label>2019-01-03 16:09</label>创建
 									<p style="color: #959595;"><label>申请金额：</label><span>1</span>金币</p>
 									<p style="color: #959595;"><label>退款原因：</label><span>不满意</span></p>
 									<p style="color: #959595;"><label>退款说明：</label><span>请尽快退款</span></p>
@@ -256,10 +263,10 @@
 								<li><img src="../Uploads/images/章若楠6.jpg" width="134px" height="89px"/></li>
 								<li><a href="">荔枝</a></li>
 								<li><a href="">你真的喜欢？</a></li>
-								<li><img src="../Public/images/i_3.png"/><span>1.0</span></li>
+								<li><img src="/Public/images/i_3.png"/><span>1.0</span></li>
 								<li style="color: #959595;"><span>预定日期</span><span>2019-01-03 14:50</span></li>
 								<li><span style="color: #959595;">人数</span><span>1</span></li>
-								<li><span style="color: #959595;">总计</span><img src="../Public/images/i_3.png"/><span>1.0</span></li>
+								<li><span style="color: #959595;">总计</span><img src="/Public/images/i_3.png"/><span>1.0</span></li>
 							</ul>
 						</div>
 					</div>
@@ -276,24 +283,24 @@
 					<div class="footerinner">
 						<ul class="share">
 							<li>
-								<img class="weibo_icon" src="../Public/images/share1.png" alt="">
+								<img class="weibo_icon" src="/Public/images/share1.png" alt="">
 							</li>
 							<li>
-								<img class="qq_icon" src="../Public/images/share2.png" alt="">
+								<img class="qq_icon" src="/Public/images/share2.png" alt="">
 							</li>
 							<li>
-								<img class="twitter_icon" src="../Public/images/share3.png" alt="">
+								<img class="twitter_icon" src="/Public/images/share3.png" alt="">
 							</li>
 							<li>
-								<img class="wechat_icon" src="../Public/images/share4.png" alt="">
+								<img class="wechat_icon" src="/Public/images/share4.png" alt="">
 							</li>
 						</ul>
 						<div class="code_wrap">
 							<ul class="code">
-								<li><img class="weibo" src="../Public/images/weibo1.png" alt=""></li>
-								<li><img class="qq" src="../Public/images/qq1.png" alt=""></li>
-								<li><img class="twitter" src="../Public/images/twitter1.png" alt=""></li>
-								<li><img class="wechat" src="../Public/images/wechat1.png" alt=""></li>
+								<li><img class="weibo" src="/Public/images/weibo1.png" alt=""></li>
+								<li><img class="qq" src="/Public/images/qq1.png" alt=""></li>
+								<li><img class="twitter" src="/Public/images/twitter1.png" alt=""></li>
+								<li><img class="wechat" src="/Public/images/wechat1.png" alt=""></li>
 							</ul>
 						</div>
 						<div class="footerinfo">
@@ -388,7 +395,7 @@
 				<div class="d d-qrcode">
 					<i class="arrow"></i>
 					<div class="inner-box">
-						<div class="qrcode-img"><img src="../Public/images/r_ewm.jpg" alt=""></div>
+						<div class="qrcode-img"><img src="/Public/images/r_ewm.jpg" alt=""></div>
 						<p>微信服务号</p>
 					</div>
 				</div>
@@ -417,28 +424,56 @@
 				</div>
 			</div>
 		</div>
+		<div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 	</body>
-	<script src="../Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript" src="../Public/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="../Public/js/qikoo.js"></script>
+	<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
 
-	<script src="../Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
-	
-	<script src="../Public/js/vue.min.js"></script>
-	<script src="../Public/js/element.min.js"></script>
+	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/vue.min.js"></script>
+	<script src="/Public/js/element.min.js"></script>
 
 	<script>
-		new Vue({
-			el: '#myVue',
+	
+	
+	
+	
+	
+		var listVMrefddetails=new Vue({
+			el: '#listVMrefddetails',
 			data: {
 				stepVal1: 1,
 				stepVal2: 2,
-				stepVal3: 3
+				stepVal3: 3,
+				RefundVO:{}
 			},
 			methods: {
-
+				
+				//初始化
+				initializations:function(orderid){
+					
+					$.getJSON("/c/lz/dsd/user/queryMyrefundDetailed/"+orderid,function(json){
+						listVMrefddetails.RefundVO=json[0];
+				});
+				}
+				
+			},
+			created: function(){
+				
+				if (sessionStorage.getItem("orderid") != null) {
+				      //自定义代码
+				      this.initializations(sessionStorage.getItem("orderid"));
+				}
+				
+				else{
+					showTool("系统繁忙！");
+					window.sessionStorage.removeItem("orderid");
+				}
+				
 			}
-		})
+			});
 
 		//站内联系
 		function sendmessage() {
