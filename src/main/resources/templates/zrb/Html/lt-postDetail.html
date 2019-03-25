@@ -11,6 +11,7 @@
 <link rel="shortcut icon" href="/Public/images/favicon.ico"
 	type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="/Public/css/qikoo.css" />
+<link rel="stylesheet" type="text/css" href="/Public/css/viewer.min.css" />
 <script type="text/javascript" src="/Public/js/qikoo.js"></script>
 <script src="/Public/js/showTool.js" type="text/javascript"
 	charset="utf-8"></script>
@@ -149,7 +150,7 @@
 				</dl>
 
 				<div class="tz_con">
-					<div class="bbs_dcontext" th:utext="${POSTVO.content}"></div>
+					<div class="bbs_dcontext" id="dowebok" th:utext="${POSTVO.content}"></div>
 					<div class="tz_detail_btn_a" id="sharediv">
 						<a href="javascript:void(0);" name="good" class="sc_btn"><span
 							class="sc_ic zan_i"></span>赞&nbsp;<font
@@ -269,10 +270,10 @@
 							th:href="@{/c/zrb/column(pid=${param.pfmid},page=1,forumId=${param.fmid},orderId=0,essence=0)}"
 							th:text="${FMNAME}">韩国大学简介</a>
 					</h2>
-					版主
-					<p class="f14 c_4">
+					<a href="#" style="color: blue;">申请版主</a>
+					<!-- <p class="f14 c_4">
 						版主：<a href="javascript:void(0);" class="btna_s2">abcdefg</a>
-					</p>
+					</p> -->
 				</div>
 
 				<div class="br_part2">
@@ -504,6 +505,12 @@
 	 <div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 </body>
 <script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+<script src="/Public/js/viewer.min.js"></script>
+<script>
+var viewer = new Viewer(document.getElementById('dowebok'), {
+	url: 'data-original'
+});
+</script>
 <script type="text/javascript">
 	$(".top_right").html("");
 	$
@@ -533,7 +540,6 @@
 					if (result == "true") {
 
 						window.location.href = "/c/tsy/gologin";
-						alert("退出成功...");
 					}
 
 					else {

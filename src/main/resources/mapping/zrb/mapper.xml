@@ -21,30 +21,22 @@
 	</select>
 	<!-- 动态加载板块结束 -->
 
-	
+
 	<!-- 显示帖子列表映射map -->
-	<resultMap type="com.accp.vo.zrb.PostcommentVo"
-		id="SimplePostcommentVoMap">
-		<association property="user" column="commentator"
-			select="queryUserById"></association>
+	<resultMap type="com.accp.vo.zrb.PostcommentVo" id="SimplePostcommentVoMap">
+		<association property="user" column="commentator" select="queryUserById"></association>
 	</resultMap>
-	<resultMap type="com.accp.vo.zrb.PostcommentVo"
-		id="PostcommentVoMap">
-		<association property="user" column="commentator"
-			select="queryUserById"></association>
-		<association property="pc" column="pid"
-			select="queryCommentPid"></association>
+	<resultMap type="com.accp.vo.zrb.PostcommentVo" id="PostcommentVoMap">
+		<association property="user" column="commentator" select="queryUserById"></association>
+		<association property="pc" column="pid" select="queryCommentPid"></association>
 	</resultMap>
 	<resultMap type="com.accp.vo.zrb.PostVo" id="PostVoMap">
 		<result property="postid" column="postID" />
-		<association property="user" column="userid"
-			select="queryUserById"></association>
-		<association property="forum" column="fmid"
-			select="queryForumByFmid"></association>
+		<association property="user" column="userid" select="queryUserById"></association>
+		<association property="forum" column="fmid" select="queryForumByFmid"></association>
 		<association property="lastcomment" column="postid"
 			select="queryLastcommentByPostid"></association>
-		<association property="count" column="postid"
-			select="queryCountByPostid"></association>
+		<association property="count" column="postid" select="queryCountByPostid"></association>
 	</resultMap>
 	<!-- 发帖人 -->
 	<select id="queryUserById" resultType="user">
@@ -57,9 +49,9 @@
 		forummanagement where fmid=#{0}
 	</select>
 	<!-- 查询最后回复人 -->
-	<select id="queryLastcommentByPostid"
-		resultMap="PostcommentVoMap">
-		select * from postcomment where postid=#{0} order by
+	<select id="queryLastcommentByPostid" resultMap="PostcommentVoMap">
+		select * from
+		postcomment where postid=#{0} order by
 		reviewtime desc limit 0,1
 	</select>
 
@@ -135,17 +127,23 @@
 	</update>
 	<!-- 查询帖子详情 -->
 	<select id="queryPostDetail" resultMap="PostVoMap">
-		update post set 
-		commentNumber = (select count(*) FROM postcomment where postID = #{postId}),
-		fabulousNumber = (select count(*) FROM postfabulous where postID = #{postId} and status=1),
-		collectionNumber = (select count(*) FROM postcollection where pcID = #{postId}),
-		browsenumber = browsenumber+1
+		update post set
+		commentNumber = (select count(*) FROM postcomment where postID =
+		#{postId}),
+		fabulousNumber = (select count(*) FROM postfabulous where
+		postID = #{postId} and status=1),
+		collectionNumber = (select count(*)
+		FROM postcollection where pcID = #{postId}),
+		browsenumber =
+		browsenumber+1
 		where postId = #{postId};
 		select
-		*,(select max(reviewtime) from postcomment p where
+		*,(select max(reviewtime)
+		from postcomment p where
 		p.postId=po.postId)lasttime
 		from post po
-		where postID = #{postId}
+		where
+		postID = #{postId}
 	</select>
 
 	<!-- 查询帖子详情内评论列表 -->
@@ -222,14 +220,16 @@
 		select count(1) from
 		postfabulous
 		WHERE TO_DAYS(`fabuloustime`) = TO_DAYS(NOW())
-		and postId = #{postId} and userId = #{userId}
+		and postId =
+		#{postId} and userId = #{userId}
 	</select>
 	<!-- 点赞 -->
 	<select id="saveFabulous">
 		insert into
 		postfabulous(`userID`,`postID`,`fabulousTime`,`status`)
 		values(#{fabu.userid},#{fabu.postid},#{fabu.fabuloustime},1);
-		update post
+		update
+		post
 		set fabulousNumber = fabulousNumber+1
 		where postID = #{fabu.postid}
 	</select>
@@ -237,7 +237,8 @@
 	<select id="selectFabulousStatus" resultType="int">
 		select status from
 		postfabulous
-		where postID=#{fabu.postid} and TO_DAYS(`fabulousTime`) = TO_DAYS(NOW())
+		where postID=#{fabu.postid} and TO_DAYS(`fabulousTime`) =
+		TO_DAYS(NOW())
 		and userId = #{fabu.userid};
 	</select>
 	<!-- 取消点赞 -->
@@ -245,8 +246,10 @@
 		update
 		postfabulous
 		set `status`=#{fabu.status}
-		where postID=#{fabu.postid} and TO_DAYS(`fabulousTime`) = TO_DAYS(NOW())
-		and userID = #{fabu.userid};
+		where
+		postID=#{fabu.postid} and TO_DAYS(`fabulousTime`) = TO_DAYS(NOW())
+		and
+		userID = #{fabu.userid};
 		update post
 		<if test="fabu.status==1">
 			set fabulousNumber = fabulousNumber+1
@@ -267,7 +270,8 @@
 		select * from
 		postcomment
 		where commentator = #{userId} and postId = #{postId}
-		order by reviewtime desc
+		order
+		by reviewtime desc
 		limit
 		0,1
 	</select>
@@ -322,10 +326,23 @@
 		</set>
 		where postId = #{post.postid} and userId = #{post.userid}
 	</update>
-	
+
 	<select id="queryUserInfo" resultType="user">
 		select * from user
-		where userId = #{userId}
+		where
+		userId = #{userId}
 	</select>
- 
+
+	<select id="showShareInfo" resultType="com.accp.vo.zrb.ShareInfoVO">
+		SELECT
+		o.serviceID,o.userID,serviceCoverImg FROM orders o
+		LEFT JOIN services s ON s.`serviceID`=o.`serviceID`
+		WHERE o.serviceID IN(
+		SELECT serviceID FROM services WHERE userID=#{userId}
+		)
+		AND orderStatus=5
+		GROUP BY o.serviceID
+		ORDER BY SUM(smallPlan) DESC
+		LIMIT 0,2
+	</select>
 </mapper>

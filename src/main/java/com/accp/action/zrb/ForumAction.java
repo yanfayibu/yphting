@@ -25,6 +25,7 @@ import com.accp.pojo.Postfabulous;
 import com.accp.pojo.User;
 import com.accp.vo.zrb.PostVo;
 import com.accp.vo.zrb.PostcommentVo;
+import com.accp.vo.zrb.ShareInfoVO;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -35,7 +36,7 @@ public class ForumAction {
 	private ForumBiz biz;
 
 	@GetMapping("column")
-	public String showColumn(Integer pid,@RequestParam(defaultValue="1")Integer page,@RequestParam(defaultValue="2")Integer size,@RequestParam(required=false)String title,@RequestParam(required=false)Integer forumId,Integer orderId,@RequestParam(required=false)Integer essence,Model model) {
+	public String showColumn(Integer pid,@RequestParam(defaultValue="1")Integer page,@RequestParam(defaultValue="10")Integer size,@RequestParam(required=false)String title,@RequestParam(required=false)Integer forumId,Integer orderId,@RequestParam(required=false)Integer essence,Model model) {
 
 		//查询左侧栏板块
 		List<Forummanagement> list = biz.queryBlock();
@@ -94,6 +95,7 @@ public class ForumAction {
 			model.addAttribute("BLIST", list);
 			model.addAttribute("pid", pid);
 			model.addAttribute("fmid", fmid);
+			model.addAttribute("person", user);
 			return "/zrb/Html/lt-addForum";
 		}
 		//return "/zrb/Html/lt-addForum";
@@ -366,6 +368,15 @@ public class ForumAction {
 		model.addAttribute("user", user);
 		model.addAttribute("user_center", userPostList);
 		return "/zrb/Html/zjw-dongtai";
+	}
+	
+	
+	@GetMapping("showShareInfo")
+	@ResponseBody
+	public List<ShareInfoVO> showShareInfo(HttpSession session){
+		User user = (User)session.getAttribute("userinfo");
+		List<ShareInfoVO> list = biz.showShareInfo(user.getUserid());
+		return list;
 	}
 
 }

@@ -12,6 +12,7 @@ import com.accp.pojo.Postfabulous;
 import com.accp.pojo.User;
 import com.accp.vo.zrb.PostVo;
 import com.accp.vo.zrb.PostcommentVo;
+import com.accp.vo.zrb.ShareInfoVO;
 
 public interface IForumDao {
 	
@@ -220,5 +221,12 @@ public interface IForumDao {
 	 * @return
 	 */
 	public User queryUserInfo(@Param("userId")Integer userId);
+	
+	/**
+	 * 查询商家销售额前三的服务
+	 * @param userId
+	 * @return
+	 */
+	public List<ShareInfoVO> showShareInfo(@Param("userId")Integer userId);
 	
 }

@@ -74,8 +74,7 @@
 					<div class="ft_sec">
 						发贴前了解所在版的讨论主题和相关规定，不发表与版规不符的言论，不在他人的帖子内发表与主帖内容无关的言论。<br>尊重他人的知识产权，不得剽窃他人作品，转载和引用他人作品时应符合版权许可。
 					</div>
-					<form id="formmsg" method="post" target="topost"
-						onsubmit="return chkforms()">
+					<form id="formmsg" method="post" target="topost">
 						<div class="ft_part_d">
 							<!--
                                 	作者：1154044031@qq.com
@@ -100,9 +99,10 @@
 						<div class="ft_part_d">
 							<div class="ke-container ke-container-default"
 								style="width: 1100px; margin-bottom: 30px;">
-								<textarea name="content" id="content"
+								<div name="content" id="content"
 									style="width: 1100px; height: 400px; display: none;"
-									th:utext="${POST.content}"></textarea>
+									th:utext="${POST.content}"></div>
+								
 							</div>
 							<div class="bbs_btn_bt">
 								<a href="javascript:void(0);" onclick="$('#formmsg').submit()"
@@ -288,7 +288,7 @@
 			        filterMode: true,
 			        allowFileManager: true,
 			        uploadJson: '/c/zrb/kindeditor/upload',
-			        fileManagerJson : '/c/sxy/kindeditor/manager',
+			        fileManagerJson : '/c/zrb/kindeditor/manager',
 			        afterBlur : function() {
 			            this.sync();
 			        }
@@ -330,14 +330,14 @@
 			}
 			//编辑触发事件
 			$(".btn_jy_a").click(function(){
-				if($("[name=catid]").val()==""||$("[name=subject]").val()==""||$("[name=content]").val()==""){
+				if($("[name=catid]").val()==""||$("[name=subject]").val()==""||$("[name=contents]").val()==""){
 					alert("请填写完整的信息！");
 				}else{
 					var obj = new Object();
 					obj["postid"] = "[[${POST.postid}]]"
 					obj["fmid"] = $("[name=catid]").val();
 				 	obj["title"] = $("[name=subject]").val();
-				 	obj["content"] = $("[name=content]").val();
+				 	obj["content"] = $("[name=content]").html();
 				 	obj["userid"] = "[[${POST.user.userid}]]";
 				 	/*var year = new Date().getFullYear();
 				 	var month = new Date().getMonth()+1;
@@ -394,7 +394,6 @@
 							if(result=="true"){
 								
 								window.location.href="/c/tsy/gologin";
-								alert("退出成功...");
 							}
 							
 							else{

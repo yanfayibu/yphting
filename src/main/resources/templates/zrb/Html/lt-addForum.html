@@ -90,7 +90,8 @@
 							</select> <select class="sel_f validate[required]" name="catid" id="catid">
 								<option value="">选择栏目</option>
 								<option value="">韩国大学简介</option>
-							</select>
+							</select> <a th:if="${person.merchanttype!=0}" href="javascript:void(0)"
+								id="showInfo">分享我的店铺</a>
 						</div>
 						<div class="ft_part_d">
 							<input type="text" placeholder="标题（必填*）" name="subject"
@@ -98,7 +99,7 @@
 						</div>
 						<div class="ft_part_d">
 							<div class="ke-container ke-container-default"
-								style="width: 1100px; margin-bottom: 30px;">
+								style="width: 1100px; margin-bottom: 30px;" id="contentBox">
 								<textarea name="content" id="content"
 									style="width: 1100px; height: 400px; display: none;"></textarea>
 							</div>
@@ -274,7 +275,37 @@
 <script charset="utf-8" src="/Public/js/kindeditor/kindeditor-all.js"></script>
 <!-- 导入kindeditor的语言包-->
 <script charset="utf-8" src="/Public/js/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
 
+	$("#showInfo").toggle(function(){
+		$("#showInfo").text("取消分享");
+		var boxInfo=$("<div id='boxInfo'></div>");
+		
+		$.ajax({
+			url:"/c/zrb/showShareInfo",
+			type:"get",
+			dataType:"json",
+			success:function(data){
+				$.each(data,function(i,obj){
+					var showInfo=$("<img style='margin:0 5px;' width='100px' height='100px' src='"+obj.serviceCoverImg+"' alt='''>");
+					boxInfo.append(showInfo);
+				})
+				var showLink=$("<a href='/api/Forward_view/user/center'>逛一逛他/她的店铺>></a>");
+				boxInfo.append(showLink);
+			},
+			error:function(){
+				alert("操作错误！");
+			} 
+		})
+		
+		$("#contentBox").append(boxInfo);
+	},function(){
+		$("#showInfo").text("分享我的店铺");
+		$("#boxInfo").remove();
+	});
+
+
+</script>
 
 <script>
 			//富文本
@@ -334,7 +365,11 @@
 					var obj = new Object();
 					obj["fmid"] = $("[name=catid]").val();
 				 	obj["title"] = $("[name=subject]").val();
-				 	obj["content"] = $("[name=content]").val();
+				 	if($("#boxInfo").html()){
+				 		obj["content"] = $("[name=content]").val()+"<br/>"+"<br/>"+"<br/>"+$("#boxInfo").html();
+				 	}else{
+				 		obj["content"] = $("[name=content]").val();
+				 	}
 				 	/*var year = new Date().getFullYear();
 				 	var month = new Date().getMonth()+1;
 				 	var day = new Date().getDate();
@@ -396,7 +431,6 @@
 							if(result=="true"){
 								
 								window.location.href="/c/tsy/gologin";
-								alert("退出成功...");
 							}
 							
 							else{

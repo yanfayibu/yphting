@@ -19,6 +19,7 @@ import com.accp.pojo.Postfabulous;
 import com.accp.pojo.User;
 import com.accp.vo.zrb.PostVo;
 import com.accp.vo.zrb.PostcommentVo;
+import com.accp.vo.zrb.ShareInfoVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -301,5 +302,14 @@ public class ForumBiz {
 	 */
 	public User queryUserInfo(Integer userId) {
 		return dao.queryUserInfo(userId);
+	}
+	
+	/**
+	 * 查询商家销售额前三的服务
+	 * @param userId
+	 * @return
+	 */
+	public List<ShareInfoVO> showShareInfo(Integer userId) {
+		return dao.showShareInfo(userId);
 	}
 } 
