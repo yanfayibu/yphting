@@ -1,20 +1,6 @@
 @charset "UTF-8";
 
-/*{*/
-  /*background-color: white;*/
-  /*overflow: auto;*/
-  /*overflow-y: auto;*/
-  /*overflow-x: hidden;*/
-  /*width: 100%;*/
-  /*position: fixed;*/
-  /*height: 100%;*/
-  /*z-index: 10;*/
-  /*left: 0;*/
-  /*top: 0;*/
 
-  /*background-position: center top;*/
-  /*background-repeat: no-repeat;*/
-  /*background-size: 100% auto; }*/
 
 
 .Y-content {
@@ -64,7 +50,6 @@
 }
 .Y-content .selectBox {
 	cursor: pointer;
-  /*background-color: rgba(252, 186, 92, 0.75);*/
  background-color: red;
   position: absolute;
   left: 50%;

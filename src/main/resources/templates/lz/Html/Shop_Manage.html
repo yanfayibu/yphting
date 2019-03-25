@@ -141,6 +141,7 @@
 	</head>
 
 	<body>
+		<audio id="myaudio" src=""   autoplay="autoplay"  hidden="true" style="display:none" ></audio>
 		<!--head-->
 		<div class="container-fluid" style="background-color: #FFFAE1;">
 
@@ -149,9 +150,9 @@
 				<div class="col-md-8 col-sm-7 col-xs-12 col-md-offset-1 col-sm-offset-1">
 					<ul class="list-inline head">
 						<li>
-							<a href="">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="/c/hzj/homeUrl">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a th:href="@{/view/sjrz}">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
 							<a href="">帮助中心</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
@@ -169,7 +170,7 @@
 						<li>
 							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif" id="eif"></span></a>
 						</li>
 
 					</ul>
@@ -201,7 +202,7 @@
 					<ul class="nav navbar-nav ">
 
 						<li>
-							<a href="">商家中心</a>
+							<a href="/c/smy/user/getUserBySjzx">商家中心</a>
 						</li>
 						<li>
 							<a href="/api/Forward_view/user/center">个人中心</a>
@@ -212,7 +213,7 @@
 							<span class="my_nav_i"></span>
 						</li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" id="count"></span></a>
 						</li>
 
 					</ul>
@@ -243,7 +244,7 @@
 								<li >
 									<a href="/api/Forward_view/user/Accountmanage"><span class="msp2 pre_c4"></span>帐号管理</a>
 								</li>
-								<li class="cur">
+								<li th:if="${session.userinfo.merchanttype ne 0 and  session.userinfo.auditstatus==2  and session.userinfo.businessstate==1}">
 									<a href="/api/Forward_view/user/Shop"><span class="msp2 pre_c3"></span>店铺信息</a>
 								</li>
 							</ul>
@@ -696,7 +697,7 @@
 								<p>
 									<ul class="list-inline">
 										<li>
-											<a href="">商家入驻</a>
+											<a th:href="@{/view/sjrz}">商家入驻</a>
 										</li>
 										<li>
 											<a href="">帮助中心</a>
@@ -734,7 +735,7 @@
 				<nav class="footerxs navbar navbar-default navbar-fixed-bottom visible-xs-block " style="padding: 10px;background-color:#101010;">
 
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-thumbs-down"></span>
-						<a href="">商家入驻</a>
+						<a th:href="@{/view/sjrz}">商家入驻</a>
 					</div>
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-question-sign"></span>
 						<a href="">帮助中心</a>
@@ -795,6 +796,7 @@
     <div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
 	</body>
 	<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
 	<script src="/Public/js/upload.js" type="text/javascript" charset="utf-8"></script>
@@ -802,7 +804,11 @@
 <script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/Public/dist/summernote.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/Public/dist/lang/summernote-zh-CN.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/Public/js/getunread.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+	
+	//读取未读信息
+	unreadinfo();
 	
 	//语言
 	var yy="[[${session.userinfo.languagenametext}]]";

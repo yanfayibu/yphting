@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.accp.dao.hzj.IAdvertisementDao">
+	<sql id="selectAll">
+		select * from 
+	</sql>
+	
+	
+	
+	<!-- Map：查询首页广告位 -->
+	<resultMap type="com.accp.vo.hzj.AdvertisementVO" id="AdvertisementVOMap">
+		<id column="aid" property="aid"/>
+		<result column="atid" property="atid"/>
+		<result column="atitle" property="atitle"/>
+		<result column="aorder" property="aorder"/>
+		<result column="aimgPath" property="aimgpath"/>
+		<result column="apcUrl" property="apcurl"/>
+		<result column="aappUrl" property="aappurl"/>
+		<result column="state" property="state"/>
+		<result column="startTime" property="starttime"/>
+		<result column="rentaMonth" property="rentamonth"/>
+		<result column="price" property="price"/>
+		<result column="adescribe" property="adescribe"/>
+		<association property="whObj" column="atid" select="queryHome"></association>
+	</resultMap>
+	
+	
+	 <!-- 根据广告版块类别编号查询图片宽高 -->
+	 <select id="queryHome" resultType="com.accp.vo.hzj.ImageWidthAndHeightVO">
+		SELECT SUBSTRING_INDEX(`atpx`,'*',1) AS `width`,SUBSTRING_INDEX(`atpx`,'*',-1) AS `height`
+		FROM `advertisementtype`
+		WHERE `atid` = #{0}
+	</select>
+	<!-- 首页社区服务广告位查询 -->
+	<select id="queryHomeAdvertising" resultMap="AdvertisementVOMap">
+		<include refid="selectAll"/>
+		`advertisement`
+		<where>
+			<if test="atid==1">
+				`atid` = 1
+			</if>
+			<if test="atid==2">
+				`atid` IN(4,5,6,7,16,17)
+			</if>
+			<if test="atid==3">
+				`atid` = 2
+			</if>
+			<if test="atid==4">
+				`atid` = 3
+			</if>
+		</where>
+		<if test="atid==1">
+			ORDER BY `aorder` 
+		</if>
+	</select>
+	
+	
+	<!-- 首页社区服务星级服务商家推荐 -->
+	<select id="querySerRecommendVO" resultType="com.accp.vo.hzj.SerRecommendVO">
+		SELECT u.`userID`,u.`userName`,u.`userImgPath`,u.`shopImg`,u.`selfIntroduction`,u.`merchantLevel`
+		FROM `user` AS u
+		WHERE (u.`firstServiceID` = #{stid} OR `secondServiceID` = #{stid}) AND u.`auditStatus` = 2
+		ORDER BY `merchantLevel` DESC,`orderCount` DESC
+		LIMIT 9
+	</select>
+	
+	
+	<!-- 查询首页社区服务最新帖子 --> 
+	<select id="queryHomePostVO" resultType="com.accp.vo.hzj.HomePostVO">
+		SELECT p.`postID`,p.`title`,u.`userID`,u.`userName`,u.`userImgPath`,f.`fmName`,IF(TIMESTAMPDIFF(HOUR,p.`releaseTime`,NOW())>=24,CONCAT(TIMESTAMPDIFF(DAY,p.`releaseTime`,NOW()),'天'), CONCAT(CONCAT(FLOOR(TIMESTAMPDIFF(MINUTE,p.`releaseTime`,NOW())/60),'小时'),CONCAT(FLOOR(SUBSTRING_INDEX(TIMESTAMPDIFF(MINUTE,p.`releaseTime`,NOW())/60,'.',-1)/10000*60),'分钟'))) AS 'releaseTime',
+		(SELECT u.`userID` FROM `postcomment` AS pc INNER JOIN `user` AS u ON u.`userID` = pc.`commentator` WHERE `postID` = p.`postID` AND pid = 0 AND `operatingState` = 1 ORDER BY `reviewTime` DESC LIMIT 1) AS `replyUserID`,
+		(SELECT u.`userName` FROM `postcomment` AS pc INNER JOIN `user` AS u ON u.`userID` = pc.`commentator` WHERE `postID` = p.`postID` AND pid = 0 AND `operatingState` = 1 ORDER BY `reviewTime` DESC LIMIT 1) AS `replyUserName`,
+		(SELECT IF(TIMESTAMPDIFF(HOUR,pc.`reviewTime`,NOW())>=24,CONCAT(TIMESTAMPDIFF(DAY,pc.`reviewTime`,NOW()),'天'), CONCAT(CONCAT(FLOOR(TIMESTAMPDIFF(MINUTE,pc.`reviewTime`,NOW())/60),'小时'),CONCAT(FLOOR(SUBSTRING_INDEX(TIMESTAMPDIFF(MINUTE,pc.`reviewTime`,NOW())/60,'.',-1)/10000*60),'分钟'))) FROM `postcomment` AS pc INNER JOIN `user` AS u ON u.`userID` = pc.`commentator` WHERE `postID` = p.`postID` AND pid = 0 AND `operatingState` = 1 ORDER BY `reviewTime` DESC LIMIT 1) AS `replyUserTime`
+		FROM `post` AS p
+		INNER JOIN `user` AS u
+		ON u.`userID` = p.`userID`
+		INNER JOIN `forummanagement` AS f
+		ON f.`fmID` = p.`fmID`
+		ORDER BY p.`releaseTime` DESC
+		LIMIT 9
+	</select>
+	
+	
+	<!-- 查询首页社区服务美妆天地板块帖子 -->
+	<select id="queryHomePostByMakeup" resultType="Post">
+		SELECT *
+		FROM `post`
+		WHERE `fmID` = 29
+		ORDER BY `releaseTime` DESC
+		LIMIT 9
+	</select>
+</mapper>

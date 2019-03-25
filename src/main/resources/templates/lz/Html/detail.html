@@ -113,6 +113,7 @@
 	</head>
 
 	<body>
+		<audio id="myaudio" src=""   autoplay="autoplay"  hidden="true" style="display:none" ></audio>
 		<!--head-->
 		<div class="container-fluid" style="background-color: #FFFAE1;">
 
@@ -121,9 +122,9 @@
 				<div class="col-md-8 col-sm-7 col-xs-12 col-md-offset-1 col-sm-offset-1">
 					<ul class="list-inline head">
 						<li>
-							<a href="">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="/c/hzj/homeUrl">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a th:href="@{/view/sjrz}">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
 							<a href="">帮助中心</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
@@ -141,7 +142,7 @@
 						<li>
 							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif" id="eif"></span></a>
 						</li>
 
 					</ul>
@@ -173,7 +174,7 @@
 					<ul class="nav navbar-nav ">
 
 							<li>
-							<a href="#">商家中心</a>
+							<a href="/c/smy/user/getUserBySjzx">商家中心</a>
 						</li>
 						<li class="active">
 							<a href="/api/Forward_view/user/center">个人中心</a>
@@ -183,7 +184,7 @@
 							<a href="/api/Forward_view/user/Modifydata">账户设置</a>
 						</li>
 						<li> 
-							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" id="count"></span></a>
 						</li>
 
 					</ul>
@@ -399,7 +400,7 @@
 								<p>
 									<ul class="list-inline">
 										<li>
-											<a href="">商家入驻</a>
+											<a th:href="@{/view/sjrz}">商家入驻</a>
 										</li>
 										<li>
 											<a href="">帮助中心</a>
@@ -437,7 +438,7 @@
 				<nav class="footerxs navbar navbar-default navbar-fixed-bottom visible-xs-block " style="padding: 10px;background-color:#101010;">
 
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-thumbs-down"></span>
-						<a href="">商家入驻</a>
+						<a th:href="@{/view/sjrz}">商家入驻</a>
 					</div>
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-question-sign"></span>
 						<a href="">帮助中心</a>
@@ -522,7 +523,13 @@
 	
 	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
 					<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+					<script src="/Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
+							<script src="/Public/js/getunread.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+	
+	//读取未读信息
+	unreadinfo();
+	
 	//站内联系
 	var addressid=0;
 		 function sendmessage(obj){

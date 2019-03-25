@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>韩汀广告位</title>
+
+<link href="/Public/css/gloab.css" rel="stylesheet">
+<link href="/Public/css/index.css" rel="stylesheet">
+
+<link href="/Public/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/Public/css/bootstrap-datetimepicker.min.css"/>
+
+</head>
+<body class="bgf4">
+<div class="login-box f-mt10 f-pb50">
+	<div class="main bgf">    
+    	<div class="reg-box-pan display-inline">  
+        	<div class="step">        	
+                <ul>
+                    <li class="col-xs-4 on">
+                        <span class="num"><em class="f-r5"></em><i>1</i></span>                	
+                        <span class="line_bg lbg-r"></span>
+                        <p class="lbg-txt">填写广告信息</p>
+                    </li>
+                    <li class="col-xs-4">
+                        <span class="num"><em class="f-r5"></em><i>2</i></span>
+                        <span class="line_bg lbg-l"></span>
+                        <span class="line_bg lbg-r"></span>
+                        <p class="lbg-txt">广告审核中</p>
+                    </li>
+                    <li class="col-xs-4">
+                        <span class="num"><em class="f-r5"></em><i>3</i></span>
+                        <span class="line_bg lbg-l"></span>
+                        <p class="lbg-txt">完成</p>
+                    </li>
+                </ul>
+         </div>
+         
+         
+         
+         <form class="form-horizontal part1">
+  <div class="form-group">
+    <label for="selects" class="col-sm-2 control-label"><strong style="color: red;">*&nbsp;</strong>广告位置：</label>
+    <div class="col-sm-10">
+     <select name="aid" class="form-control" id="selects">
+     	<option th:each="temp:${BLIST}" th:value="${temp.aid}" th:text="${temp.atitle}">11</option>
+     </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label"><strong style="color: red;">*&nbsp;</strong>广告图片：</label>
+    <div class="col-sm-10">
+      <div id="drop_area" name="aimgPath"></div>   
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="moeny" class="col-sm-2 control-label"><strong style="color: red;">*&nbsp;</strong>付款金额：</label>
+    <div class="col-sm-10">
+    <input type="text" name="price" class="form-control" id="money" readonly="readonly" value="0">
+</div>
+  </div>
+  
+  
+  <div class="form-group">
+    <label for="moth" class="col-sm-2 control-label"><strong style="color: red;">*&nbsp;</strong>租的月数：</label>
+    <div class="col-sm-10">
+       <input type="text" name="rentAMonth" class="form-control" id="moth" readonly="readonly" value="0" >
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="start" class="col-sm-2 control-label"><strong style="color: red;">*&nbsp;</strong>开始时间：</label>
+    <div class="col-sm-10">
+      <div id="startdiv" class="input-group date">
+		<input id="start" name="startTime" class="form-control" type="text"   readonly="readonly" onchange="alters()">
+		<span class="input-group-addon"> <span
+                                                class="glyphicon glyphicon-remove"></span>
+						</span> <span class="input-group-addon"> <span
+                                                class="glyphicon glyphicon-calendar"></span>
+						</span>
+						
+					</div>  
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="end" class="col-sm-2 control-label"><strong style="color: red;">*&nbsp;</strong>结束时间：</label>
+    <div class="col-sm-10">
+       <div id="endDiv" class="input-group date " >
+                                     <input id="end"
+                                                name="endTime" class="form-control" type="text"
+                                                  readonly="readonly" onchange="alters()"> <span
+                                                class="input-group-addon"> <span
+                                                class="glyphicon glyphicon-remove"></span>
+                                            </span> <span class="input-group-addon"> <span
+                                                class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+    </div>
+  </div>
+  
+<div class="form-group text-center">
+	     <a href="javascript:;" class="btn btn-blue " id="btn_part" style="padding: 10px 50px;">下一步</a>                         
+                      
+                    
+</div>
+</form>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+        	<div class="reg-box" id="verifyCheck" style="margin-top:20px;">
+            	
+                
+                 
+                <div class="part4 text-center" style="display:none">
+                	<h3>恭喜颠三倒四，等待管理员审核，去商家广告位查看结果吧！</h3>
+                    <p class="c-666 f-mt30 f-mb50">页面将在 <strong id="times" class="f-size18">10</strong> 秒钟后，跳转到 <a href="" class="c-blue">商家中心</a></p>
+                </div>          
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-sPopBg" style="z-index:998;"></div>
+<div class="m-sPopCon regcon">
+	<div class="m-sPopTitle"><strong>服务协议条款</strong><b id="sPopClose" class="m-sPopClose" onClick="closeClause()">×</b></div>
+    <div class="apply_up_content">
+    	<pre class="f-r0">
+		<strong>同意以下服务条款，提交注册信息</strong>
+        </pre>
+    </div>
+    <center><a class="btn btn-blue btn-lg f-size12 b-b0 b-l0 b-t0 b-r0 f-pl50 f-pr50 f-r3" href="javascript:closeClause();">已阅读并同意此条款</a></center>
+</div>
+
+</body>
+<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="/Public/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="/Public/js/yearsDay.js" ></script>
+<script type="text/javascript" src="/Public/js/bootstrap-datetimepicker.min.js" ></script>
+<script type="text/javascript" src="/Public/js/upload.js" ></script>
+<script type="text/javascript" src="/Public/js/DateDay.js" ></script>
+
+
+
+
+<script>
+	var obj = new Object();
+	
+	//图片上传
+	var dragImgUpload = new DragImgUpload("#drop_area", {
+			callback: function(files) {
+				var fr = new FileReader();//读取文件
+				var file = files[0];
+				fr.readAsDataURL(file);//读取文件
+				
+				fr.onload = function() {
+								var base64Data = this.result;//获得base编码字符串格式
+								obj["aimgpath"]	=base64Data;
+								//alert(base64Data)
+								
+								
+							};
+			}
+	});
+	$(".preview img").attr("src", "img/upload.png")
+	
+	
+	
+	
+	
+$(function(){	
+	
+	//第一页的确定按钮
+	$("#btn_part").click(function(){	
+		var aid=$("[name=aid]").val();
+		/* var aimgPath=$("[name=aimgPath]").val(); */
+		var price=$("[name=price]").val();
+		var rentAMonth=$("[name=rentAMonth]").val();
+		var startTime=$("[name=startTime]").val();
+		var endTime=$("[name=endTime]").val().trim();
+		obj["aid"]=aid;
+		/* obj["aimgPath"]=aimgPath; */
+		obj["price"]=price;
+		obj["rentamonth"]=rentAMonth;
+		obj["starttime"]=startTime;
+		obj["endtime"]=endTime;
+		savePost(obj);
+		//判断资料正确
+		
+		$(".part1").hide();
+		$(".part4").show();
+		$(".step li").eq(1).addClass("on");
+		
+		//定时
+		jump(10)
+	});
+
+	function savePost(obj){
+	 	$.ajax({
+	 		url:"/c/smy/advertisementApply",
+	 		type:"post",
+	 		data:JSON.stringify(obj),
+			contentType:"application/json",
+			success:function(data){
+				if(data.code=="200"){
+					alert("广告位申请成功!");
+				}else if(data.code=="400"){
+					alert("广告位申请失败!。");
+				}
+			},
+			error:function(){
+				alert("操作错误！");
+			}
+	 	})
+	}
+});
+
+
+
+function  alters(){
+		
+		if(jQuery("#start").val().trim()==""){
+			alert("开始日期不能为空")
+		}
+		else if(jQuery("#end").val().trim()==""){
+			alert("结束日期不能为空")
+		}
+		else{
+			//获得两个时间相隔的月数
+			var day=MonthsBetw($("#start").val(),$("#end").val());
+			jQuery("#moth").val(day);
+			var money=parseInt(day*600);
+			jQuery("#money").val(money);
+		}
+	
+}
+
+
+
+	//定时方法
+	function jump(times) { 
+window.setTimeout(function(){ 
+times--; 
+if(times > 0) { 
+$("#times").text(times);
+jump(times); 
+} else { 
+	
+	//跳转
+location.href=""; 
+} 
+},1000); 
+	
+}
+
+</script>
+
+</html>

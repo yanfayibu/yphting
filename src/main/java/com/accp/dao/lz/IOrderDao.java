@@ -9,6 +9,7 @@ import com.accp.pojo.Banktype;
 import com.accp.pojo.Evaluationservice;
 import com.accp.pojo.Orders;
 import com.accp.pojo.Putforward;
+import com.accp.pojo.Putforwardrecord;
 import com.accp.pojo.Refund;
 import com.accp.vo.lz.OrderVO;
 import com.accp.vo.lz.RefundVO;
@@ -47,5 +48,8 @@ public interface IOrderDao {
 	
 	//新增提现表
 	public  int addwithdraw(@Param("put") Putforward put);
+	
+	//新增提现记录表
+	public  void  addwithdrawrecord (@Param("put") Putforwardrecord put)throws Exception ;
 	
 }

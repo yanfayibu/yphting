@@ -27,6 +27,7 @@
 			<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
+	<script src="/Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 	
 			.a_color {
@@ -194,6 +195,7 @@
 	</head>
 
 	<body>
+	<audio id="myaudio" src=""   autoplay="autoplay"  hidden="true" style="display:none" ></audio>
 		<!--head-->
 		<div class="container-fluid" style="background-color: #FFFAE1;">
 
@@ -202,9 +204,9 @@
 				<div class="col-md-8 col-sm-7 col-xs-12 col-md-offset-1 col-sm-offset-1">
 					<ul class="list-inline head">
 						<li>
-							<a href="">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="/c/hzj/homeUrl">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a th:href="@{/view/sjrz}">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
 							<a href="">帮助中心</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
@@ -222,7 +224,7 @@
 						<li>
 							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif" id="eif"></span></a>
 						</li>
 
 					</ul>
@@ -254,7 +256,7 @@
 					<ul class="nav navbar-nav ">
 
 							<li>
-							<a href="#">商家中心</a>
+							<a href="/c/smy/user/getUserBySjzx">商家中心</a>
 						</li>
 						<li class="active">
 							<a href="/api/Forward_view/user/center">个人中心</a>
@@ -264,7 +266,7 @@
 							<a href="/api/Forward_view/user/Modifydata">账户设置</a>
 						</li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" id="count"></span></a>
 						</li>
 
 					</ul>
@@ -445,17 +447,21 @@
 														</td>
 														<td>
 															<p><a  th:href="@{/api/Forward_view/user/payGold(orderid=${temp.orderid})}" class="btn btn-warning" th:if="${temp.orderstatus==1}">支付金币</a></p>
-															<p><a href="pay.html" class="btn btn-success" th:if="${temp.orderstatus==4}">确认完成</a></p>
-															<p><a th:href="@{/api/Forward_view/user/evaluation(orderid=${temp.orderid})}" class="btn btn-warning" th:if="${temp.commentstatus==1}">评价</a></p>
+															<p><a href="javascript:void(0)" class="btn btn-danger" th:if="${temp.orderstatus==4}" onclick="Confirmservice(this)">
+															<input type="hidden" th:value="${temp.orderid}"  >
+															确认完成</a>
+															</p>
+															<p><a th:href="@{/api/Forward_view/user/evaluation(orderid=${temp.orderid})}" class="btn btn-warning" th:if="${temp.commentstatus==1 and temp.orderstatus==5}">评价</a></p>
 															<p><span  th:if="${temp.commentstatus==2}">已评价</span></p>
 															<p><span  th:if="${temp.commentstatus==3}">双方已评</span></p>
-															<p><a href="/api/Forward_view/user/Requestrefund" class="btn btn-primary" th:if="${temp.orderstatus==5&&temp.refundstatus==0}" onclick="cankan(this)">申请退款
+															<p><a th:href="@{/api/Forward_view/user/Requestrefund(orderid=${temp.orderid})}" class="btn btn-primary" th:if="${temp.orderstatus==5&&temp.refundstatus<=0}">申请退款</a></p>
+															
+															
+															<p>
+															<a href="javascript:void(0)" onclick="funddetail(this)" th:if="${temp.refundstatus>0}">
 															<input type="hidden" th:value="${temp.orderid}" >
-															<input type="hidden" th:value="${temp.user.username}" >
-															<input type="hidden" th:value="${temp.smallplan}" >
-															<input type="hidden" th:value="${temp.user.userid}" >
-															</a></p>
-															<p><a href="pay.html" th:if="${temp.refundstatus>0}">查看退款详情</a></p>
+															查看退款详情</a>
+															</p>
 															
 															<p>
 															
@@ -545,7 +551,7 @@
 								<p>
 									<ul class="list-inline">
 										<li>
-											<a href="">商家入驻</a>
+											<a th:href="@{/view/sjrz}">商家入驻</a>
 										</li>
 										<li>
 											<a href="">帮助中心</a>
@@ -583,7 +589,7 @@
 				<nav class="footerxs navbar navbar-default navbar-fixed-bottom visible-xs-block " style="padding: 10px;background-color:#101010;">
 
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-thumbs-down"></span>
-						<a href="">商家入驻</a>
+						<a th:href="@{/view/sjrz}">商家入驻</a>
 					</div>
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-question-sign"></span>
 						<a href="">帮助中心</a>
@@ -663,9 +669,12 @@
 
 	<script type="text/javascript" src="/Public/js/footer_suspend.js"></script>
 	<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/stochastic.js"></script>
+			<script src="/Public/js/getunread.js" type="text/javascript" charset="utf-8"></script>
 	<script>
 	
-	
+	//读取未读信息
+	unreadinfo();
 	
 	$("#num").text("第"+"[[${pageOrderList.pageNum}]]"+"页");
 	$("#total").text("共"+"[[${pageOrderList.pages}]]"+"页");
@@ -683,37 +692,43 @@
 			 function send(){
 			 	if($("textarea").val()==""){
 			 		alert("请填写信件内容！")
+			 		
 			 	}
 			 	else{
 			 		
 			 	
+			 		
 			 		var News={};
-			 	
-			 		News["addressee"]=addressid;
-			 		News["content"]=$("textarea").val();
-			 		News["newstype"]=$("#newstype").val();
-			 		$.ajax("/c/lz/user/Addnews", {
-								type : "POST",
-								dataType : "json",
-								contentType:"application/json",
-								data:JSON.stringify(News),
-								success : function(msg) {
-									if(msg.code==200){
-										$(".modal").modal("hide");
-										$("textarea").val("");
-										showTool("发送成功！");
-										setTimeout(function(){
-											window.location.href="/c/lz/dsd/user/queryMyreservationservice";
-										},1000);	
-										
+			 		bossRand(1,9,function(num){
+			 			
+			 			News["addressee"]=addressid;
+				 		News["content"]=$("textarea").val();
+				 		News["newstype"]=$("#newstype").val();
+				 		News["messagegroup"]=parseInt(num);
+				 		$.ajax("/c/lz/user/Addnews", {
+									type : "POST",
+									dataType : "json",
+									contentType:"application/json",
+									data:JSON.stringify(News),
+									success : function(msg) {
+										if(msg.code==200){
+											$(".modal").modal("hide");
+											$("textarea").val("");
+											showTool("发送成功！");
+											setTimeout(function(){
+												window.location.href="/c/lz/dsd/user/queryMyreservationservice";
+											},1000);	
+											
+										}
+										else{
+											$(".modal").modal("hide");
+											$("textarea").val("");
+											showTool("发送失败！")
+										}
 									}
-									else{
-										$(".modal").modal("hide");
-										$("textarea").val("");
-										showTool("发送失败！")
-									}
-								}
-							});
+								});
+			 		})
+			 		
 			 		
 			 	}
 			 }
@@ -783,16 +798,50 @@
 			 }
 	
 			 
-			//查看
-				function cankan(obj){
-				var oders={};
+			
+			
+			
+			
+			
+			
+			
+			//确认完成
+			 function Confirmservice(obj){
 				
-				oders["orderid"]=$(obj).children('input:eq(0)').val();
-				oders["name"]=$(obj).children('input:eq(1)').val();
-				oders["moeny"]=$(obj).children('input:eq(2)').val();
-				oders["userid"]=$(obj).children('input:eq(3)').val();
-				 	window.sessionStorage.setItem("orde",JSON.stringify(oders));
-				 	window.location.href="/api/Forward_view/user/Requestrefund";
-				}
+				
+				 qikoo.dialog.confirm('确定服务完成了吗？',function(){
+				
+					
+					 $.ajax("/c/lz/dsd/user/order/Confirm/"+$(obj).children('input').val(), {
+							type :"post",
+							dataType : "json",
+							success :function(msg) {
+								if(msg.code==200){
+									
+									showTool("确认成功");
+									setTimeout(function(){
+										window.location.href="/c/lz/dsd/user/queryMyreservationservice";
+								 	},1000)
+								}
+								else{
+									showTool("系统繁忙...");
+								}
+							}
+						}); 
+
+					  
+						 			 
+			        },function(){
+						
+				});
+			 }
+	
+			
+			//查看退款详情
+	function funddetail(obj){
+		window.sessionStorage.setItem("orderid",$(obj).children('input').val());
+	 	window.location.href="/api/Forward_view/user/fundDetailed";
+	 	
+	}
 	</script>
 </html>

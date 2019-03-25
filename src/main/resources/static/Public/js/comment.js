@@ -153,9 +153,9 @@ jQuery.fn.rater	= function(options) {
 		//显示当前分值
 		if (typeof settings.title_format == 'function') {
 			
-			jQuery(this).parents().nextAll('.rater-star-result').html(current_value+'分&nbsp;'+settings.title_format(current_value));
+			jQuery(this).parents().nextAll('.rater-star-result').html("<span>"+current_value+"</span>分&nbsp;"+settings.title_format(current_value));
 		}
-		$("#StarNum").val(current_value);
+		//$("#StarNum").val(current_value);
 		//jQuery(this).parents().next('.rater-star-result').html(current_value);
 		//jQuery(this).unbind('mouseout',startTip)
 	})

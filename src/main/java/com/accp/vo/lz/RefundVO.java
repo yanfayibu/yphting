@@ -25,7 +25,7 @@ public class RefundVO {
 	private Float applyrefundmoney;         //申请退款金额
 
 	private Float actualrefundmoney;        //实际退款金额
-
+	
 	private Date applicationtime;           //申请时间
 
 	private Date audittime;                 //商家审核时间

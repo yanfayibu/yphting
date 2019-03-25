@@ -26,13 +26,5 @@ public class MD5Signature {
 		return new String(resultCharArray);
 	}
 	
-	public static void main(String[] args) {
-		try {
-			System.out.println(MD5Signature.md5("123456"));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 }

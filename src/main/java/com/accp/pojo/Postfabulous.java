@@ -12,12 +12,22 @@ public class Postfabulous {
     private Integer postid;     //帖子编号
 
     private Date fabuloustime;  //点赞时间
+    
+    private Integer status;     //点赞状态
 
     public Integer getPostfab() {
         return postfab;
     }
 
-    public void setPostfab(Integer postfab) {
+    public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public void setPostfab(Integer postfab) {
         this.postfab = postfab;
     }
 

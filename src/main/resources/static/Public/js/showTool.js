@@ -14,8 +14,24 @@
  //退出系统
     function signout(){
     	qikoo.dialog.confirm('确定要退出吗？',function(){
-    			alert("退出成功");
-    			 			 
+    		$.ajax("/c/lz/user/loginout",{
+				type:"GET",
+				dataType:"text",
+				success:function(result){
+					
+					
+					if(result=="true"){
+						
+					window.location.href="/c/tsy/gologin";
+						
+					}
+					
+					else{
+						showTool("系统异常！")
+					}
+					
+				}
+			}); 			 
             },function(){
     			//alert("取消啦！");
     	});

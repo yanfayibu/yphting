@@ -16,6 +16,7 @@ import com.accp.pojo.Banktype;
 import com.accp.pojo.Evaluationservice;
 import com.accp.pojo.Orders;
 import com.accp.pojo.Putforward;
+import com.accp.pojo.Putforwardrecord;
 import com.accp.pojo.Refund;
 import com.accp.vo.lz.EvaluationVO;
 import com.accp.vo.lz.OrderVO;
@@ -96,6 +97,13 @@ public class OrderBiz {
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public  boolean addwithdraw( Putforward put) {
 	return  dao.addwithdraw(put)>0;
-		}
+	}
+	
+	//添加提现记录表
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+		public  void addwithdrawrecord( Putforwardrecord put)throws Exception {
+			dao.addwithdrawrecord(put);
+			}
+	
 	
 }

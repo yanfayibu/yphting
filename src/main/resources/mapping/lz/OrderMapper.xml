@@ -8,7 +8,7 @@
 
  
 <!-- map映射 -->
- 	<resultMap type="OrderVO" id="OrdersMap">
+ 	<resultMap type="com.accp.vo.lz.OrderVO" id="OrdersMap">
 	
 		<id column="orderID" property="orderid"/>
 		<result column="userID" property="userid"/>
@@ -141,7 +141,7 @@ WHERE a.`userID`=#{ordervo.userid}
 	SELECT A.`refundID` ,A.`point`,A.`refundReason`,A.`refundExplain`,A.`refundImg`,
 A.`applyRefundMoney`,A.`ActualRefundMoney`,A.`applicationTime`,A.`businessRemarks`,A.`auditTime`,A.`auditStatus`,
 A.`adminRemarks`,`adminTime`,`adminStatus`,
-B.`orderID` ,B.`refundstatus`,B.`scheduledStartTime`,B.`population`,B.`number`,B.`smallPlan`
+B.`orderID` ,B.`refundstatus`,B.`orderTime`,B.`population`,B.`number`,B.`smallPlan`
 ,
 C.`userID`,C.`userName`,C.`userImgPath`
 ,D.`serviceID`,D.`serviceTitle`,D.`serviceFuTitle`,D.`serviceCoverImg`,D.`servicePrice`
@@ -150,7 +150,7 @@ C.`userID`,C.`userName`,C.`userImgPath`
 LEFT JOIN   `orders` B ON A.`orderID`=B.`orderID`
 LEFT JOIN  `user` C ON A.`userID`=C.`userID`
 LEFT JOIN `services` D ON  B.`serviceID`=D.`serviceID`
-LEFT JOIN  `user` E ON B.`userID`=E.`userID`
+LEFT JOIN  `user` E ON D.`userID`=E.`userID`
 
 <where>
 <if test="userid!=0">A.`userID`=#{userid}</if>
@@ -163,7 +163,7 @@ ORDER BY A.`refundID` DESC
 </select>
 	
 	<!-- 我的退款映射map -->
-	<resultMap type="RefundVO" id="Myrefund">
+	<resultMap type="com.accp.vo.lz.RefundVO" id="Myrefund">
 	<id column="refundID" property="refundid"/>
 	<result column="point" property="point"/>
 	<result column="refundReason" property="refundreason"/>
@@ -182,7 +182,7 @@ ORDER BY A.`refundID` DESC
 	<association property="order" javaType="Orders">
 	<id column="orderID" property="orderid"/>
 	<result column="refundstatus" property="refundstatus"/>
-	<result column="scheduledStartTime" property="scheduledstarttime"/>
+	<result column="orderTime" property="ordertime"/>
 	<result column="population" property="population"/>
 	<result column="number" property="number"/>
 	<result column="smallPlan" property="smallplan"/>
@@ -261,5 +261,10 @@ ORDER BY A.`refundID` DESC
 	<insert id="addwithdraw">
 	INSERT INTO`putforward`(`userID`,`putName`,`bankID`,`bankAccount`,`openBankName`,`submitTime`,`auditTime`,`money`,`auditStatus`)
 VALUES(#{put.userid},#{put.putname},#{put.bankid},#{put.bankaccount},#{put.openbankname},#{put.submittime,jdbcType=TIMESTAMP},#{put.audittime,jdbcType=TIMESTAMP},#{put.money},#{put.auditstatus})
+	</insert>
+	<!-- 添加提现记录表 -->
+	<insert id="addwithdrawrecord">
+	INSERT INTO `putforwardrecord`(`userID`,`bankAccount`,`bankID`,`submitTime`,`completeTime`,`money`,`adminOpinion`)
+VALUES(#{put.userid},#{put.bankaccount},#{put.bankid},#{put.submittime,jdbcType=TIMESTAMP},#{put.completetime,jdbcType=TIMESTAMP},#{put.money},#{put.adminopinion})
 	</insert>
  </mapper>

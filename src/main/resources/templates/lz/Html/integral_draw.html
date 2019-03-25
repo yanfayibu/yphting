@@ -27,6 +27,7 @@
 	<script src="/Public/js/rem.js"></script>
 	<script src="/Public/js/rotate.js"></script>
 		<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
+		<script src="/Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
 	<style>
 		
 			
@@ -64,6 +65,21 @@
             text-align: center;font-size: 16px;margin-top: 100px;
             margin-bottom: 30px;
         }
+        .vsd{
+        cursor: pointer;
+ background-color: #ADADAD;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 2.8266666667rem;
+  height: 2.5066666667rem;
+  border-radius: 0.2666666667rem;
+        }
         .fg-box{position:relative;width:330px;height:400px;background:#fff;padding:20px 20px 28px;margin: 0 auto;}
 .fg-line{position:absolute;height:70%;width:2px;background:#E5EBF0;left:50px;top:42px;}
 .fg-box dl{max-height:360px;overflow:hidden;position:relative;}
@@ -91,6 +107,8 @@ body{
 		</style>
 	</head>
 	<body >
+	
+	<audio id="myaudio" src=""   autoplay="autoplay"  hidden="true" style="display:none" ></audio>
 		   <!--提示框-->
 
     <div id="tooltip" style="display:none;position: fixed;left: 50%;top: 50%;transform: translate(-50%,-50%);font-size: 18px;background-color: rgba(0,0,0,0.5);color: white;padding: 5px 10px;z-index: 1000;white-space: nowrap"></div>
@@ -102,9 +120,9 @@ body{
 				<div class="col-md-8 col-sm-7 col-xs-12 col-md-offset-1 col-sm-offset-1">
 					<ul class="list-inline head">
 						<li>
-							<a href="">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="/c/hzj/homeUrl">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a th:href="@{/view/sjrz}">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
 							<a href="">帮助中心</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
@@ -122,7 +140,7 @@ body{
 						<li>
 							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif" id="eif"></span></a>
 						</li>
 
 					</ul>
@@ -136,137 +154,33 @@ body{
 	<div class="fg-line"></div>
 	<dl> 
 	
-        <dd>
-        	<div class="fg-left"><span>1小时前</span></div>
-            <div class="fg-right">
-            <h4>李**购了10元</h4>
-           
-            </div>
-        </dd>
-        <dd>
-        	<div class="fg-left"><span>2小时前</span></div>
-            <div class="fg-right">
-            <h4>李**购了20元</h4>
-           
-            </div>
-        </dd>
-        <dd>
-        	<div class="fg-left"><span>3小时前</span></div>
-            <div class="fg-right">
-            <h4>李**购了30元</h4>
-         
-            </div>
-        </dd>
-        <dd>
-        	<div class="fg-left"><span>4小时前</span></div>
-            <div class="fg-right">
-            <h4>李**购了40元</h4>
-            
-            </div>
-        </dd>
-        <dd>
-        	<div class="fg-left"><span>5小时前</span></div>
-            <div class="fg-right">
-            <h4>李**购了50元</h4>
-            
-            </div>
-        </dd>
-        <dd>
-        	<div class="fg-left"><span>6小时前</span></div>
-            <div class="fg-right">
-            <h4>李**购了60元</h4>
-            
-            </div>
-        </dd>
+      
+   
+    
     </dl>
 </div>
 		
 	
 		
 		<div style="max-width: 640px;display: block;margin: auto">
-		<div class="title">我的积分：<span style="color: #FFFFFF;font-weight: bold;font-size: 20px;">100</span></div>
+		<div class="title">我的积分：<span style="color: #FFFFFF;font-weight: bold;font-size: 25px;" th:text="${session.userinfo.userintegral}" id="jifen">100</span></div>
+   
     <div id="allParent" class="Y-content" >
-        <div class="item i1">
+        
+        <div th:class="|item i${iterStat.index+1}| " th:each="temp,iterStat:${prizeList}">
+       
             <div class="parent">
                 <div class="face">
-                    <div class="jpBox">
-                        1金币
+                    <div class="jpBox" >
+                    <span th:text="${temp.prizename}"></span>
+                       <input type="hidden" th:value="${temp.prizeid}"/>
                     </div>
+                   
                 </div>
                 <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
             </div>
         </div>
-        <div class="item i2">
-            <div class="parent">
-                <div class="face">
-                    <div class="jpBox">
-                        10积分
-                    </div>
-                </div>
-                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
-            </div>
-        </div>
-        <div class="item i3">
-            <div class="parent">
-                <div class="face">
-                    <div class="jpBox">
-                        5金币
-                    </div>
-                </div>
-                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
-            </div>
-        </div>
-        <div class="item i4">
-            <div class="parent">
-                <div class="face">
-                    <div class="jpBox">
-                    20积分
-                    </div>
-                </div>
-                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
-            </div>
-        </div>
-        <div class="item i5">
-            <div class="parent">
-                <div class="face">
-                    <div class="jpBox">
-                     30积分
-                    </div>
-                </div>
-                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
-            </div>
-        </div>
-        <div class="item i6">
-            <div class="parent">
-                <div class="face">
-                    <div class="jpBox">
-                       8金币
-                    </div>
-                </div>
-                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
-            </div>
-        </div>
-        <div class="item i7">
-            <div class="parent">
-                <div class="face">
-                    <div class="jpBox">
-                        再来一次
-                    </div>
-                </div>
-                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
-            </div>
-        </div>
-        <div class="item i8">
-            <div class="parent">
-                <div class="face">
-                    <div class="jpBox">
-                        50金币
-                    </div>
-                </div>
-                <div class="back"><img src="/Public/images/a1.png" style="width: 100%;height: 100%"></div>
-            </div>
-        </div>
-        <div class="selectBox" >
+        <div class="selectBox" id="choujiang" >
             <div class="parent">
                 <div class="face">
                     <div class="jpBox">
@@ -330,7 +244,7 @@ body{
 								<p>
 									<ul class="list-inline">
 										<li>
-											<a href="">商家入驻</a>
+											<a th:href="@{/view/sjrz}">商家入驻</a>
 										</li>
 										<li>
 											<a href="">帮助中心</a>
@@ -368,7 +282,7 @@ body{
 				<nav class="footerxs navbar navbar-default navbar-fixed-bottom visible-xs-block " style="padding: 10px;background-color:#101010;">
 
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-thumbs-down"></span>
-						<a href="">商家入驻</a>
+						<a th:href="@{/view/sjrz}">商家入驻</a>
 					</div>
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-question-sign"></span>
 						<a href="">帮助中心</a>
@@ -459,23 +373,59 @@ body{
 	</body>
 	
 	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
-				<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/Public/js/tool.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/Public/js/getunread.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-    
+	//读取未读信息
+	unreadinfo();
+	
+	//加载初始化对
     window.onload = function(){
       var obj =   $("#allParent").rotateEx({
+    	
+    	  //达到最大翻牌数的回调
             maxNumCall:function(){
                 showTool("翻到了最大的数量啦");
             },
+            
+          //翻牌的时候动画开始调用回调
             clickAmtStart:function(o1,o2,o3){
-                showTool("恭喜抽中"+o3.innerText);
-                $(".selectBox").css("background-color","red");
+            	var d=$(o3);
+            	var v=d.children().children().children().children("input").val();
+            	var name=d.text();
+            	//抽奖
+            	$.ajax("/c/lz/user/lottery/"+v,{
+        			type:"PUT",
+        			contentType:"application/json",
+        			dataType:"json",
+        			success:function(data){
+        				if(data.code==200){
+        					
+        					showTool("恭喜抽中"+name);
+        	                $(".selectBox").css("background-color","red");
+        	              
+        	                
+        	              //读取用户金币
+        	            	$.getJSON("/c/lz/user",function(result){
+        	            		$("#jifen").text(result.userintegral);
+        	            	})
+        	            	
+        				}
+        			}
+        		});
+            	
+            	
             },
+          	//翻牌的时候动画结束调用回调
             clickAmtEnd:function(o1,o2){
                 //o2显示所有奖品
                 o2.allFace();
             },
-            changeAmtCall:function(o1,o2){
+            
+            //牌从正面切换到反面动画结束调用
+            changeAmtCall:function(o1,o2,allO){   
+            	allO.option.noFaceEle.length=0;
                 //随机修改奖品的位置
                 obj.reset();
             }
@@ -485,19 +435,77 @@ body{
         
     }
     
-   var _box =$('#box');
-var _interval=3000; //刷新间隔时间3秒
+	
+	
+	  
+        	
+            
+            
+  //初始化中奖记录      
+  getWinningRecord();         
+       
+function getWinningRecord(){
+	
+	
+	
+	
+	
+		//读取中奖记录
+	$.getJSON("/c/lz/winningrecord",function(json){
+		$.each(json,function(i,item){ 
+			var time=timeCheckFun(new Date(item.time).getTime(),new Date().getTime());
+	var dd=$("<dd><div class='fg-left'><span>"+time+"</span></div><div class='fg-right'><h4>"+item.content+"</h4></div></dd>");
+	$("#box dl").append(dd);
+	});
+	
+		
+	});
+	}
+	
+	
+	
+	//WebSocket
+			if (window.WebSocket) {
+		var mysocket = new WebSocket("ws://127.0.0.1:1001/ws/sys");
+		mysocket.onopen = function() {
+			console.debug('建立连接');
+		}
+		mysocket.onclose = function() {
+			console.debug('关闭连接');
+		}
+		mysocket.onerror = function() {
+			console.debug('通讯异常');
+		}
+
+		mysocket.onmessage = function(e) {
+			if(e.data=="reload"){
+				
+				setTimeout(function(){
+					gdb();
+				},1000);
+			}
+		}
+	} else {
+		alert("不支持WebSocket");
+	}
+	
+	
+	
+	
 function gdb(){
-	$("<dd style='height:0px;'><div class='fg-left'><span>1小时前</span></div><div class='fg-right'><h4>王**购了60元</h4></div></dd>").prependTo('#box dl');
-	var _first=$('#box dl dd:first');
-	_first.animate({height: '+53px'}, "slow");
-	var _last=$('#box dl dd:last');
-	_last.remove();
-	setTimeout(function(){
-		gdb();
-	},_interval);
+	
+	//读取最新中奖记录
+	$.getJSON("/c/lz/OnereWinningRecording",function(result){
+		var time=timeCheckFun(new Date(result.time).getTime(),new Date().getTime());
+		$("<dd style='height:0px;'><div class='fg-left'><span>"+time+"</span></div><div class='fg-right'><h4>"+result.content+"</h4></div></dd>").prependTo('#box dl');
+		var _first=$('#box dl dd:first');
+		_first.animate({height: '+53px'}, "slow");
+		var _last=$('#box dl dd:last');
+		_last.remove();
+		
+	});
+	
 }; 
-gdb();
    
    
 </script>

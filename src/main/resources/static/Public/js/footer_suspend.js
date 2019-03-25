@@ -46,10 +46,9 @@ $(document).ready(function() {
 
 		});
 
-		
 
-	
-	
+
+		
 
 		/*底部二维码*/
 

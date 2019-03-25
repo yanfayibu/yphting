@@ -107,6 +107,7 @@
 	</head>
 
 	<body>
+		<audio id="myaudio" src=""   autoplay="autoplay"  hidden="true" style="display:none" ></audio>
 		<!--head-->
 		<div class="container-fluid" style="background-color: #FFFAE1;">
 
@@ -115,9 +116,9 @@
 				<div class="col-md-8 col-sm-7 col-xs-12 col-md-offset-1 col-sm-offset-1">
 					<ul class="list-inline head">
 						<li>
-							<a href="">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="/c/hzj/homeUrl">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a th:href="@{/view/sjrz}">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
 							<a href="">帮助中心</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
@@ -135,7 +136,7 @@
 						<li>
 							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif" id="eif"></span></a>
 						</li>
 
 					</ul>
@@ -167,7 +168,7 @@
 					<ul class="nav navbar-nav ">
 
 						<li>
-							<a href="">商家中心</a>
+							<a href="/c/smy/user/getUserBySjzx">商家中心</a>
 						</li>
 						<li class="active">
 							<a href="/api/Forward_view/user/center">个人中心</a>
@@ -178,7 +179,7 @@
 							<span class="my_nav_i"></span>
 						</li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" id="count"></span></a>
 						</li>
 
 					</ul>
@@ -212,12 +213,58 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 50px;border-bottom: 1px #e6e6e6 solid;">
 						
-								<el-steps :active="stepVal2" align-center>
+					<el-steps :active="stepVal2" align-center  v-if="RefundVO.order.refundstatus==1">
 									<el-step title="买家提交申请" description="服务单已申请成功，待商家处理中"></el-step>
-									<el-step title="商家 处理退款申请" description="商家不同意退款"></el-step>
+									<el-step title="商家 处理退款申请" description="待商家处理"></el-step>
 									<el-step title="完成" description="退款成功"></el-step>
-								</el-steps>
+									
+					</el-steps>
 							
+					<el-steps :active="stepVal3" align-center  v-if="RefundVO.order.refundstatus==2">
+								<el-step title="买家提交申请" description="服务单已申请成功，待商家处理中"></el-step>
+									<el-step title="商家 处理退款申请" description="商家不同意"></el-step>
+									<el-step title="完成" description="退款被拒绝"></el-step>
+									
+					</el-steps>	
+					
+				 <el-steps :active="stepVal3" align-center  v-if="RefundVO.order.refundstatus==3">
+									<el-step title="买家提交申请" description="服务单已申请成功，商家不同意退款"></el-step>
+									<el-step title="管理员介入" description="管理员待审核" v-if="RefundVO.adminstatus==1 "></el-step>
+									<el-step title="管理员介入" description="管理员同意退款" v-if="RefundVO.adminstatus==2"></el-step>
+									<el-step title="管理员介入" description="管理员未同意" v-if="RefundVO.adminstatus==3"></el-step>
+									<el-step title="完成" description="退款申请中" v-if="RefundVO.adminstatus==1"></el-step>
+									<el-step title="完成" description="退款完成" v-if="RefundVO.adminstatus==2"></el-step>
+									<el-step title="完成" description="退款被管理员拒绝" v-if="RefundVO.adminstatus==3"></el-step>
+									
+						</el-steps>	
+						 
+						
+						
+						<el-steps :active="stepVal3" align-center  v-if="RefundVO.order.refundstatus==4">
+									<el-step title="买家提交申请" description="服务单已申请成功，商家不同意退款"></el-step>
+									<el-step title="管理员处理" description="管理员拒绝退款"></el-step>
+									<el-step title="完成" description="退款被管理员拒绝"></el-step>
+									
+						</el-steps>	
+						
+						
+						<el-steps :active="stepVal3" align-center  v-if="RefundVO.order.refundstatus==5">
+									<el-step title="买家提交申请" description="服务单已申请成功，待商家处理中"></el-step>
+									
+									<el-step title="商家 处理退款申请" description="商家接受退款"></el-step>
+									<el-step title="完成" description="退款成功"></el-step>
+									
+						</el-steps>	
+						
+						
+						
+						<el-steps :active="stepVal3" align-center  v-if="RefundVO.order.refundstatus==6">
+									<el-step title="买家提交申请" description="服务单已申请成功，待商家处理中"></el-step>
+									
+									<el-step title="买家操作取消退款" description="买家取消退款"></el-step>
+									<el-step title="完成" description="退款取消"></el-step>
+									
+						</el-steps>
 						</div>
 					</div>
 
@@ -227,8 +274,15 @@
 								<li>
 									<p><strong style="color: #959595;" class="hidden-xs">协商记录</strong>
 
-										<a href="javascript:void(0)" class="pull-right"  onclick="sendmessage()">站内信商家</a><span class="pull-right" style="color:#959595 ;">|</span>
-										<a href="javascript:void(0)" class="pull-right" >申请管理员介入</a>
+												<a href="javascript:void(0)" class="pull-right"  onclick="sendmessage(this) " >
+													<input type="hidden" :value="RefundVO.merchant.userimgpath">
+													<input type="hidden" :value="RefundVO.merchant.userid" >
+													<input type="hidden" :value="RefundVO.merchant.shopname" >
+													站内信商家</a>
+<span class="pull-right" style="color:#959595 ;" v-if="RefundVO.auditstatus==3 && RefundVO.order.refundstatus!=3">|</span>
+										<a href="javascript:void(0)" class="pull-right" v-if="RefundVO.auditstatus==3 && RefundVO.order.refundstatus!=3" onclick="adminjieru(this)">申请管理员介入
+										<input type="hidden" :value="RefundVO.order.orderid" >
+										</a>
 									</p>
 									<p><label style="font-weight: 500;">状态：</label>
 									<span v-if="RefundVO.order.refundstatus==1">退款申请中</span>
@@ -239,34 +293,50 @@
 									<span v-else-if="RefundVO.order.refundstatus==6">退款取消</span>
 									</p>
 								</li>
+								
+								
+								
+								<li v-if="RefundVO.admintime!=null">
+									<p><label>管理员协商结果</label><span v-text="RefundVO.admintime">2019-03-05 08:00</span></p>
+									<p style="color: #959595;"><label>退款金币：</label><span v-text="RefundVO.actualrefundmoney">1</span>金币</p>
+									<p style="color: #959595;"><label>退款说明：</label><span v-text="RefundVO.adminremarks">121232323</span></p>
+									<!-- <p><a href="" target="_blank"><img src="" width="150px"/></a></p> -->
+								</li>
+								
+								
 
-								<li>
-									<p><label>商家</label><a href="" v-text="RefundVO.merchant.username">巨蟹boy7730</a><span v-text="RefundVO.audittime">2019-01-03 16:10</span></p>
-									<p style="color: #959595;"><label>商家</label><span  v-text="RefundVO.merchant.username">（巨蟹boy7730）</span> <label  v-text="RefundVO.businessremarks">不同意退款部分金币</label></p>
-									<p style="color: #959595;"><label>退款金币：</label><span v-text="RefundVO.actualrefundmoney"></span>金币</p>
-									<p style="color: #959595;"><label>退款说明：</label><span v-text="RefundVO.refundexplain">不同意</span></p>
-										<p><a :href="RefundVO.refundimg" target="_blank"><img :src="RefundVO.refundimg" width="150px"/></a></p>
+								<li v-if="RefundVO.merchant.shopname!=null">
+									<p><label>商家</label><a href="" v-text="RefundVO.merchant.shopname">巨蟹boy7730</a><span v-text="RefundVO.audittime">2019-01-03 16:10</span></p>
+									<p style="color: #959595;" v-if="RefundVO.auditstatus==3"><label>商家</label>(<span v-text="RefundVO.merchant.shopname">巨蟹boy4650</span>) <label >不同意退款部分金币</label></p>
+									<p style="color: #959595;" v-else-if="RefundVO.auditstatus==2"><label>商家</label>(<span v-text="RefundVO.merchant.shopname">巨蟹boy4650</span>) <label >同意退款部分金币</label></p>
+									<p style="color: #959595;"><span v-if="RefundVO.auditstatus==3"><label>退款金币：</label><span>0</span>金币</span>
+									<span v-if="RefundVO.auditstatus==2"><label>退款金币：</label><span v-text="RefundVO.actualrefundmoney"></span>金币</span>
+									</p>
+									<p style="color: #959595;"><label>退款说明：</label><span v-text="RefundVO.businessremarks">不同意</span></p>
+									<!-- <p><a href="" target="_blank"><img src="" width="150px"/></a></p> -->
 								</li>
 								<li>
-									<p><label>买家</label><a href="" v-text="RefundVO.user.username">@Mr. Li</a><span v-text="RefundVO.merchant.username">2019-01-03 16:09</span></p>
-									<p style="color: #959595;"><label>买家</label><span v-text="RefundVO.user.username">（@Mr. Li）</span> 于<label>2019-01-03 16:09</label>创建
-									<p style="color: #959595;"><label>申请金额：</label><span>1</span>金币</p>
-									<p style="color: #959595;"><label>退款原因：</label><span>不满意</span></p>
-									<p style="color: #959595;"><label>退款说明：</label><span>请尽快退款</span></p>
-									<p><a href="../Uploads/images/章若楠6.jpg" target="_blank"><img src="../Uploads/images/章若楠6.jpg" width="150px"/></a></p>
+									<p><label>买家</label><a href="" v-text="RefundVO.user.username" >@Mr. Li</a><span v-text="RefundVO.applicationtime">2019-01-03 16:09</span></p>
+									<p style="color: #959595;">创建了退款申请</p>
+									<p style="color: #959595;"><label>申请金额：</label><span v-text="RefundVO.applyrefundmoney">1</span>金币</p>
+									<p style="color: #959595;"><label>退款原因：</label><span v-text="RefundVO.refundreason">垃圾</span></p>
+									<p style="color: #959595;"><label>退款说明：</label><span v-text="RefundVO.refundexplain">请尽快退款</span></p>
+									<p><a :href="RefundVO.refundimg" target="_blank"><img :src="RefundVO.refundimg" width="150px"/></a></p>
 								</li>
 							</ul>
 						</div>
 						
 						<div class="col-lg-2 col-md-11 col-sm-8 hidden-xs" >
 							<ul class="list-unstyled sjinfo">
-								<li><img src="../Uploads/images/章若楠6.jpg" width="134px" height="89px"/></li>
-								<li><a href="">荔枝</a></li>
-								<li><a href="">你真的喜欢？</a></li>
-								<li><img src="/Public/images/i_3.png"/><span>1.0</span></li>
-								<li style="color: #959595;"><span>预定日期</span><span>2019-01-03 14:50</span></li>
-								<li><span style="color: #959595;">人数</span><span>1</span></li>
-								<li><span style="color: #959595;">总计</span><img src="/Public/images/i_3.png"/><span>1.0</span></li>
+								<li><img :src="RefundVO.service.servicecoverimg" width="134px" height="89px"/></li>
+								<li><a href="" v-text="RefundVO.service.servicetitle">荔枝</a></li>
+								<li><a href="" v-text="RefundVO.service.servicefutitle">你真的喜欢？</a></li>
+								<li><img src="/Public/images/i_3.png"/><span v-text="RefundVO.service.serviceprice">1.0</span></li>
+								<li style="color: #959595;"><span>预定日期</span><span v-text="RefundVO.order.ordertime">2019-01-03 14:50</span></li>
+								<li><span style="color: #959595;" v-if="RefundVO.order.population!=0">人数<span v-text="RefundVO.order.population">1</span>人</span>
+								<span style="color: #959595;" v-if="RefundVO.order.number!=0">份数<span v-text="RefundVO.order.number">1</span>份</span>
+								</li>
+								<li><span style="color: #959595;">总计</span><img src="/Public/images/i_3.png"/><span v-text="RefundVO.order.smallplan">1.0</span></li>
 							</ul>
 						</div>
 					</div>
@@ -309,7 +379,7 @@
 								<p>
 									<ul class="list-inline">
 										<li>
-											<a href="">商家入驻</a>
+											<a th:href="@{/view/sjrz}">商家入驻</a>
 										</li>
 										<li>
 											<a href="">帮助中心</a>
@@ -347,7 +417,7 @@
 				<nav class="footerxs navbar navbar-default navbar-fixed-bottom visible-xs-block " style="padding: 10px;background-color:#101010;">
 
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-thumbs-down"></span>
-						<a href="">商家入驻</a>
+						<a th:href="@{/view/sjrz}">商家入驻</a>
 					</div>
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-question-sign"></span>
 						<a href="">帮助中心</a>
@@ -409,15 +479,17 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" style="letter-spacing:4px ;color: #959595;">与<span style="color: black;">荔枝</span>站内信</h4>
+						<h4 class="modal-title" style="letter-spacing:4px ;color: #959595;">与<span style="color: black;" id="name">荔枝</span>站内信</h4>
 					</div>
 					<div class="modal-body">
 
-						<img src="../Uploads/images/章若楠6.jpg" width="60px" height="60px" style="border-radius: 50%;" />
+						<img src="" width="60px" height="60px" style="border-radius: 50%;" />
 						<textarea class="form-control" rows="3" style="width: 80%;display: inline-block;vertical-align: middle;"></textarea>
 
 					</div>
 					<div class="modal-footer">
+					
+					<input type="hidden" value="2" id="newstype">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 						<button type="button" class="btn btn-primary" onclick="send()">发送</button>
 					</div>
@@ -429,25 +501,35 @@
 	<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
-
+<script src="/Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/Public/js/getunread.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/Public/js/vue.min.js"></script>
+			
 	<script src="/Public/js/element.min.js"></script>
-
+<script src="/Public/js/stochastic.js"></script>
 	<script>
 	
 	
+	//读取未读信息
+	unreadinfo();
 	
-	
-	
+	$(function(){
+		
 		var listVMrefddetails=new Vue({
 			el: '#listVMrefddetails',
 			data: {
 				stepVal1: 1,
 				stepVal2: 2,
 				stepVal3: 3,
-				RefundVO:{}
+				RefundVO:{
+					order:{},
+					merchant:{},
+					user:{},
+					service:{}
+					
+				}
 			},
 			methods: {
 				
@@ -456,6 +538,8 @@
 					
 					$.getJSON("/c/lz/dsd/user/queryMyrefundDetailed/"+orderid,function(json){
 						listVMrefddetails.RefundVO=json[0];
+						
+						
 				});
 				}
 				
@@ -472,21 +556,103 @@
 					window.sessionStorage.removeItem("orderid");
 				}
 				
+				
 			}
 			});
 
+	})
+		
+		
+		
+		
 		//站内联系
-		function sendmessage() {
-			$(".modal").modal("show");
-		}
-		//发送
-		function send() {
-			if($("textarea").val() == "") {
-				alert("请填写信件内容！")
-			} else {
-				$(".modal").modal("hide");
+		var addressid=0;
+			 function sendmessage(obj){
+				
+			$("#name").text($(obj).children("input:eq(2)").val());
+			$(".modal-body img").attr("src",$(obj).children("input:eq(0)").val());
+			addressid=$(obj).children("input:eq(1)").val();
+		$(".modal").modal("show");
 			}
-		}
+			 //发送
+			 function send(){
+			 	if($("textarea").val()==""){
+			 		alert("请填写信件内容！")
+			 		
+			 	}
+			 	else{
+			 		
+			 	
+			 		
+			 		var News={};
+			 		bossRand(1,9,function(num){
+			 			
+			 			News["addressee"]=addressid;
+				 		News["content"]=$("textarea").val();
+				 		News["newstype"]=$("#newstype").val();
+				 		News["messagegroup"]=parseInt(num);
+				 		$.ajax("/c/lz/user/Addnews", {
+									type : "POST",
+									dataType : "json",
+									contentType:"application/json",
+									data:JSON.stringify(News),
+									success : function(msg) {
+										if(msg.code==200){
+											$(".modal").modal("hide");
+											$("textarea").val("");
+											showTool("发送成功！");
+											setTimeout(function(){
+												window.location.reload();
+											},1000);	
+											
+										}
+										else{
+											$(".modal").modal("hide");
+											$("textarea").val("");
+											showTool("发送失败！")
+										}
+									}
+								});
+			 		})
+			 		
+			 		
+			 	}
+			 }
+		
+		
+			 
+			 //申请管理员介入
+			 function  adminjieru(obj){
+				 qikoo.dialog.confirm('确定申请管理员介入？',function(){
+						
+					 
+					 //执行
+						$.ajax("/c/lz/dsd/user/admingetinvolved/"+$(obj).children("input[type=hidden]").val(),{
+							type:"PUT",
+							dataType:"json",
+							success:function(result){
+								
+								if(result.code==200){
+									showTool("移交给管理员成功！");
+									
+									setTimeout(function(){
+										window.location.href="/api/Forward_view/user/myrefund";
+									},1000);
+								}
+								else if(result.code==500){
+									showTool("移交给管理员失败！");
+								}
+								
+								
+							}
+						}); 
+						 	
+			        },function(){
+						//alert("取消啦！");
+				});
+			 }
+		
+		
 	</script>
 
 </html>

@@ -27,6 +27,7 @@
 		<script src="/Public/js/jquery-1.12.4.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="/Public/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/Public/js/qikoo.js"></script>
+	<script src="/Public/js/jquery.messager.js" type="text/javascript" charset="utf-8"></script>
 	
 		<style type="text/css">
 			
@@ -197,6 +198,7 @@
 	</head>
 
 	<body>
+		<audio id="myaudio" src=""   autoplay="autoplay"  hidden="true" style="display:none" ></audio>
 		<!--head-->
 		<div class="container-fluid" style="background-color: #FFFAE1;">
 
@@ -205,9 +207,9 @@
 				<div class="col-md-8 col-sm-7 col-xs-12 col-md-offset-1 col-sm-offset-1">
 					<ul class="list-inline head">
 						<li>
-							<a href="">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a href="/c/hzj/homeUrl">首页</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
+							<a th:href="@{/view/sjrz}">商家入驻</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
 							<a href="">帮助中心</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
@@ -225,7 +227,7 @@
 						<li>
 							<a href="javascript:void(0)" onclick="signout()">退出</a>&nbsp;&nbsp;&nbsp;<span style="color: #C6C3B1;">|</span></li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo" style="position: relative;"><img src="/Public/images/e_i.png" /><span class="eif" id="eif"></span></a>
 						</li>
 
 					</ul>
@@ -257,7 +259,7 @@
 					<ul class="nav navbar-nav ">
 
 						<li>
-							<a href="">商家中心</a>
+							<a href="/c/smy/user/getUserBySjzx">商家中心</a>
 						</li>
 						<li class="active">
 							<a href="/api/Forward_view/user/center">个人中心</a>
@@ -268,7 +270,7 @@
 						
 						</li>
 						<li>
-							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;" th:text="${session.instationunread}"></span></a>
+							<a href="/api/Forward_view/user/Stationinfo">消息<span class="label label-danger" style="vertical-align: top;"  id="count"></span></a>
 						</li>
 
 					</ul>
@@ -331,9 +333,9 @@
 						</div>
 						<div class="col-lg-10" style="padding: 10px;margin-left: 1%;">
 							
-							<p style="padding-left:2rem;color: darkgray;font-size: 1.5rem;">
+							<p style="padding-left:1rem;color: darkgray;font-size: 1.5rem;letter-spacing: 2px">
 								<label style="color: red;">* 温馨提示：</label> 
-								本次售后服务将由 <span style="color: red;font-weight: bolder;" id="sjname"></span>为您提供
+								本次售后服务将由 <span style="color: red;font-weight: bolder;" >[[${refunds.user.shopname}]]</span>为您提供
 							</p>
 							<form class="form-horizontal">
 								
@@ -355,18 +357,17 @@
 
 			</label>
     		<div class="col-lg-9 col-md-8 col-sm-8">
-     		 <input type="text" class="form-control" id="tkjb" placeholder="" v-model="Refund.applyrefundmoney" onchange="changges(this)">
+     		 <input type="text" class="form-control"  v-model="Refund.applyrefundmoney" readonly="readonly">
+     		 <label style="padding: 10px;color: red;font-weight: bolder;letter-spacing: 2px">服务费0.1% 已扣除</label>
     		</div>
   </div>
   
   
   <div class="form-group" style="margin-top: 20px;">
-   			 <label  class="col-lg-1 col-md-2 col-sm-2 control-label" v-model="Refund.refundexplain">描述
-
-			</label>
+   			 <label  class="col-lg-1 col-md-2 col-sm-2 control-label" >描述</label>
     		<div class="col-lg-9 col-md-8 col-sm-8">
     			
-     		 <textarea class="form-control" rows="6" v-model="Refund.refundexplain"></textarea>
+     		 <textarea class="form-control" rows="6" v-model="Refund.refundexplain" id="ms"></textarea>
     		</div>
   </div>
   
@@ -433,7 +434,7 @@
 								<p>
 									<ul class="list-inline">
 										<li>
-											<a href="">商家入驻</a>
+											<a th:href="@{/view/sjrz}">商家入驻</a>
 										</li>
 										<li>
 											<a href="">帮助中心</a>
@@ -471,7 +472,7 @@
 				<nav class="footerxs navbar navbar-default navbar-fixed-bottom visible-xs-block " style="padding: 10px;background-color:#101010;">
 
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-thumbs-down"></span>
-						<a href="">商家入驻</a>
+						<a th:href="@{/view/sjrz}">商家入驻</a>
 					</div>
 					<div class=" col-xs-4 text-center"><span class="  glyphicon glyphicon-question-sign"></span>
 						<a href="">帮助中心</a>
@@ -536,100 +537,74 @@
 	<script src="/Public/js/footer_suspend.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/Public/js/vue.min.js"></script>
 	<script src="/Public/js/showTool.js" type="text/javascript" charset="utf-8"></script>
+			<script src="/Public/js/getunread.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 
-	var total=0;
 	
+	
+	//读取未读信息
+	unreadinfo();
 	
 	var VMfund=new Vue({
 		el:"#VMfund",
 		data:{
 			Refund:{
-				"refundreason":"尚未接单",
-				"refundimg":"",
-				"applyrefundmoney":0,
-				"refundexplain":"",
-				"orderid":""
-			},
+				refundreason:"描述不符",
+				refundimg:"",
+				applyrefundmoney:0,
+				refundexplain:"",
+				orderid:""
+				
+				
+			}
 		},
 		methods: {
 			
 			//提交
 			submits:function(){
-				
-				if(isNaN($("#tkjb").val())){ 
-					showTool("这不是数字");
-					$("#tkjb").val(total);
-					return;
-					} 
-				
-				if(parseFloat($("#tkjb").val())>total){
-					showTool("不能超过本订单金额");
-					$("#tkjb").val(total);
-					return;
-				}
-				
-				if(!validate($("#tkjb").val())){
-					$("#tkjb").val(total);
-					return;
-				}
-				if(VMfund.Refund.refundexplain==""){
-					showTool("请填写描述信息");
 					
-					return ;
-				}
 				
-				if(VMfund.Refund.applyrefundmoney=="" || VMfund.Refund.applyrefundmoney==0){
-					showTool("请填写退款金额");
-					return ;
-				}
-				VMfund.Refund.applyrefundmoney=parseFloat($("#tkjb").val())*1;
-				var Refund=VMfund.Refund;
-				$.ajax("/c/lz/dsd/user/addRefund", {
-					type : "POST",
-					dataType : "json",
-					contentType:"application/json",
-					data:JSON.stringify(Refund),
-					success : function(msg) {
-						if(msg.code==200){
-						
-							qikoo.dialog.alert("提交成功");
+				if($("#ms").val().trim()!=""){
+					
+					$.ajax("/c/lz/dsd/user/addRefund", {
+						type : "POST",
+						dataType : "json",
+						contentType:"application/json",
+						data:JSON.stringify(VMfund.Refund),
+						success : function(msg) {
+							if(msg.code==200){
 							
-							$(".console-btn-confirm").click(function(){
-								window.location.href="myrefund";
-							});
-							//定时跳转2s
-							window.setTimeout(function(){
-								window.location.href="myrefund";
-							},2000);
+								qikoo.dialog.alert("提交成功");
+								
+								$(".console-btn-confirm").click(function(){
+									window.location.href="myrefund";
+								});
+								//定时跳转2s
+								window.setTimeout(function(){
+									window.location.href="myrefund";
+								},2000);
+								
+							}
+							else{
+								showTool("提交失败");
+							}
 							
 						}
-						else{
-							showTool("提交失败");
-						}
-						
-					}
-				
-				
-			});
+					
+					
+				});
+				}
+				else{
+					
+					showTool("请填写退款描述");
+					
+				}
 				
 			}
 		},
 		created:function(){
-			
-			if (sessionStorage.getItem("orde")!= null) {
-			     var oders=JSON.parse(sessionStorage.getItem("orde"));
-			     this.Refund.orderid=oders.orderid;
-			     this.Refund.applyrefundmoney=oders.moeny;
-			     total=oders.moeny;
-			     $("#sjname").text("@"+oders.name);
-			}
-			
-			else{
-				showTool("系统繁忙！");
-				window.sessionStorage.removeItem("orde");
-			}
-			
+			this.Refund.applyrefundmoney="[[${refunds.smallplan}]]";
+			this.Refund.orderid="[[${refunds.orderid}]]";
 			
 			
 			
@@ -667,31 +642,6 @@
 	
 		
 		
-		//改变值时
-		function changges(obj){
-			
-			if(isNaN($(obj).val())){ 
-				showTool("这不是数字");
-				$(obj).val(total);
-				return;
-				} 
-			
-			if(parseFloat($(obj).val())>total){
-				showTool("不能超过本订单金额");
-				$(obj).val(total);
-				return;
-			}
-			
-			if(!validate($(obj).val())){
-				$(obj).val(total);
-				return;
-			}
-		}
-		
-		//判断非负数
-		function validate(num){
-   return /^\d+(\.{0,1}\d+){0,1}$/ .test(num);
- }
 		
 		
 	</script>

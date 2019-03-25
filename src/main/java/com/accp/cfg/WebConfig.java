@@ -1,8 +1,10 @@
 package com.accp.cfg;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 
 @Configuration
@@ -20,6 +22,17 @@ public class WebConfig implements WebMvcConfigurer {
 				// 设置允许的方法
 				.allowedMethods("*");
 	}
+	
+	/**
+	 * 
+	* @title: serverEndpointExporter 
+	* @description: 注册WebSocket endpoint站点服务【非常重要】
+	* @return
+	 */
+	@Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
+    }
 	
 	
 }

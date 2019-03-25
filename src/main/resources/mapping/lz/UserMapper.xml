@@ -64,7 +64,7 @@ UPDATE `user`
 
 
 <!-- map -->
-<resultMap type="NewVo" id="queryNews">
+<resultMap type="com.accp.vo.lz.NewVO" id="queryNews">
 		<id column="newsid" property="newsid"/>
 		<result column="thesender" property="thesender"/>
 		<result column="addressee" property="addressee"/>
@@ -78,6 +78,7 @@ UPDATE `user`
 		<result column="send" property="userrealname"/>
 		<result column="img" property="userimgpath"/>
 		<result column="sendname" property="username"/>
+		<result column="sendshopname" property="shopname"/>
 		</association>
 		<association property="ressee" javaType="User">
 		<id column="userID" property="userid"/>
@@ -90,7 +91,7 @@ UPDATE `user`
 
 <!-- 查询站内信息消息-->
 <select id="searchNew" resultMap="queryNews">
-SELECT b.`userRealName`  ,b.`userID`  , c.`userRealName` AS send ,c.`userName` AS sendname,c.`userID` AS sendID , a.`content` , a.`messageGroup` 
+SELECT b.`userRealName`  ,b.`userID` ,c.`shopName` AS sendshopname , c.`userRealName` AS send ,c.`userName` AS sendname,c.`userID` AS sendID , a.`content` , a.`messageGroup` 
 ,a.`newsID`, a.`newsType`,a.`readState`,a.`sendingTime`,c.`userImgPath` AS img
 FROM `news` a
 LEFT JOIN `user` b ON  a.`addRessee`=b.`userID`
@@ -115,8 +116,9 @@ UPDATE `news` SET `readState`=1
 
 <!-- 查询消息站内详情 -->
 <select id="Queryzndetails" resultMap="queryNews">
-SELECT b.`userRealName` AS Recipient ,b.`userID` AS RecipientID , c.`userRealName` AS send ,c.`userName` AS sendname,c.`userID` AS sendID , a.`content` , a.`messageGroup` 
-,a.`newsID`, a.`newsType`,a.`readState`,a.`sendingTime`,c.`userImgPath`
+
+SELECT b.`userRealName`  ,b.`userID` ,c.`shopName` AS sendshopname , c.`userRealName` AS send ,c.`userName` AS sendname,c.`userID` AS sendID , a.`content` , a.`messageGroup` 
+,a.`newsID`, a.`newsType`,a.`readState`,a.`sendingTime`,c.`userImgPath` AS img
 FROM `news` a
 LEFT JOIN `user` b ON  a.`addRessee`=b.`userID`
 LEFT JOIN `user` c ON  a.`theSender`=c.`userID`
@@ -314,7 +316,7 @@ SELECT * FROM `sharea` WHERE `pid`=2
 	
 	
 	<!-- 映射map -->
-	<resultMap type="EvaluationVO" id="myreview">
+	<resultMap type="com.accp.vo.lz.EvaluationVO" id="myreview">
 	<id column="serviceAppraiseID" property="serviceappraiseid"/>
 	<result column="serviceAppraiseContent" property="serviceappraisecontent"/>
 	<result column="serviceAppraiseDate" property="serviceappraisedate"/>
@@ -368,4 +370,175 @@ ORDER BY A.`serviceAppraiseDate`  DESC
 	INSERT INTO `goldnotes`(`userID`,`acquisitionMode`,`recordDate`,`recordDescribe`,`recordInAndOut`,`auditStatus`)
 	VALUES(#{gold.userid},#{gold.acquisitionmode},NOW(),#{gold.recorddescribe},#{gold.recordinandout},#{gold.auditstatus})
 	</insert>
+	
+	<!-- 查询奖品列表 -->
+	<select id="QueryPrizeList" resultType="prize">
+		SELECT * FROM `prize`
+	</select>
+	
+	<!-- 新增抽奖记录 -->
+	<insert id="addPrizerecord">
+	INSERT INTO `lotteryrecord`(`time`,`content`,`userid`)VALUES(#{lotter.time,jdbcType=TIMESTAMP},#{lotter.content},#{lotter.userid});
+	</insert>
+	
+	<!-- 查询奖品名称 -->
+	<select id="QueryPrizeName" resultType="java.lang.String">
+	SELECT `prizeName` FROM `prize` WHERE`prizeid`=#{prizeid}
+	</select>
+	
+	<!-- 查询中奖记录 -->
+	<select id="QueryLotteryrecord" resultType="Lotteryrecord">
+	SELECT * FROM `lotteryrecord` ORDER BY `time` DESC
+	</select>
+	
+	<!-- 查询最新的一条中奖记录 -->
+	<select id="QueryOneLotteryrecord" resultType="Lotteryrecord">
+	SELECT * FROM `lotteryrecord` 
+	ORDER BY `time` DESC LIMIT 0,1
+	</select>
+	
+	<!-- 查询商品星数 -->
+	<select id="QueryProductstar" resultType="string">
+	SELECT  SUM(`serviceAppraiseLevel`)/COUNT(*)/5*100 FROM `evaluationservice` WHERE `serviceID`=#{serviceID}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<resultMap type="com.accp.vo.lz.FavoriteProductVO" id="FavoriteProductMap">
+	<collection property="servicecollection" javaType="Servicecollection">
+	<id column="serColleID" property="sercolleid"/>
+	</collection>
+	
+	<collection property="services" javaType="Services">
+		<id column="serviceID" property="serviceid"/>
+		<result column="serviceTitle" property="servicetitle"/>
+		<result column="serviceCoverImg" property="servicecoverimg"/>
+		<result column="servicePrice" property="serviceprice"/>
+	</collection>
+	
+	<collection property="user" javaType="User">
+	<id column="userID" property="userid"/>
+	<result column="userName" property="username"/>
+	</collection>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 查询收藏商品 -->
+	<select id="QueryFavoriteProduct" resultMap="FavoriteProductMap">
+	
+SELECT s.`serColleID`, v.`serviceID`, v.`serviceTitle`, v.`serviceCoverImg`,v.`servicePrice` ,u.`userID`,u.`userName` FROM `servicecollection` AS s
+LEFT JOIN `services` AS v ON s.`serviceID`=v.`serviceID`
+LEFT JOIN `user` AS u ON s.`userID`=u.`userID`
+LEFT JOIN `servicetype` AS t ON v.`stid`=t.`stid`
+<where>
+u.`userID`=#{userid} 
+<if test="name!=null and name!=''">
+AND (u.`shopName` LIKE '%${name}%' OR  v.`servicetitle` LIKE '%${name}%') 
+</if>
+<if test="stid!=0 and stid!=null">
+AND t.`stid`=#{stid}
+</if>
+</where>
+	</select>
+	
+	
+	
+	
+	
+	<resultMap type="com.accp.vo.lz.ServiceTypeVO" id="QueryServiceTypeMap">
+	<id column="stid" property="stid"/>
+	<result column="stName" property="stname"/>
+	<result column="suliang" property="sum" />
+	</resultMap>
+	<!--查询收藏服务类别 -->
+	<select id="QueryServiceType" resultMap="QueryServiceTypeMap">
+SELECT D.`stid`, D.`stName`, COUNT(*)  AS suliang  FROM `servicecollection`  A
+LEFT JOIN `services` B ON A.`serviceID`=B.`serviceID`
+LEFT JOIN `user`  C ON A.`userID`=C.`userID`
+LEFT JOIN `servicetype` D ON B.`stid`=D.`stid`
+WHERE C.`userID`=#{userid}
+GROUP BY D.`stid`
+	</select>
+	
+	
+	<!-- 删除收藏 -->
+	<delete id="delteservicecollection">
+	DELETE FROM `servicecollection` WHERE`serColleID`=#{sercolleid}
+	</delete>
+	
+	
+	
+	
+	<resultMap type="com.accp.vo.lz.RecommendVO" id="QueryrecommendMap">
+	<association property="user" javaType="User">
+	<id column="userID" property="userid"/>
+	<result column="userImgPath" property="userimgpath"/>
+	<result column="userName" property="username"/>
+	<result column="shopName" property="shopname"/>
+	</association>
+	<association property="services" javaType="Services">
+	<id column="serviceID" property="serviceid"/>
+	<result column="serviceTitle" property="servicetitle"/>
+	<result column="servicePrice" property="serviceprice"/>
+	<result column="stid" property="stid"/>
+	<result column="serviceCoverImg" property="servicecoverimg"/>
+	</association>
+	</resultMap>
+	<!-- 查询推荐服务 -->
+	<select id="Queryrecommend" resultMap="QueryrecommendMap">
+SELECT B.`userID`,B.`userImgPath`,B.`userName`,B.`shopName`,A.`serviceID`,A.`serviceTitle`,A.`servicePrice`,A.`stid`,A.`serviceCoverImg` FROM `services` A
+LEFT JOIN `user` B ON A.`userID`=B.`userID`
+WHERE A.`shelfState`=1 AND A.`auditStatus`=2  AND A.`recommendBool`=1 
+ORDER BY A.`releaseTime` DESC
+LIMIT 0,10
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<resultMap type="com.accp.vo.lz.BottomAdVO" id="QueryBottomAdVOMap">
+	<association property="advertisementtype" javaType="Advertisementtype">
+	<id column="atpx" property="atpx"/>
+	</association>
+	<association property="advertisement" javaType="Advertisement">
+	<id column="atitle" property="atitle"/>
+	<result column="aimgPath" property="aimgpath"/>
+	<result column="apcUrl" property="apcurl"/>
+	<result column="aappUrl" property="aappurl"/>
+	<result column="adescribe" property="adescribe"/>
+	</association>
+	</resultMap>
+	
+	<!-- 查询底部加入我们上方广告 -->
+	<select id="QueryBottomAdVO" resultMap="QueryBottomAdVOMap">
+SELECT  A.`atpx`,B.`atitle`,B.`aimgPath`,`apcUrl`,B.`aappUrl`,B.`adescribe` FROM  `advertisementtype` A
+INNER JOIN `advertisement` B ON B.`atid`=A.`atid`
+WHERE A.`atid`=3
+	</select>
+	<!-- 查询系统配置表 -->
+	<select id="Querysysteminfo" resultType="System">
+	SELECT * FROM `system` LIMIT 0,1
+	</select>
  </mapper>

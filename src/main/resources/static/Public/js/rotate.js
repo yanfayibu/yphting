@@ -565,6 +565,7 @@
         };
         rotateObj.init();
         rotateObj.indexAmtStart = function(){
+        	
             if(isClick){
                 defOpt.clickAmtStart(THIS,rotateObj,clickEle,o);
             }
@@ -588,15 +589,30 @@
                 });
             }
         };
-        var tapEle = this.find(".selectBox");
+        var tapEle = this.find("#choujiang");
         //翻牌
         tapEle.on(defOpt.clickName,function(){
-            if(rotateObj.type==="allFace"){
-                rotateObj.allBack();
-                
-                $(".selectBox").css("background-color","#ADADAD");
-            }
-            
+        	
+        	//读取用户积分是否足够
+        	$.getJSON("/c/lz/user/Queryuserintegral",function(json){
+				
+        		if(json.code=="200"){
+        			if(rotateObj.type==="allFace"){
+                        rotateObj.allBack();
+                        //设置8张不能点击
+                        defOpt.noFaceEle=[0,1,2,3,4,5,6,7];
+                        $("#choujiang").css("background-color","#ADADAD");
+                    }	
+        		}
+        		else{
+        			qikoo.dialog.alert("积分不足");
+        			$(".console-btn-confirm").click(function(){
+        				 
+					});
+        			 
+        		}
+				
+			});	
         });
         var allEle = this.find("."+defOpt.itemClass);
         function testF(){
@@ -612,6 +628,7 @@
         //单翻
         allEle.on(defOpt.clickName,function(e){
             e.stopPropagation();
+            
             if(rotateObj.type==="allFace"){
                 return
             }
@@ -628,6 +645,7 @@
                clickEle = this;
                rotateObj.faceIndex(index);
            }
+          
         });
         //随机打乱奖项
         o.reset = function(){

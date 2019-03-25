@@ -15,12 +15,19 @@ import com.accp.pojo.Goldnotes;
 import com.accp.pojo.Integralrecord;
 import com.accp.pojo.Languagetype;
 import com.accp.pojo.Login;
+import com.accp.pojo.Lotteryrecord;
 import com.accp.pojo.Majortype;
 import com.accp.pojo.News;
+import com.accp.pojo.Prize;
 import com.accp.pojo.Sharea;
+import com.accp.pojo.System;
 import com.accp.pojo.User;
+import com.accp.vo.lz.BottomAdVO;
 import com.accp.vo.lz.EvaluationVO;
+import com.accp.vo.lz.FavoriteProductVO;
 import com.accp.vo.lz.NewVO;
+import com.accp.vo.lz.RecommendVO;
+import com.accp.vo.lz.ServiceTypeVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -34,7 +41,7 @@ import com.github.pagehelper.PageInfo;
  * 注意：本内容仅限于公司内部传阅，禁止外泄以及用于其他的商业目 
  */
 
-@Service
+@Service("userbiz")
 @Transactional(propagation = Propagation.SUPPORTS, isolation = Isolation.READ_COMMITTED, readOnly = true)
 @SuppressWarnings("all")
 public class UserBiz {
@@ -173,6 +180,72 @@ public class UserBiz {
 		public  boolean addGoldRecording(Goldnotes gold) {
 		return userdao.addGoldRecording(gold)>0;
 				}
-				
+		
+		
+		
+		//奖品列表
+		public  List<Prize> QueryPrizeList(){
+			return userdao.QueryPrizeList();
+		}
+		
+		//查询奖品名称 
+		public String QueryPrizeName(int prizeid) {
+			return userdao.QueryPrizeName(prizeid);
+		}
+		
+		//新增抽奖记录
+		@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+		public  boolean addPrizerecord(Lotteryrecord lotter) {
+		return userdao.addPrizerecord(lotter)>0;
+		}
+		//查询中奖记录
+		public List<Lotteryrecord> QueryLotteryrecord(){
+			return userdao.QueryLotteryrecord();
+		}
+		
+		//查询一条最新中奖记录
+		public  Lotteryrecord  QueryOneLotteryrecord() {
+			return userdao.QueryOneLotteryrecord();
+		}
+		
+		
+		//查询收藏商品服务类别
+		public List<ServiceTypeVO> QueryServiceType(Integer userid){
+			return userdao.QueryServiceType(userid);
+		}
+		
+		//查询收藏商品
+		public PageInfo<FavoriteProductVO> QueryFavoriteProductpage(Integer pageNum,Integer pageSize,String name,Integer userid,Integer stid){
+			PageHelper.startPage(pageNum, pageSize);
+			return new PageInfo<FavoriteProductVO>(userdao.QueryFavoriteProduct(name, userid, stid));
+		}	
+		
+		//查询商品星数
+		public String  QueryProductstar( int serviceID) {
+			return userdao.QueryProductstar(serviceID)!=null?userdao.QueryProductstar(serviceID):"0";
+		}
+		
+		//删除服务收藏
+		@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+		public void delteservicecollection(Integer sercolleid)throws Exception {
+			userdao.delteservicecollection(sercolleid);
+		}
+		
+		//查询服务推荐
+		public  List<RecommendVO> Queryrecommend() {
+			return userdao.Queryrecommend();
+
+		}
+		
+		//查询底部加入我们上方广告
+		public BottomAdVO QueryBottomAdVO() {
+			return userdao.QueryBottomAdVO();
+		}
+		
+		//查询系统配置信息
+		public System Querysysteminfo() {
+			return userdao.Querysysteminfo();
+		}
+		
 			
 }

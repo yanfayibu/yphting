@@ -9,11 +9,16 @@ import com.accp.pojo.Goldnotes;
 import com.accp.pojo.Integralrecord;
 import com.accp.pojo.Languagetype;
 import com.accp.pojo.Login;
+import com.accp.pojo.Lotteryrecord;
 import com.accp.pojo.Majortype;
 import com.accp.pojo.News;
+import com.accp.pojo.Prize;
 import com.accp.pojo.Sharea;
+import com.accp.pojo.System;
 import com.accp.pojo.User;
+import com.accp.vo.lz.BottomAdVO;
 import com.accp.vo.lz.EvaluationVO;
+import com.accp.vo.lz.FavoriteProductVO;
 /**
  * 
  * @ClassName:  IUserDao   
@@ -25,6 +30,8 @@ import com.accp.vo.lz.EvaluationVO;
  * 注意：本内容仅限于公司内部传阅，禁止外泄以及用于其他的商业目
  */
 import com.accp.vo.lz.NewVO;
+import com.accp.vo.lz.RecommendVO;
+import com.accp.vo.lz.ServiceTypeVO;
 public interface IUserDao {
 
 
@@ -103,4 +110,42 @@ public interface IUserDao {
 	//Add user gold coin record
 	public  int addGoldRecording(@Param("gold") Goldnotes gold);
 	
+	
+	//Query prize list
+	public  List<Prize> QueryPrizeList();
+	
+	
+	//Query prize name
+	public String QueryPrizeName(@Param("prizeid") int prizeid);
+	
+	//Add winning record
+	public int addPrizerecord(@Param("lotter") Lotteryrecord lotter);
+	
+	
+	//查询中奖记录
+	public  List<Lotteryrecord>  QueryLotteryrecord();
+	
+	//查询最新一条中奖记录
+	public  Lotteryrecord QueryOneLotteryrecord();
+	
+	//查询商品星数
+	public String  QueryProductstar(@Param("serviceID") int serviceID);
+	
+	//查询收藏商品
+	public List<FavoriteProductVO> QueryFavoriteProduct(@Param("name") String name,@Param("userid") int userid,@Param("stid")int stid);
+	
+	//查询收藏商品服务类别
+	public List<ServiceTypeVO> QueryServiceType(@Param("userid") int userid);
+	
+	//删除服务收藏
+	public  void delteservicecollection(@Param("sercolleid") int sercolleid);
+	
+	//查询推荐服务
+	public List<RecommendVO> Queryrecommend();
+	
+	//查询底部加入我们上方广告
+	public BottomAdVO QueryBottomAdVO();
+	
+	//查询系统配置信息
+	public System Querysysteminfo();
 }

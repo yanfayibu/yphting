@@ -1,17 +1,16 @@
-/*package com.accp.util.email;
+package com.accp.util.email;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-
-*//**
+/**
  * 邮件
  * 
  * @author yuno
  *
- *//*
+ */
 public class Email {
 	// 发件人
 	private final static String NAME = "yphting@163.com";
@@ -22,7 +21,7 @@ public class Email {
 	// 发件人昵称
 	private final static String NICK = "韩汀社区";
 
-	*//**
+	/**
 	 * 发送邮件
 	 * 
 	 * @param to
@@ -35,7 +34,7 @@ public class Email {
 	 * @throws MessagingException
 	 * @throws UnsupportedEncodingException
 	 * @throws AddressException
-	 *//*
+	 */
 	public static void sendSimpleMail(String to, String title, String text)
 			throws AddressException, UnsupportedEncodingException, MessagingException {
 		Properties prop = new Properties();
@@ -50,7 +49,7 @@ public class Email {
 		ts.sendMessage(msg, msg.getAllRecipients());
 	}
 
-	*//**
+	/**
 	 * 新建邮件
 	 * 
 	 * @param session
@@ -65,7 +64,7 @@ public class Email {
 	 * @throws AddressException
 	 * @throws MessagingException
 	 * @throws UnsupportedEncodingException
-	 *//*
+	 */
 	public static MimeMessage createSimpleMail(Session session, String to, String title, String text)
 			throws AddressException, MessagingException, UnsupportedEncodingException {
 		MimeMessage mm = new MimeMessage(session);
@@ -76,4 +75,4 @@ public class Email {
 		mm.setContent(text, "text/html;charset=utf-8");
 		return mm;
 	}
-}*/
+}

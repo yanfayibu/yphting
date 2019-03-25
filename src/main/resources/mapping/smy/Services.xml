@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.accp.dao.smy.ServicesDao">
+	<sql id="selectAll">
+		select * from
+	</sql>
+	
+	<!-- 查询服务类别（如自驾游、微整形） -->
+	<select id="queryServiceType" resultType="com.accp.vo.smy.ServiceType">
+		<include refid="selectAll"/>
+		`servicetype`
+		<where>
+			<if test="stpid==null and selectNum==null">
+				`stPid` IS NULL
+			</if>
+			<if test="stpid!=null and selectNum==1">
+				`stPid` = #{stpid}
+			</if>
+			<if test="stpid!=null and selectNum==2">
+				`stPid` = (SELECT `stPid` FROM `servicetype` WHERE `stid` = #{stpid})
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询服务语言 -->
+	<select id="queryLanguagetype" resultType="com.accp.vo.smy.LanguageType">
+		<include refid="selectAll"/>
+		`languagetype`
+	</select>
+	
+	<!-- 查询擅长专业 -->
+	<select id="queryMajortype" resultType="com.accp.vo.smy.MajorType">
+		<include refid="selectAll"/>
+		`majortype`
+	</select>
+	
+	<!-- 查询中韩行政地区 -->
+	<select id="querySharea" resultType="com.accp.vo.smy.ShArea">
+		<include refid="selectAll"/>
+		`sharea` 
+		<where>
+			<if test="pid==null and flag==false">
+				`level` = 0
+			</if>
+			<if test="pid!=null and flag==false">
+				`pid` = #{pid}
+			</if>
+			<if test="pid!=2 and flag==true">
+				`pid` IN (SELECT `areaID` FROM `sharea` WHERE `pid` = #{pid})
+			</if>
+			<if test="pid==2 and flag==true">
+				`pid` = 2
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询商家入驻时缴纳保证金额 -->
+	<select id="queryBond" resultType="java.lang.Float">
+		SELECT bond FROM `system` LIMIT 1
+	</select>
+	
+	<select id="queryUser" resultType="com.accp.vo.smy.User">
+		<include refid="selectAll"/>
+		`user` where userID=#{userID}
+	</select>
+	
+	
+	  <!-- 发布服务-->
+    	<insert id="addService">
+    		INSERT INTO `services` (`stid`, `userID`, `resourceID`,`serviceTitle`, `serviceFuTitle`,`downloadTitle`,`servicePrice`,
+		 `serviceCoverImg`, `serviceImgUrlOne`,`serviceImgUrlTwo`, `serviceImgUrlThree`, `serviceImgUrlFour`,
+		  `serviceCostTypeID`,`serviceIntro`, `serviceCity`,`country`, `serviceCostInclude`, 
+		   `serviceStartDate`,`serviceEndDate`, `schoolRegion`, `schoolNameByCN`,`majoyNameByCN`,
+		   `schoolNameByROK`, `majoyNameByROK`,`goodAtMajoy`,`hospitalName`,`serviceHour`, `uploadDataUrl`,`releaseTime`,
+		    `browseNumber`,`weight`,`recommendBool`, `adminOpinion`,`auditStatus`)VALUES 
+		  (#{services.stid},#{services.userID},#{services.resourceID},#{services.serviceTitle},#{services.serviceFuTitle},
+		  #{services.downloadTitle},#{services.servicePrice},#{services.serviceCoverImg},#{services.serviceImgUrlOne},#{services.serviceImgUrlTwo},
+		  #{services.serviceImgUrlThree}, #{services.serviceImgUrlFour},#{services.serviceCostTypeID},#{services.serviceIntro},
+		  #{services.serviceCity},#{services.country},#{services.serviceCostInclude},#{services.serviceStartDate},#{services.serviceEndDate},
+		  #{services.schoolRegion},#{services.schoolNameByCN},#{services.majoyNameByCN},#{services.schoolNameByROK},#{services.majoyNameByROK},#{services.goodAtMajoy},
+		  #{services.hospitalName},#{services.serviceHour},#{services.uploadDataUrl},NOW(),#{services.browseNumber},#{services.weight},#{services.recommendBool},#{services.adminOpinion},2);
+    	</insert>
+    	
+    	<!-- 商家入驻 -->
+    	<update id="merchantMove">
+		UPDATE `user`
+		<set>
+			<if test="obj.merchantType!=null and obj.merchantType!=''">
+				`merchanttype` = #{obj.merchantType},
+			</if>
+			<if test="obj.firstServiceID!=null and obj.firstServiceID!=''">
+				`firstserviceid` = #{obj.firstServiceID},`firstServiceMoney` = 0,
+			</if>
+			<if test="obj.secondServiceID!=null and obj.secondServiceID!=''">
+				`secondserviceid` = #{obj.secondServiceID},`secondServiceMoney` = 0,
+			</if>
+			<if test="obj.hospitalName!=null and obj.hospitalName!=''">
+				`hospitalname` = #{obj.hospitalName},
+			</if>
+			<if test="obj.shopName!=null and obj.shopName!=''">
+				`shopName` = #{obj.shopName},
+			</if>
+			<if test="obj.userRealName!=null and obj.userRealName!=''">
+				`userrealname` = #{obj.userRealName},
+			</if>
+			<if test="obj.signature!=null and obj.signature!=''">
+				`signature` = #{obj.signature},
+			</if>
+			<if test="obj.shopImg!=null and obj.shopImg!=''">
+				`shopimg` = #{obj.shopImg},
+			</if>
+			<if test="obj.identityType!=null and obj.identityType!=''">
+				`identitytype` = #{obj.identityType},
+			</if>
+			<if test="obj.identityNumder!=null and obj.identityNumder!=''">
+				`identitynumder` = #{obj.identityNumder},
+			</if>
+			<if test="obj.identityRealName!=null and obj.identityRealName!=''">
+				`identityrealname` = #{obj.identityRealName},
+			</if>
+			<if test="obj.country!=null and obj.country!=''">
+				`country` = #{obj.country},
+			</if>
+			<if test="obj.provincialID!=null and obj.provincialID!=''">
+				`provincialid` = #{obj.provincialID},
+			</if>
+			<if test="obj.cityID!=null and obj.cityID!=''">
+				`cityid` = #{obj.cityID},
+			</if>
+			<if test="obj.countyID!=null and obj.countyID!=''">
+				`countyid` = #{obj.countyID},
+			</if>
+			<if test="obj.adDetail!=null and obj.adDetail!=''">
+				`addetail` = #{obj.adDetail},
+			</if>
+			<if test="obj.identityPositiveImg!=null and obj.identityPositiveImg!=''">
+				`identitypositiveimg` = #{obj.identityPositiveImg},
+			</if>
+			<if test="obj.identityNegativeImg!=null and obj.identityNegativeImg!=''">
+				`identitynegativeimg` = #{obj.identityNegativeImg},
+			</if>
+			<if test="obj.identityHandImg!=null and obj.identityHandImg!=''">
+				`identityhandimg` = #{obj.identityHandImg},
+			</if>
+			<if test="obj.languageNameText!=null and obj.languageNameText!=''">
+				`languagenametext` = #{obj.languageNameText},
+			</if>
+			<if test="obj.majorNameText!=null and obj.majorNameText!=''">
+				`majornametext` = #{obj.majorNameText},
+			</if>
+			<if test="obj.liveCityID!=null and obj.liveCityID!=''">
+				`livecityid` = #{obj.liveCityID},
+			</if>
+			<if test="obj.merchantEmail!=null and obj.merchantEmail!=''">
+				`merchantemail` = #{obj.merchantEmail},
+			</if>
+			<if test="obj.merchantPhone!=null and obj.merchantPhone!=''">
+				`merchantphone` = #{obj.merchantPhone},
+			</if>
+			<if test="obj.qq!=null and obj.qq!=''">
+				`qq` = #{obj.qq},
+			</if>
+			<if test="obj.weChat!=null and obj.weChat!=''">
+				`wechat` = #{obj.weChat},
+			</if>
+			<if test="obj.profession!=null and obj.profession!=''">
+				`profession` = #{obj.profession},
+			</if>
+			<if test="obj.height!=null and obj.height!=''">
+				`height` = #{obj.height},
+			</if>
+			<if test="obj.constellation!=null and obj.constellation!=''">
+				`constellation` = #{obj.constellation},
+			</if>
+			<if test="obj.age!=null and obj.age!=''">
+				`age` = #{obj.age},
+			</if>
+			<if test="obj.selfIntroduction!=null and obj.selfIntroduction!=''">
+				`selfintroduction` = #{obj.selfIntroduction},
+			</if>
+			`userMoney` = `userMoney` - #{bond},`guaranteeMoney` = #{bond},`auditStatus` = 1,`merchantLevel` = 3,
+		</set>
+		<where>
+			`userID` = #{obj.userID}
+		</where>
+	</update>
+	
+	<select id="queryUserOrder" resultMap="queryOrders">
+		SELECT * FROM orders
+		WHERE serviceID IN(SELECT `serviceID` FROM services WHERE `userID`=#{userID})
+			<if test="orderStatus!=null and orderStatus!=0">
+		 		and orderStatus =#{orderStatus}
+			</if>
+			<if test="refundstatus!=null and refundstatus!=-1">
+				and refundstatus =#{refundstatus}
+			</if>
+			<if test='orderID!=null and orderID!=""'>
+				and orderID like '%${orderID}%'
+			</if>
+			ORDER BY  `orderTime` DESC
+	</select>
+	<select id="selectUser" resultType="com.accp.vo.smy.User">
+		SELECT * FROM `user`
+		where `userID` = #{0}
+	</select>
+	<select id="querySer" resultType="com.accp.vo.smy.Services">
+		SELECT * FROM `services`
+		WHERE `serviceID`=#{0}
+	</select>
+	<resultMap type="com.accp.vo.smy.OrderInfoVo" id="queryOrders">
+		<id column="orderID" property="orderid"/>
+		<result column="userID" property="userid"/>
+		<result column="serviceID" property="serviceid"/>
+		<result column="resouroeID" property="resouroeid"/>
+		<result column="orderType" property="ordertype"/>
+		<result column="orderTime" property="ordertime"/>
+		<result column="paymentTime" property="paymenttime"/>
+		<result column="receiptTime" property="receipttime"/>
+		<result column="provideServicesTime" property="provideservicestime"/>
+		<result column="completeTime" property="completetime"/>
+		<result column="remarks" property="remarks"/>
+		<result column="scheduledStartTime" property="scheduledstarttime"/>
+		<result column="scheduledEndTime" property="scheduledendtime"/>
+		<result column="population" property="population"/>
+		<result column="number" property="number"/>
+		<result column="smallPlan" property="smallplan"/>
+		<result column="totalPrice" property="totalprice"/>
+		<result column="uploadPath" property="uploadpath"/>
+		<result column="weight" property="weight"/>
+		<result column="integral" property="integral"/>
+		<result column="collectGoods" property="collectgoods"/>
+		<result column="AddressID" property="addressid"/>
+		<result column="orderStatus" property="orderstatus"/>
+		<result column="commentstatus" property="commentstatus"/>
+		<result column="refundstatus" property="refundstatus"/>
+		<result column="filesatus" property="filesatus"/>
+		<result column="documentpath" property="documentpath"/>
+		<association property="u" column="userID" select="selectUser"></association>
+		<association property="ser" column="serviceID" select="querySer"></association>
+	</resultMap>
+	<select id="querySerType" resultType="com.accp.vo.smy.ServiceType">
+		SELECT * FROM `servicetype`
+		WHERE `stid` = #{stid}
+	</select>
+	<select id="queryCountOrder" resultType="com.accp.vo.smy.Orders">
+		SELECT * FROM orders
+		WHERE serviceID IN(SELECT `serviceID` FROM services WHERE `userID`=#{userID})
+	</select>
+	<select id="queryAOrder" resultMap="queryOrders">
+		SELECT * FROM orders
+		WHERE `orderID`=#{orderID}
+	</select>
+	
+	<update id="updateOrdersStatus">
+	UPDATE `orders`
+	SET `orderStatus`=#{orderStatus} 
+	<if test="orderStatus==3">
+		,receiptTime=NOW()
+	</if>
+	<if test="orderStatus==4">
+		,provideServicesTime=NOW()
+	</if>
+	WHERE `orderID`=#{orderID}
+	</update>
+	
+	<resultMap  id="ServicesMap"  type="com.accp.vo.smy.ServicesVo">
+		<result column="serviceID" property="serviceid" />
+		<result  column="stid" property="stid"/>
+		<result column="userID" property="userid" />
+		<result column="stName" property="stname" />
+		<result column="serviceCoverImg" property="servicecoverimg" />
+		<result column="serviceImgUrlOne" property="serviceimgurlone" />
+		<result column="serviceImgUrlTwo" property="serviceimgurltwo" />
+		<result column="serviceImgUrlThree" property="serviceimgurlthree" />
+		<result column="serviceImgUrlFour" property="serviceimgurlfour" />
+		<result column="serviceTitle" property="servicetitle" />
+		<result column="serviceFuTitle" property="servicefutitle" />
+		<result column="serviceStartDate" property="servicestartdate" />
+		<result column="serviceEndDate" property="serviceenddate" />
+		<result column="servicePrice" property="serviceprice" />
+		<result column="servicecity" property="servicecity" />
+		<result column="serviceIntro" property="serviceintro" />
+		<result column="name" property="name" />
+		<result column="serviceCostTypeID" property="servicecosttypeid" />
+		<result column="serviceCostInclude" property="servicecostinclude" />
+		<result column="number" property="number" />
+		<result column="uploadtitle" property="uploadtitle" />
+		<result column="uploadDataUrl" property="uploaddataurl" />
+		<result column="releaseTime" property="releasetime" />
+		<result column="auditStatus" property="auditstatus" />
+		</resultMap>
+		<select  id="queryServiceAndByTitle" resultMap="ServicesMap"  >
+						SELECT * ,(SELECT COUNT(*) FROM orders AS o WHERE s.`serviceID`=o.`serviceID` ) AS `count` FROM `services` AS s 
+					LEFT JOIN sharea AS ea  
+					ON s.`country`=ea.`areaID`
+			<where>	
+			<if test="userID!=null">
+				and s.userID=#{userID}
+			</if>
+			<if test="serviceTitle!=null">
+				and s.serviceTitle like '${serviceTitle}%'
+			</if>
+		</where>
+		</select>
+		<select id="queryService"   resultType="com.accp.vo.smy.Services">
+				SELECT   *FROM `services`  WHERE  serviceID=#{serviceID}
+		</select>
+		<!-- <select   id="queryUserById" resultType="com.accp.vo.smy.User">
+			  <include refid="selectAll"/>  USER WHERE userID=#{userID}
+		</select> -->
+		
+		<update id="updateService">
+		update services
+		<set>
+			<if test="services.stid!=null">
+				stid=#{services.stid},
+			</if>
+			<if test="services.userID!=null">
+				userID=#{services.userID},
+			</if>
+			<if test="services.serviceTitle!=null">
+				serviceTitle=#{services.serviceTitle},
+			</if>
+			<if test="services.serviceFuTitle!=null">
+				serviceFuTitle=#{services.serviceFuTitle},
+			</if>
+			<if test="services.downloadTitle!=null">
+				downloadTitle=#{services.downloadTitle},
+			</if>
+			<if test="services.servicePrice!=null">
+				servicePrice=#{services.servicePrice},
+			</if>
+			<if test="services.serviceCoverImg!=null">
+				serviceCoverImg=#{services.serviceCoverImg},
+			</if>
+			<if test="services.serviceImgUrlOne!=null">
+				serviceImgUrlOne=#{services.serviceImgUrlOne},
+			</if>
+			<if test="services.serviceImgUrlTwo!=null">
+				serviceImgUrlTwo=#{services.serviceImgUrlTwo},
+			</if>
+			<if test="services.serviceImgUrlThree!=null">
+				serviceImgUrlThree=#{services.serviceImgUrlThree},
+			</if>
+			<if test="services.serviceImgUrlFour!=null">
+				serviceImgUrlFour=#{services.serviceImgUrlFour},
+			</if>
+			<if test="services.serviceCostTypeID!=null">
+				serviceCostTypeID=#{services.serviceCostTypeID},
+			</if>
+			<if test="services.serviceIntro!=null">
+				serviceIntro=#{services.serviceIntro},
+			</if>
+			<if test="services.serviceCity!=null">
+				serviceCity=#{services.serviceCity},
+			</if>
+			<if test="services.country!=null">
+				country=#{services.country},
+			</if>
+			<if test="services.serviceCostInclude!=null">
+				serviceCostInclude=#{services.serviceCostInclude},
+			</if>
+			<if test="services.serviceStartDate!=null">
+				serviceStartDate=#{services.serviceStartDate},
+			</if>
+			<if test="services.serviceEndDate!=null">
+				serviceEndDate=#{services.serviceEndDate},
+			</if>
+			<if test="services.schoolRegion!=null">
+				schoolRegion=#{services.schoolRegion},
+			</if>
+			<if test="services.schoolNameByCN!=null">
+				schoolNameByCN=#{services.schoolNameByCN},
+			</if>
+			<if test="services.majoyNameByCN!=null">
+				majoyNameByCN=#{services.majoyNameByCN},
+			</if>
+			
+			<if test="services.schoolNameByROK!=null">
+				schoolNameByROK=#{services.schoolNameByROK},
+			</if>
+			
+			<if test="services.majoyNameByROK!=null">
+				majoyNameByROK=#{services.majoyNameByROK},
+			</if>
+			<if test="services.goodAtMajoy!=null">
+					goodAtMajoy=#{services.goodAtMajoy},
+			</if>
+			<if test="services.hospitalName!=null">
+				hospitalName=#{services.hospitalName},
+			</if>
+			<if test="services.serviceHour!=null">
+				serviceHour=#{services.serviceHour},
+			</if>
+			<if test="services.uploadDataUrl!=null">
+				uploadDataUrl=#{services.uploadDataUrl},
+			</if>
+			<if test="services.releaseTime!=null">
+				releaseTime=#{services.releaseTime},
+			</if>
+			<if test="services.weight!=null">
+				weight=#{services.weight},
+			</if>
+			<if test="services.browseNumber!=null">
+				browseNumber=#{services.browseNumber},
+			</if>
+		
+			<if test="services.recommendBool!=null">
+				recommendBool=#{services.recommendBool},
+			</if>
+			<if test="services.adminOpinion!=null">
+				adminOpinion=#{services.adminOpinion},
+			</if>
+			<if test="services.auditStatus!=null">
+				auditStatus=#{services.auditStatus},
+			</if>
+		</set>
+		where serviceID=#{services.serviceID}
+		</update>
+		
+		<delete id="deleteService">
+			delete from services where serviceID=#{serviceID}
+		</delete>
+		
+		<resultMap type="com.accp.vo.smy.UserAppVo" id="AppraisalapplyMap">
+				<result   column="applyID"   property="applyID"/>	
+				<result   column="stid"   property="stid"/>	
+				<result   column="stName"   property="stname"/>	
+				<result   column="submitTime"   property="submittime"/>	
+				<result   column="auditTime"   property="audittime"/>	
+				<result   column="auditStatus"   property="auditstatus"/>	
+		</resultMap>
+	
+		<select id="queryAppraisalapply" resultMap="AppraisalapplyMap">
+				SELECT serviceType.stid,serviceType.stName,appraisalapply.* FROM `serviceType` 
+				LEFT JOIN appraisalapply ON userID=#{userID} AND serviceType.`stid`=appraisalapply.`stid`
+				WHERE serviceType.stid IN(#{oneid},#{twoid})
+		</select>
+		
+		<insert id="addAppraisalapply">
+				INSERT INTO `appraisalapply`(`userID`,`stid`,`name`,`sex`,`height`,`constellation`,`age`,`visaType`,`documentType`,`certificates`,`experience`,`vehicle`, `guideCard`,`inKorea`,`phone`,`email`,`country`,`provincialID`,`cityID`,`detailed`,`hospitalLicense`,`cooperativeHospital`,`cooperativeHospitalURL`,`hospitalPhone`,`translateType`,`translate`,`office`,`officeCountry`,`officeProvince`,`officeCity`,`officeDetailed`,`koreaLicense`,`translateWebsite`,`studyMajor`,`schoolReport`,`officialNetworkURL`,`submitTime`,`auditTime`,`adminOpinion`,`auditStatus`)
+				VALUES(#{app.userID},#{app.stid},#{app.name},#{app.sex},#{app.height},#{app.constellation},#{app.age},#{app.visaType},#{app.documentType},#{app.certificates},#{app.experience},#{app.vehicle},#{app.guideCard},#{app.inKorea},#{app.phone},#{app.email},#{app.country},#{app.provincialID},#{app.cityID},#{app.detailed},#{app.hospitalLicense},#{app.cooperativeHospital},#{app.cooperativeHospitalURL},#{app.hospitalPhone},#{app.translateType},#{app.translate},#{app.office},#{app.officeCountry},#{app.officeProvince},#{app.officeCity},#{app.officeDetailed},#{app.koreaLicense},#{app.translateWebsite},#{app.studyMajor},#{app.schoolReport},#{app.officialNetworkURL},#{app.submitTime},#{app.auditTime},#{app.adminOpinion},#{app.auditStatus});
+		</insert>
+		
+		<select id="queryAppraisal"   resultType="com.accp.vo.smy.AppraisalApply">
+				SELECT   *FROM `appraisalapply`  WHERE  applyID=#{applyID}
+		</select>
+		
+		<update id="updateAppraisalApply">
+		update `appraisalapply`
+		<set>
+			<if test="app.stid!=null">
+				stid=#{app.stid},
+			</if>
+			<if test="app.name!=null">
+				name=#{app.name},
+			</if>
+			<if test="app.sex!=null">
+				sex=#{app.sex},
+			</if>
+			<if test="app.height!=null">
+				height=#{app.height},
+			</if>
+			<if test="app.constellation!=null">
+				constellation=#{app.constellation},
+			</if>
+			<if test="app.age!=null">
+				age=#{app.age},
+			</if>
+			<if test="app.visaType!=null">
+				visaType=#{app.visaType},
+			</if>
+			<if test="app.documentType!=null">
+				documentType=#{app.documentType},
+			</if>
+			<if test="app.certificates!=null">
+				certificates=#{app.certificates},
+			</if>
+			<if test="app.experience!=null">
+				experience=#{app.experience},
+			</if>
+			<if test="app.vehicle!=null">
+				vehicle=#{app.vehicle},
+			</if>
+			<if test="app.guideCard!=null">
+				guideCard=#{app.guideCard},
+			</if>
+			<if test="app.inKorea!=null">
+				inKorea=#{app.inKorea},
+			</if>
+			<if test="app.phone!=null">
+				phone=#{app.phone},
+			</if>
+			<if test="app.email!=null">
+				email=#{app.email},
+			</if>
+			<if test="app.country!=null">
+				country=#{app.country},
+			</if>
+			<if test="app.provincialID!=null">
+				provincialID=#{app.provincialID},
+			</if>
+			<if test="app.cityID!=null">
+				cityID=#{app.cityID},
+			</if>
+			<if test="app.detailed!=null">
+				detailed=#{app.detailed},
+			</if>
+			<if test="app.hospitalLicense!=null">
+				hospitalLicense=#{app.hospitalLicense},
+			</if>
+			
+			<if test="app.cooperativeHospital!=null">
+				cooperativeHospital=#{app.cooperativeHospital},
+			</if>
+			
+			<if test="app.cooperativeHospitalURL!=null">
+				cooperativeHospitalURL=#{app.cooperativeHospitalURL},
+			</if>
+			<if test="app.hospitalPhone!=null">
+					hospitalPhone=#{app.hospitalPhone},
+			</if>
+			<if test="app.translateType!=null">
+				translateType=#{app.translateType},
+			</if>
+			<if test="app.translate!=null">
+				translate=#{app.translate},
+			</if>
+			<if test="app.office!=null">
+				office=#{app.office},
+			</if>
+			<if test="app.officeCountry!=null">
+				officeCountry=#{app.officeCountry},
+			</if>
+			<if test="app.officeProvince!=null">
+				officeProvince=#{app.officeProvince},
+			</if>
+			<if test="app.officeCity!=null">
+				officeCity=#{app.officeCity},
+			</if>
+		
+			<if test="app.officeDetailed!=null">
+				officeDetailed=#{app.officeDetailed},
+			</if>
+			<if test="app.koreaLicense!=null">
+				koreaLicense=#{app.koreaLicense},
+			</if>
+			<if test="app.translateWebsite!=null">
+				translateWebsite=#{app.translateWebsite},
+			</if>
+			<if test="app.studyMajor!=null">
+				studyMajor=#{app.studyMajor},
+			</if>
+			<if test="app.schoolReport!=null">
+				schoolReport=#{app.schoolReport},
+			</if>
+			<if test="app.officialNetworkURL!=null">
+				officialNetworkURL=#{app.officialNetworkURL},
+			</if>
+			<if test="app.submitTime!=null">
+				submitTime=#{app.submitTime},
+			</if>
+			<if test="app.auditTime!=null">
+				auditTime=#{app.auditTime},
+			</if>
+			<if test="app.adminOpinion!=null">
+				adminOpinion=#{app.adminOpinion},
+			</if>
+			<if test="app.auditStatus!=null">
+				auditStatus=#{app.auditStatus},
+			</if>
+			<if test="app.strength!=null">
+				strength=#{app.strength},
+			</if>
+		</set>
+		where applyID=#{app.applyID}
+		</update>
+		
+		<resultMap type="com.accp.vo.smy.EvaluationVo" id="evaluationMap">
+		<id property="serviceAppraiseID" column="serviceAppraiseID" />
+		<result property="serviceID" column="serviceID" />
+		<result property="userID" column="userID" />
+		<result property="userImgPath" column="userImgPath" />
+		<result property="userName" column="userName" />
+		<result property="serviceTitle" column="serviceTitle" />
+		<result property="serviceAppraiseContent" column="serviceAppraiseContent" />
+		<result property="serviceAppraiseDate" column="serviceAppraiseDate" />
+		<result property="serviceAppraiseLevel" column="serviceAppraiseLevel" />
+		<result property="serviceappraisePID" column="serviceappraisePID" />
+		<association property="parentPID" column="serviceAppraiseID" select="selectParentPID"/>
+	</resultMap>
+	
+	<select id="selectParentPID" resultType="com.accp.vo.smy.EvaluationVo">
+		select * from `evaluationservice` WHERE `serviceAppraisePID`=#{0}
+	</select>
+	
+	<!-- 查询商家中心——我收到的评价 -->
+	 <select id="queryEvaluation" resultMap="evaluationMap">
+	 	SELECT ev.*,se.`serviceTitle`,us.`userName`,us.`userImgPath` FROM `evaluationservice` ev
+		LEFT JOIN `services` se ON se.`serviceID`=ev.`serviceID`
+		JOIN `user` us ON us.`userID`=EV.`userID`
+		WHERE se.`userID`=#{userID} AND ev.serviceAppraisePID=0
+	 </select>
+	
+	<insert id="addMerchantsEvaluation">
+		INSERT INTO `evaluationservice`(`serviceID`,`userID`,`serviceAppraiseContent`,`serviceAppraiseDate`,`serviceAppraisePID`)
+		VALUES(#{serviceID},#{userID},#{serviceContent},NOW(),#{PID})
+	</insert>
+	
+	
+	
+	
+	
+	
+	<resultMap type="com.accp.vo.smy.RefundVO" id="refundMap">
+		<association property="user" column="userID"
+			select="queryUserById"></association>
+		<association property="order" column="orderID"
+			select="queryOrderById"></association>
+	</resultMap>
+	<!--查询收到的退款列表  -->
+	<select id="queryRefundList" resultMap="refundMap">
+		select * from refund
+		where orderid in(select orderid from orders where serviceid in(select
+		serviceid from services where userid=#{userid}))
+		order by refundid desc
+	</select>
+	<select id="queryRefundByOrderId" resultMap="refundMap">
+		select * from
+		refund
+		where orderID=#{orderid}
+	</select>
+	<select id="queryUserById" resultType="com.accp.vo.smy.Users">
+		select * from user where
+		userid=#{0}
+	</select>
+	
+	<resultMap type="com.accp.vo.smy.Order" id="OrderMap">
+		<association property="service" column="serviceID" select="queryServiceById"></association>
+	</resultMap>
+	
+	<select id="queryOrderById" resultMap="OrderMap">
+		select *
+		from orders
+		where
+		orderID=#{orderid}
+	</select>
+	<resultMap type="com.accp.vo.smy.Service" id="ServiceMap">
+		<association property="user" column="userID" select="queryUserById"></association>
+		<association property="serviceType" column="stid"
+			select="queryServiceTypeById"></association>
+	</resultMap>
+	
+	<select id="queryServiceById" resultMap="ServiceMap">
+		select *
+		from services
+		where serviceid=#{0}
+	</select>
+	<select id="queryServiceTypeById" resultType="com.accp.vo.smy.ServiceType">
+		select *
+		from
+		servicetype
+		where stid=#{0}
+	</select>
+	
+	<insert id="saveGoldNotes">
+		INSERT INTO `goldnotes`(`userID`,`acquisitionMode`,`recordDate`,`recordDescribe`,`recordInAndOut`,`auditStatus`)
+		VALUES(#{userID},#{acquisitionMode},NOW(),#{recordDescribe},#{recordInAndOut},#{auditStatus})
+	</insert>
+	<insert id="saveSystemMSG">
+		INSERT INTO `news`(`addRessee`,`content`,`sendingTime`,`readState`,`newsType`)
+		VALUES(#{userID},#{content},NOW(),0,1)
+	</insert>
+	
+	<update id="updateOrder">
+		update orders
+		<set>
+			<if test="order.orderStatus!=null">
+				orderStatus=#{order.orderStatus},
+			</if>
+			<if test="order.paymentTime!=null">
+				paymentTime=#{order.paymentTime},
+			</if>
+			<if test="order.completeTime!=null">
+				completeTime=#{order.completeTime},
+			</if>
+			<if test="order.commentstatus!=null">
+				commentstatus=#{order.commentstatus},
+			</if>
+			<if test="order.refundstatus!=null">
+				refundstatus=#{order.refundstatus},
+			</if>
+		</set>
+		where orderID=#{order.orderID}
+	</update>
+	
+	<update id="updateRefund">
+		update refund
+		<set>
+			<if test="refund.ActualRefundMoney!=null">
+				ActualRefundMoney=#{refund.ActualRefundMoney},
+			</if>
+			<if test="refund.auditTime!=null">
+				auditTime=#{refund.auditTime},
+			</if>
+			<if test="refund.auditStatus!=null">
+				auditStatus=#{refund.auditStatus},
+			</if>
+			<if test="refund.adminTime!=null">
+				adminTime=#{refund.adminTime},
+			</if>
+			<if test="refund.adminStatus!=null">
+				adminStatus=#{refund.adminStatus},
+			</if>
+			<if test="refund.businessRemarks!=null">
+				businessRemarks=#{refund.businessRemarks},
+			</if>
+			<if test="refund.adminRemarks!=null">
+				adminRemarks=#{refund.adminRemarks},
+			</if>
+			
+		</set>
+		where orderID=#{refund.orderID}
+	</update>
+	
+	<insert id="addGoldnotes" useGeneratedKeys="true"
+		keyProperty="recordID" parameterType="com.accp.vo.smy.Goldnotes">
+		INSERT INTO
+		goldNotes(userID,recordDate,recordDescribe,recordInAndOut,auditStatus,acquisitionMode)
+		VALUES(#{goldnotes.userID},#{goldnotes.recordDate,jdbcType=TIMESTAMP}
+		,#{goldnotes.recordDescribe},#{goldnotes.recordInAndOut},#{goldnotes.auditStatus},#{goldnotes.acquisitionMode}) 
+	</insert>
+	
+	<update id="updateUserMoney">
+		update user set userMoney=userMoney+#{userMoney} where
+		userID=#{userID}
+	</update>
+	
+	
+	<select id="querySerlevelName" resultType="com.accp.vo.smy.ServicesLevel">
+			SELECT * FROM servicelevel sl
+			LEFT JOIN services s ON s.`stid`=sl.`stid`
+			WHERE sl.`stid` IN (SELECT stid FROM USER u
+			LEFT JOIN services s ON
+			u.userID=s.`userID`
+			WHERE u.userID=#{userID})
+			AND (((SELECT firstServiceMoney
+			FROM USER
+			WHERE userID=#{userID})&lt;serviceIntegralMax AND
+			(SELECT
+			firstServiceMoney FROM USER
+			WHERE userID=#{userID})&gt;=serviceIntegralMin)
+			OR
+			((SELECT secondServiceMoney FROM USER
+			WHERE
+			userID=#{userID})&lt;serviceIntegralMax AND
+			(SELECT secondServiceMoney FROM
+			USER
+			WHERE userID=#{userID})&gt;=serviceIntegralMin)
+			)
+			GROUP BY (sl.`stid`)
+	</select>
+	
+	<select id="findAvailableAdvertisement" resultType="advertisement">
+		<include refid="selectAll"/>
+		advertisement
+		WHERE `state`=0
+	</select>
+	<insert id="addAdvertisementApply">
+   		INSERT INTO `advertisementapply` (`userID`,`aid`,`aimgPath`,`apcUrl`,`aappUrl`,`price`,
+  		`rentAMonth`,`startTime`,`endTime`,`applyTime`,`auditStatus`) 
+		VALUES(#{advertisementapply.userid},#{advertisementapply.aid},
+        #{advertisementapply.aimgpath},#{advertisementapply.apcurl},
+        #{advertisementapply.aappurl},#{advertisementapply.price},
+        #{advertisementapply.rentamonth},#{advertisementapply.starttime},
+        #{advertisementapply.endtime},Now(),
+        1);
+   	</insert>
+</mapper>
