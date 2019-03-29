@@ -25,7 +25,7 @@
 <div class="header" id="botop">
 		<div class="h_top">
 		<div class="b_box">
-			<div class="top_nav"><a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span><a href="#">商家入驻</a><span class="ht_line"></span><a href="#">帮助中心</a><span class="ht_line"></span><a href="#">关于韩汀</a><span class="ht_line"></span><a href="#">联系我们</a></div>
+			<div class="top_nav"><a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span><a href="javaScript:void(0)" onclick="merch()">商家入驻</a><span class="ht_line"></span><a href="#">帮助中心</a><span class="ht_line"></span><a href="#">关于韩汀</a><span class="ht_line"></span><a href="#">联系我们</a></div>
 			
 			<div class="top_right">
 									<a href="sjzx-index.html">.2304</a>			<span class="ht_line"></span><a href="#">退出</a>
@@ -90,10 +90,10 @@
                 <li ><a href="/c/smy/queryEvaluation?pageNum=1&pageSize=2"><span class="msp2 pre_c4"></span>我收到的评价</a></li>
                 <li ><a href="#"><span class="msp2 pre_c5"></span>我发出的物流</a></li>
                 <li ><a href="/c/smy/refund/list"><span class="msp2 pre_c6"></span>我收到的退款<span class="sp_acon_1"></span></a></li>
-                <li ><a href="/c/smy/list"><span class="msp2 pre_c3"></span>申请广告位</a></li>
+                <li ><a href="/c/smy/querystid"><span class="msp2 pre_c3"></span>申请广告位</a></li>
                 <li ><a href="#"><span class="msp2 pre_c3"></span>我提交的托管</a></li>
             </ul>
-			<div class="ad_left_1"></div>        
+			<div class="ad_left_1"><span th:each="temp:${Aimgpath}"><img th:src="${temp.aimgpath}" width="170" height="150"/></span></div>        
 		</div>
 
 		
@@ -116,7 +116,11 @@
 				<!--<span class="busi_c_name"><span style="font-size: 14px;color:green;border:2px solid black;border-radius:9px; border:solid 1px #b5118c; padding: 0 10px;text-align: center;"><span style="color:green;">开启</span>&nbsp;</span></span>-->
 				<!--&lt;!&ndash;<span> <a class="edit_a">开启</a></span>&ndash;&gt;-->
 				<span class="busi_c_name"><span class="open_status" >
-				<span style="color:green;" class="sq">申请广告位</span>
+				<span style="color:green;" class="sq">申请星级服务</span>
+				&nbsp;</span></span>
+				
+				<span class="busi_c_name"><span class="open_status" >
+				<span style="color:green;" class="sq">信誉分：[[${SCORE}]]</span>
 				&nbsp;</span></span>
 			</div>
 
@@ -160,7 +164,7 @@
 							<div class="yd_xm_title" th:text="${temp.ser.serviceTitle}"></div>
 							<p th:text="${temp.ser.serviceFuTitle}"></p>
 							<p>
-								<span class="num_1" th:text="${temp.ser.servicePrice}"></span>
+								<span class="num_1 oui" th:text="${temp.ser.servicePrice}"></span>
 							</p>
 						</div>
 					</li> 
@@ -263,13 +267,38 @@
 </div>
 
 </body>
-<script type="text/javascript" src="/Public/js/sessionHeader.js"></script>
-<script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
 <script type="text/javascript" src="/Public/js/sjzx-href.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
 <script type="text/javascript">
-	var merchantLevel=[[${user.merchantLevel}]];
-	$(".star_pl_sp").css("width",merchantLevel/5*100);
+
+function merch(){
+	$.ajax({
+		url:"/c/smy/getMer",
+		type:"get",
+		dataType:"text",
+		success:function(data){
+			if(data==0){
+				location.href="/view/sjrz";
+			}else{
+				location.href="/c/smy/user/getUserBySjzx";
+			}
+		},
+	});
+}
+
+
+	$.ajax({
+		url:"/c/smy/queryLevel",
+		type:"get",
+		dataType:"text",
+		success:function(res){
+			$(".star_pl_sp").css("width",parseFloat(res)/5*100);
+		}
+	})
+
+
+	/* var merchantLevel=[[${user.merchantLevel}]];
+	$(".star_pl_sp").css("width",merchantLevel/5*100); */
 	$.each($("[name=stid]"),function(i,obj){
 		var stid=$(this).html();
 		var p=$(this);
@@ -280,15 +309,15 @@
 	$.getJSON("/c/smy/order/queryCountOrder",function(data){
 		var jiedan=0;var fuwu=0;var dwc=0;var tuikan=0;var wancheng=0;
 		$.each(data,function(i,obj){
-			if(obj.orderstatus==2){
+			if(obj.orderStatus==2){
 				jiedan=jiedan+1;
-			}else if(obj.orderstatus==3){
+			}else if(obj.orderStatus==3){
 				fuwu=fuwu+1;
-			}else if(obj.orderstatus==4){
+			}else if(obj.orderStatus==4){
 				dwc=dwc+1;
-			}else if(obj.orderstatus==5&&obj.refundstatus==0){
+			}else if(obj.orderStatus==5&&obj.refundstatus==0){
 				wancheng=wancheng+1;
-			}else if(obj.orderstatus==5&&obj.refundstatus>0){
+			}else if(obj.orderStatus==5&&obj.refundstatus>0){
 				tuikan=tuikan+1;
 			}
 		})
@@ -318,7 +347,7 @@
 		})
 		
 		$(".sq").on("click",function(){
-			location.href="/c/smy/list";
+			location.href="/c/smy/querystid";
 		})
 
 		$(document).on("click", "#logout", function() {
@@ -331,7 +360,6 @@
 						if (result == "true") {
 
 							window.location.href = "/c/tsy/gologin";
-							alert("退出成功...");
 						}
 
 						else {

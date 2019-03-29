@@ -9,6 +9,7 @@ public class ServicesVO {
 	private boolean recommendBool;	//商家推荐
 	private String shopImg;	//店铺图片路径
 	private String shopName;	//店铺名
+	private Integer stid;	//服务类别id
 	public String getServiceTitle() {
 		return serviceTitle;
 	}
@@ -58,4 +59,11 @@ public class ServicesVO {
 	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
+	public Integer getStid() {
+		return stid;
+	}
+	public void setStid(Integer stid) {
+		this.stid = stid;
+	}
+	
 }

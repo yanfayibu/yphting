@@ -24,12 +24,15 @@ import com.accp.pojo.Languagetype;
 import com.accp.pojo.Majortype;
 import com.accp.pojo.Post;
 import com.accp.pojo.Resouroe;
+import com.accp.pojo.Rgzn;
 import com.accp.pojo.Servicelevel;
+import com.accp.pojo.Services;
 import com.accp.pojo.Servicetype;
 import com.accp.pojo.Sharea;
 import com.accp.pojo.User;
 import com.accp.util.file.Upload;
 import com.accp.vo.ydk.AdvertisementVO;
+import com.accp.vo.ydk.Artificiaiintelligence;
 import com.accp.vo.ydk.EsLevelVO;
 import com.accp.vo.ydk.HomePostVO;
 import com.accp.vo.ydk.SameServiceVO;
@@ -239,9 +242,68 @@ public class FWAction {
 				e.printStackTrace();
 			}
 		}
+		
 		obj.setOrderID(orderID);
 		obj.setUserID(loginUserID);
 		biz.submitReserve(obj);
 		return "redirect:/api/Forward_view/user/center";
+	}
+	/**
+	 * 人工智能 查询
+	 * @return
+	 */
+	@GetMapping("api/selectAI")
+	@ResponseBody
+	public List<Services> selectAI(Integer stid,HttpSession session){
+		User user = (User)session.getAttribute("userinfo");
+		if(user!=null) {
+			List<Services> ai = biz.selectAI(user.getUserid(), stid);
+			System.err.println(ai.size());
+			return ai;
+		}else {
+			return biz.selectAI(0, stid);
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @title: insertAI
+	 * @description: 人工智能 添加
+	 * @param session
+	 * @param sid
+	 * @return
+	 * 下午9:21:04
+	 */
+	@GetMapping("api/insertAI")
+	@ResponseBody
+	public Map<String,String> insertAI(HttpSession session,String ai){
+		Map<String,String> message = new HashMap<String,String>();
+		User user = (User)session.getAttribute("userinfo");
+		if(user!=null) {
+			Artificiaiintelligence ail =  JSON.parseObject(ai,Artificiaiintelligence.class);
+			System.out.println(ail);
+			ail.setUserId(user.getUserid());
+			biz.insertAI(ail);
+		}
+		return message;
+	}
+	
+	/**
+	 * 获取当前用户session
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/user/queryAUser")
+	@ResponseBody
+	public User queryAUser(HttpSession session) {
+		if(session.getAttribute("userinfo")==null) {
+			return null;
+		}else {
+			Integer userID=((User)session.getAttribute("userinfo")).getUserid();
+			User u=biz.queryUser(userID);
+			session.setAttribute("USER", u);
+			return u;
+		}
 	}
 }

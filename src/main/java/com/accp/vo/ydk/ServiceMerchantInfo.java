@@ -79,5 +79,17 @@ public class ServiceMerchantInfo {
 	public void setGuaranteeMoney(Integer guaranteeMoney) {
 		this.guaranteeMoney = guaranteeMoney;
 	}
+	@Override
+	public String toString() {
+		return "ServiceMerchantInfo [userID=" + userID + ", shopImg=" + shopImg + ", shopName=" + shopName
+				+ ", merchantLevel=" + merchantLevel + ", firstServiceLevelName=" + firstServiceLevelName
+				+ ", SecondServiceLevelName=" + SecondServiceLevelName + ", orderCount=" + orderCount
+				+ ", collectCount=" + collectCount + ", liveCityName=" + liveCityName + ", languageNameText="
+				+ languageNameText + ", guaranteeMoney=" + guaranteeMoney + "]";
+	}
+	public ServiceMerchantInfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 }

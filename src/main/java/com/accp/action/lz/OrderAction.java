@@ -150,8 +150,24 @@ public class OrderAction {
 			
 			//获得商家用户信息
 			User u= bizs.queryUserInfo(data.get(0).getUser().getUserid());
+			//获得用户订单数
+			int count=u.getOrdercount()+1;
+			
+			//订单服务类别
+			int stid=data.get(0).getService().getStid();
+			//修改该服务金额
+			User ud=new User();
+			ud.setUserid(u.getUserid());
+			ud.setFirstserviceid(u.getFirstserviceid());
+			ud.setSecondserviceid(u.getSecondserviceid());
+			ud.setFirstservicemoney(u.getFirstservicemoney()+data.get(0).getSmallplan());
+			ud.setSecondservicemoney(u.getSecondservicemoney()+data.get(0).getSmallplan());
+			bizs.updateOneANDtwosum(ud, stid);
+			
+			
 			//修改用户金币
 			User uu=new User();
+			uu.setOrdercount(count);
 			uu.setUserid(u.getUserid());
 			uu.setUsermoney(u.getUsermoney()+data.get(0).getSmallplan());
 			bizs.UpdateAmountofpoints(uu);

@@ -274,6 +274,9 @@ SELECT * FROM `sharea` WHERE `pid`=2
 	<if test="u.userintegral!=null">
 	`userIntegral`=#{u.userintegral},
 	</if>
+	<if test="u.ordercount!=null">
+	`ordercount`=#{u.ordercount},
+	</if>
 	</set>
 	where `userID`=#{u.userid}
 	</update>
@@ -541,4 +544,49 @@ WHERE A.`atid`=3
 	<select id="Querysysteminfo" resultType="System">
 	SELECT * FROM `system` LIMIT 0,1
 	</select>
+	
+	
+	<!-- 全站检索 -->
+	<select id="SelectTotalRetrieveVo" resultType="com.accp.vo.lz.TotalRetrieveVo">
+		SELECT stype.`stid`,  u.`userID` ,stype.`stName`,ser.`browseNumber`,re.`resouroeName`,ser.`serviceTitle`,ser.`serviceFuTitle`,ser.`serviceCity`,ser.`serviceID`,ser.`serviceCoverImg`,ser.`servicePrice`,ser.`recommendBool`,u.`shopImg`,u.`shopName`,u.`merchantLevel`
+		FROM `services` AS ser
+		INNER JOIN `user` AS u
+		INNER JOIN `servicetype` stype 
+		INNER JOIN `resouroe` re  
+		ON u.`userID` = ser.`userID` 
+		AND ser.`stid` = stype.`stid`
+		GROUP BY ser.`serviceID`
+		<!-- AND ser.`resourceID` = re.`resouroeID` 
+		WHERE ser.`shelfState`=1 AND ser.`auditStatus`=2 -->
+	</select>
+	
+	
+	
+	<!-- 全站搜索推荐服务 -->
+	<select id="QueryrecommendList" resultType="Services">
+SELECT  A.* FROM `services` A
+INNER JOIN `user` B ON B.`userID`=A.`userID`
+<!-- WHERE  A.`shelfState`=1 AND A.`auditStatus`=2 AND A.`recommendBool`=1 -->
+ORDER BY  B.`merchantLevel`,B.`merchantLevel`,B.`collectCount` ,B.`orderCount`,B.`browseNumber` DESC
+LIMIT 0,10
+	</select>
+	
+	
+	<!-- 修改第一个和第二个交易额 -->
+	<update id="updateOneANDtwosum">
+	UPDATE `user`
+	<set>
+	<choose>
+	<when test="u.firstserviceid==stid">
+	`firstServiceMoney`=#{u.firstservicemoney},
+	</when>
+	<when test="u.secondserviceid==stid">
+	`secondServiceMoney`=#{u.secondservicemoney},
+	</when>
+	
+	</choose>
+	</set>
+	where `userID`=#{u.userid}
+	</update>
+
  </mapper>

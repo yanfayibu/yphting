@@ -20,7 +20,7 @@
 			<div class="b_box">
 				<div class="top_nav">
 					<a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span><a
-						href="#">商家入驻</a><span class="ht_line"></span><a href="#">帮助中心</a><span
+						href="/c/smy/merchantEnterUrl">商家入驻</a><span class="ht_line"></span><a href="#">帮助中心</a><span
 						class="ht_line"></span><a href="#">关于韩汀</a><span class="ht_line"></span><a
 						href="#">联系我们</a>
 				</div>
@@ -37,7 +37,7 @@
 		<div class="b_box nav_header community_header">
 			<a class="logo my_logo" href="/c/hzj/homeUrl">御品韩汀</a>
 			<ul class="member_nav_ul">
-				<li class="cur" id="li1"><a href="/c/smy/queryAppraisalapply">商家中心</a><span
+				<li class="cur" id="li1"><a href="/c/smy/user/getUserBySjzx">商家中心</a><span
 					class="my_nav_i"></span></li>
 
 				<li id="li2"><a href="/api/Forward_view/user/center">个人中心</a><span
@@ -61,7 +61,7 @@
 				<div class="fr c_4">
 					<a href="/index.php/Home/About/trading.html" class="btna_s2 f14">交易须知</a>
 				</div>
-				<a href="/index.php/Home/Seller/index.html">商家中心</a><span
+				<a href="/c/smy/user/getUserBySjzx">商家中心</a><span
 					class="s_sp_v">-</span><a href="/index.php/Home/Seller/order.html">我收到的预定</a>
 			</div>
 			<div class="business_order_nav">
@@ -241,8 +241,6 @@
 
 
 </body>
-<script type="text/javascript" src="/Public/js/sessionHeader.js"></script>
-<script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
 <script type="text/javascript" th:inline="javascript">
 var stid=[[${order.ser.stid}]];
@@ -277,7 +275,6 @@ $(".top_right").html("");
 						if (result == "true") {
 
 							window.location.href = "/c/tsy/gologin";
-							alert("退出成功...");
 						}
 
 						else {

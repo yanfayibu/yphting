@@ -4,11 +4,45 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accp.dao.ydk.MerchantEnterAndServiceDao">
+	
+	<select id="queryUser" resultType="com.accp.pojo.User">
+		SELECT * FROM `user`
+		where `userID` = #{userID}
+	</select>
+	
+	<select id="selectAI" resultType="com.accp.vo.ydk.ServicesVO">
+		SELECT u.`userID`,ser.`serviceID`,ser.`serviceTitle`,ser.`serviceCoverImg`,ser.`servicePrice`,ser.`recommendBool`,u.`shopImg`,u.`shopName`,u.`merchantLevel` 
+		FROM `services` AS ser 
+		INNER JOIN `user` AS u 
+		ON u.`userID` = ser.`userID` 
+		AND ser.stid = 
+		(SELECT ar.stid FROM `artificiaiintelligence` ar WHERE ar.userId = #{userId} AND ar.firstStid = #{stid} ORDER BY ar.aiId DESC LIMIT 1) 
+		OR ser.stid = 
+		(SELECT stid FROM `artificiaiintelligence` WHERE userId = #{userId} AND firstStid = #{stid} ORDER BY aiId DESC LIMIT 1,1) 
+		GROUP BY ser.serviceID LIMIT 6 
+	</select>
+
+	<insert id="insertAI">
+		INSERT INTO `artificiaiintelligence`(`userId`,`firstStid`,`stid`)
+		VALUES(#{ai.userId},#{ai.firstStid},#{ai.stid});
+	</insert>
+	
+	
+
 	<!-- 自定义：查询所有 -->
 	<sql id="selectAll">
 		select * from
 	</sql>
-	
+	<!-- 查询人工智能表的数据 -->
+	<select id="queryRgznByUserid" resultType="Rgzn">
+		<include refid="selectAll"/>
+		rgzn where userid = #{userid} and stid = #{stid}
+	</select>
+	<!-- 查询与你点击的商品的相似商品 -->
+	<select id="queryXiangSiServices" resultType="Services">
+		<include refid="selectAll"/>
+		services WHERE stid = #{oftenid}
+	</select>
 	<!-- 查询服务类别（如自驾游、微整形） -->
 	<select id="queryServiceType" resultType="Servicetype">
 		<include refid="selectAll"/>
@@ -169,7 +203,7 @@
 	</select>
 	<!-- 根据服务列表条件查询服务 -->
 	<select id="queryServices" resultType="com.accp.vo.ydk.ServicesVO">
-		SELECT u.`userID`,ser.`serviceID`,ser.`serviceTitle`,ser.`serviceCoverImg`,ser.`servicePrice`,ser.`recommendBool`,u.`shopImg`,u.`shopName`,u.`merchantLevel`
+		SELECT u.`userID`,ser.`serviceID`,ser.`serviceTitle`,ser.`serviceCoverImg`,ser.`stid`,ser.`servicePrice`,ser.`recommendBool`,u.`shopImg`,u.`shopName`,u.`merchantLevel`
 		FROM `services` AS ser
 		INNER JOIN `user` AS u
 		ON u.`userID` = ser.`userID`

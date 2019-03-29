@@ -19,15 +19,19 @@ import com.accp.pojo.Lotteryrecord;
 import com.accp.pojo.Majortype;
 import com.accp.pojo.News;
 import com.accp.pojo.Prize;
+import com.accp.pojo.Services;
 import com.accp.pojo.Sharea;
 import com.accp.pojo.System;
 import com.accp.pojo.User;
+import com.accp.util.RedisBaseOps;
 import com.accp.vo.lz.BottomAdVO;
 import com.accp.vo.lz.EvaluationVO;
 import com.accp.vo.lz.FavoriteProductVO;
 import com.accp.vo.lz.NewVO;
 import com.accp.vo.lz.RecommendVO;
 import com.accp.vo.lz.ServiceTypeVO;
+import com.accp.vo.lz.TotalRetrieveVo;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -49,7 +53,8 @@ public class UserBiz {
 	@Autowired
 	private IUserDao userdao;
 	
-	
+	@Autowired
+	private RedisBaseOps rbo;
 	//change Password
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public  int  updatePwd(String userEmail,String userPwd) throws Exception {
@@ -245,6 +250,25 @@ public class UserBiz {
 		//查询系统配置信息
 		public System Querysysteminfo() {
 			return userdao.Querysysteminfo();
+		}
+		
+		
+		//查询10条服务推荐
+		public  List<Services> QueryrecommendList(){
+			return userdao.QueryrecommendList();
+		}
+		
+		//全站搜索全部
+		public  List<TotalRetrieveVo>  SelectServiceAll(){
+			return userdao.SelectTotalRetrieveVo();
+		}
+		
+		
+		
+		//修改第一个二个服务金额
+		@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+		public void updateOneANDtwosum(User u,int stid) {
+		 userdao.updateOneANDtwosum(u, stid);
 		}
 		
 			

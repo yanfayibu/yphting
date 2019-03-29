@@ -27,17 +27,12 @@
 		<div class="h_top">
 			<div class="b_box">
 				<div class="top_nav">
-					<a th:href="@{/c/hzj/homeUrl}">首页</a><span class="ht_line"></span>
-					<a href="javascript:;">商家入驻</a><span class="ht_line"></span> <a
-						href="/fw-bzzx.html">帮助中心</a><span class="ht_line"></span> <a
-						href="/fw-gyht.html">关于韩汀</a><span class="ht_line"></span> <a
-						href="/fw-lxwm.html">联系我们</a>
+					<a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span> <a
+						href="/view/sjrz">商家入驻</a><span class="ht_line"></span> <a href="">帮助中心</a><span
+						class="ht_line"></span> <a href="">关于韩汀</a><span class="ht_line"></span>
+					<a href="">联系我们</a>
 				</div>
-
-				<div class="top_right">
-					<a href="/c/tsy/gologin" name="">登录</a><span class="ht_line"></span>
-					<a href="/c/tsy/gozuce">注册</a>
-				</div>
+				<div class="top_right"></div>
 			</div>
 		</div>
 		<div class="b_box nav_header community_header">
@@ -57,7 +52,7 @@
 				</li>
 				<li class="cur"><a
 					th:href="@{/c/zrb/column?pid=1&page=1&orderId=1&essence=0}"><span
-						class="community_sp csp7"></span><br>韩汀·论坛</a></li>
+						class="community_sp csp7"></span><br>韩汀·论坛 中文</a></li>
 			</ul>
 		</div>
 	</div>
@@ -97,7 +92,7 @@
 						<form method="get" th:action="@{/c/zrb/hotPost}" id="formfind">
 							<div class="search_sec">
 								<input type="hidden" name="page" th:value="1" /> <input
-									type="text" name="title" placeholder="帖子搜索" class="s_sec_input">
+									type="text" name="title" placeholder="帖子搜索" th:value="${param.title}" class="s_sec_input">
 								<input type="submit" value="" class="s_sec_btn">
 							</div>
 						</form>

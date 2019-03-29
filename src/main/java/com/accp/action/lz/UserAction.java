@@ -3,6 +3,7 @@ package com.accp.action.lz;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.Cursor;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.biz.lz.OrderBiz;
+import com.accp.biz.lz.RedisBiz;
 import com.accp.biz.lz.UserBiz;
 import com.accp.pojo.Goldnotes;
 import com.accp.pojo.Integralrecord;
@@ -34,13 +38,17 @@ import com.accp.pojo.Lotteryrecord;
 import com.accp.pojo.News;
 import com.accp.pojo.Orders;
 import com.accp.pojo.Prize;
+import com.accp.pojo.Services;
 import com.accp.pojo.Sharea;
 import com.accp.pojo.User;
 import com.accp.util.MD5Signature;
+import com.accp.util.Pager;
 import com.accp.util.file.Upload;
 import com.accp.vo.lz.EvaluationVO;
 import com.accp.vo.lz.FavoriteProductVO;
 import com.accp.vo.lz.NewVO;
+import com.accp.vo.lz.TotalRetrieveVo;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 
 import net.bytebuddy.implementation.bind.annotation.Default;
@@ -64,7 +72,8 @@ public class UserAction {
 	private UserBiz biz;
 	@Autowired
 	private OrderBiz bizs;
-	
+	@Autowired
+	private RedisBiz redis;
 	
 	@RequestMapping(value="user")
 	@ResponseBody
@@ -816,5 +825,30 @@ public class UserAction {
 			return biz.Queryunreadinformation(new News(us.getUserid(),null));
 		}
 		
+		
+		//查询推荐前10条
+		@ResponseBody
+		@RequestMapping(value="/redisRecommendedTen",method=RequestMethod.GET)
+		public List<Services> QueryrecommendList() {
+			return redis.QueryrecommendList();
+		}
+		
+		//读取redis的模糊查询
+		@GetMapping("likeServices")
+		@ResponseBody
+		public Pager<TotalRetrieveVo> likeServices(String service,Integer pageIndex,Integer pageSize,Integer index,Integer Pop_Pice){
+			return redis.selectServices(service, pageIndex, pageSize, index, Pop_Pice);
+		}
+		
+		//读取redis的全部服务模糊查询
+		@GetMapping("likeServicesAll/{service}")
+		@ResponseBody
+		public List<TotalRetrieveVo> ServicesAll(@PathVariable String service){
+			return redis.ServicesAll(service);
+		}
+		
+		
+		
+
 	
 }

@@ -21,16 +21,17 @@
 		<iframe name="topost" id="topost" style="display:none;"></iframe>
 		<!--header-->
 		<div class="header" id="botop">
-				<div class="h_top">
+			<div class="h_top">
 				<div class="b_box">
-					<div class="top_nav"><a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span><a href="#">商家入驻</a><span class="ht_line"></span><a href="/index.php/Home/About/help.html">帮助中心</a><span class="ht_line"></span><a href="/index.php/Home/About/index.html">关于韩汀</a><span class="ht_line"></span><a href="/index.php/Home/About/contact.html">联系我们</a></div>
-					<div class="top_right login_right">
-					<!-- 	
-						<a href="/index.php/Home/Seller/index.html">透</a>			<span class="ht_line"></span><a href="/index.php/Home/Member/logout.html">退出</a>
-		            	<span class="ht_line"></span><a href="/index.php/Home/Member/sms.html"><img src="/Public/images/e_i.png" alt=""></a>
-					 -->
+					<div class="top_nav">
+						<a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span> <a
+							href="/view/sjrz">商家入驻</a><span class="ht_line"></span> <a href="">帮助中心</a><span
+							class="ht_line"></span> <a href="">关于韩汀</a><span class="ht_line"></span>
+						<a href="">联系我们</a>
 					</div>
+					<div class="top_right"></div>
 				</div>
+			</div>
 			</div>
 		    <div class="b_box nav_header community_header">
 				<a href="/c/hzj/homeUrl" class="logo logo_community">御品韩汀.社区</a>
@@ -117,7 +118,7 @@
 		        <div class="rank_box">
 		        	<ul class="rank_list_ul">
 						<li v-for="(temp,index) in pageInfo.list">
-		                	<a :href="'/c/ydk/serviceDetailUrl?htmlUrl=fw-lxzjXQ&sid='+temp.serviceID+'&uid='+temp.userID" class="rank_one_a">
+		                	<a :href="'/c/ydk/serviceDetailUrl?htmlUrl=fw-lxzjXQ&sid='+temp.serviceID+'&uid='+temp.userID" @click="insertAI(temp.stid)" class="rank_one_a">
 			                    <div class="star_img">
 			                    	<img v-if="temp.recommendBool==true" style="z-index:3;position: absolute;" src="/Public/images/tj.png" width="50" height="50"> 
 			                    	<img :src="temp.serviceCoverImg" :alt="temp.serviceTitle" width="380" height="254">
@@ -160,6 +161,44 @@
 		            </div>
 		            <!--page end-->
 		        </div>
+				
+				<!-- 猜你喜欢 -->
+				<div class="rank_box" style="margin-top: 20px">
+					<div class="page_div" style="font-size: 25px;color:#FFA818;font-weight: 500;margin-bottom: 20px;">我的足迹</div>
+					<div class="page_w page_two"></div>
+		        	<ul class="rank_list_ul">
+						<li  v-for="(temp,index) in selectAI">
+		                	<a :href="'/c/ydk/serviceDetailUrl?htmlUrl=fw-zjyXQ&sid='+temp.serviceID+'&uid='+temp.userID" @click="insertAI(temp.stid)" class="rank_one_a">
+			                    <div class="star_img">
+			                    
+			                    	<img v-if="temp.recommendBool==true" style="z-index:3;position: absolute;" src="/Public/images/tj.png" width="50" height="50"> 
+			                    	<img :src="temp.serviceCoverImg" :alt="temp.serviceTitle" width="380" height="254">
+			                    </div>
+			                    <dl class="rank_text_dl">
+			                    	<dt v-text="temp.serviceTitle">测试资源主标题</dt>
+			                        <dd>
+			                        	<div class="i_3" v-text="temp.servicePrice">100</div>
+			                        	<div class="star_pl"><span class="star_pl_sp" :style="'width:'+temp.merchantLevel*20+'%;'"></span></div>
+			                        </dd>
+			                    </dl>
+							</a>
+							<a href="javascript:void(0);" class="rank_sec_a">
+			                    <dl class="star_user_dl">
+			                        <dt>
+			                        	<img :src="temp.shopImg" :alt="temp.shopName" class="star_user_photo">
+		                        		<img src="/Public/images/hg_i.png" alt="" class="hg_i l_hi">   
+			                        </dt>
+			                        <dd>
+			                            <div class="star_user_name_s">
+			                            	<h3 class="star_user_name" v-text="temp.shopName">小明同学</h3>
+			                            </div>
+			                            <p class="star_user_text"></p>
+			                        </dd>
+			                    </dl>
+		                    </a>
+		                </li>
+		            </ul>
+				</div>
 				
 					<!--ad-->
 				<div class="ad_box2">
@@ -211,11 +250,13 @@
 					list:[]
 				},
 				serviceTypeChild:[],
-				cityList:[]
+				cityList:[],
+				selectAI:[]
 			},
 			created:function(){
 				var vm = this;
 				vm.queryServices(1);
+				vm.selectai();
 			},
 			methods:{
 				//根据条件查询服务
@@ -268,9 +309,34 @@
 					if(obj["authentication"]=="1"||obj["authentication"]=="2"){
 						obj["transactionValueID"]=stid;
 					}
-					jQuery.getJSON("/c/ydk/api/queryServices",{"objJSON":JSON.stringify(obj),"num":num,"size":6},function(data){
+					jQuery.getJSON("/c/ydk/api/queryServices",{"objJSON":JSON.stringify(obj),"num":num,"size":3},function(data){
 						vm.pageInfo = data;
 						console.info(data);
+					})
+				},
+				//猜你喜欢
+				selectai:function(){
+					jQuery.getJSON("/c/ydk/api/selectAI",{"stid":[[${param.stid}]][0]},function(data){
+						vm.selectAI = data;
+						//alert(data.length);
+						if(data.length==0){
+							jQuery(".page_two").css("display","none");
+							jQuery(".page_div").css("display","none");
+						}else{
+							jQuery(".page_two").css("display","block");
+							jQuery(".page_div").css("display","inline-block");
+						}
+						//console.info(data);
+					})
+				},
+				//添加  ’猜你喜欢‘  的数据    id:服务的id
+				insertAI:function(id){
+					var ai = {};
+					ai["firstStid"]= [[${param.stid}]][0];
+					ai["stid"] = id;
+					
+					jQuery.getJSON("/c/ydk/api/insertAI",{"ai":JSON.stringify(ai)},function(data){
+						
 					})
 				},
 				//点击类别加载对应的子类别
@@ -388,7 +454,6 @@
 						if (result == "true") {
 
 							window.location.href = "/c/tsy/gologin";
-							alert("退出成功...");
 						}
 
 						else {

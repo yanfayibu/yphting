@@ -12,18 +12,15 @@
 
 	<!--header-->
 	<div class="header" id="botop">
-			<div class="h_top">
+		<div class="h_top">
 			<div class="b_box">
 				<div class="top_nav">
-					<a href="/index.php/">首页</a><span class="ht_line"></span><a href="/index.php/Home/Member/seller.html">商家入驻</a><span class="ht_line"></span><a href="/index.php/Home/About/help.html">帮助中心</a><span class="ht_line"></span><a href="/index.php/Home/About/index.html">关于韩汀</a><span class="ht_line"></span><a href="/index.php/Home/About/contact.html">联系我们</a>
+					<a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span> <a
+						href="/view/sjrz">商家入驻</a><span class="ht_line"></span> <a href="">帮助中心</a><span
+						class="ht_line"></span> <a href="">关于韩汀</a><span class="ht_line"></span>
+					<a href="">联系我们</a>
 				</div>
-				<div class="top_right login_right">
-					<a href="/index.php/Home/Seller/index.html">透</a>
-					<span class="ht_line"></span>
-					<a href="/index.php/Home/Member/logout.html">退出</a>
-	            	<span class="ht_line"></span>
-	            	<a href="/index.php/Home/Member/sms.html"><img src="/Public/images/e_i.png" alt=""></a>
-				</div>
+				<div class="top_right"></div>
 			</div>
 		</div>
 	    <div class="b_box nav_header community_header">
@@ -166,7 +163,6 @@
 
 </body>
 	<script type="text/javascript " th:src="@{/Public/js/jquery-1.8.3.min.js}"></script>
-	<script type="text/javascript" th:src="@{/Public/js/sessionHeader.js}"></script>
 	<script type="text/javascript" th:src="@{/Public/js/headLeftNav.js}"></script>
 	<script>
 		
@@ -269,7 +265,6 @@
 						if(result=="true"){
 							
 							window.location.href="/c/tsy/gologin";
-							alert("退出成功...");
 						}
 						
 						else{

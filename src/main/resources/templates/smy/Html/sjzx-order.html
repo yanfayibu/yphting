@@ -312,15 +312,15 @@ span  .time2 {
 	$.getJSON("/c/smy/order/queryCountOrder",function(data){
 		var jiedan=0;var fuwu=0;var dwc=0;var tuikan=0;var wancheng=0;
 		$.each(data,function(i,obj){
-			if(obj.orderstatus==2){
+			if(obj.orderStatus==2){
 				jiedan=jiedan+1;
-			}else if(obj.orderstatus==3){
+			}else if(obj.orderStatus==3){
 				fuwu=fuwu+1;
-			}else if(obj.orderstatus==4){
+			}else if(obj.orderStatus==4){
 				dwc=dwc+1;
-			}else if(obj.orderstatus==5&&obj.refundstatus==0){
+			}else if(obj.orderStatus==5&&obj.refundstatus==0){
 				wancheng=wancheng+1;
-			}else if(obj.orderstatus==5&&obj.refundstatus>0){
+			}else if(obj.orderStatus==5&&obj.refundstatus>0){
 				tuikan=tuikan+1;
 			}
 		})
@@ -394,7 +394,6 @@ span  .time2 {
 						if (result == "true") {
 
 							window.location.href = "/c/tsy/gologin";
-							alert("退出成功...");
 						}
 
 						else {
@@ -409,8 +408,6 @@ span  .time2 {
 		});
 	
 </script>
-<script type="text/javascript" src="/Public/js/sessionHeader.js"></script>
-<script type="text/javascript" src="/Public/js/headLeftNav.js"></script>
 <script type="text/javascript" src="/Public/js/sjzx-href.js"></script>
 <script type="text/javascript" src="/Public/js/grzx-interlinkage.js"></script>
 </html>

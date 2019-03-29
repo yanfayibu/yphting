@@ -25,10 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.accp.biz.smy.ServicesBiz;
 import com.accp.pojo.Advertisement;
 import com.accp.pojo.Advertisementapply;
+import com.accp.pojo.Star;
+import com.accp.pojo.StarApply;
 import com.accp.util.file.Upload;
 import com.accp.vo.smy.AppraisalApply;
 import com.accp.vo.smy.EvaluationVo;
 import com.accp.vo.smy.LanguageType;
+import com.accp.vo.smy.Level;
 import com.accp.vo.smy.MajorType;
 import com.accp.vo.smy.Order;
 import com.accp.vo.smy.Orders;
@@ -93,7 +96,7 @@ public class ServicesAcion {
 				try {
 					if(!serviceCoverImg.isEmpty()) {
 						String	fmturl=Upload.uploadFile(serviceCoverImg);
-						service.setServiceCity(fmturl);
+						service.setServiceCoverImg(fmturl);
 					}
 					if(!serviceImgUrlOne.isEmpty()) {
 						String	xjturl1=Upload.uploadFile(serviceImgUrlOne);
@@ -213,7 +216,7 @@ public class ServicesAcion {
 		try {
 			if(!serviceCoverImg.isEmpty()) {
 				String	fmturl=Upload.uploadFile(serviceCoverImg);
-				service.setServiceCity(fmturl);
+				service.setServiceCoverImg(fmturl);
 			}
 			if(!serviceImgUrlOne.isEmpty()) {
 				String	xjturl1=Upload.uploadFile(serviceImgUrlOne);
@@ -292,7 +295,7 @@ public class ServicesAcion {
 				try {
 					if(!serviceCoverImg.isEmpty()) {
 						String	fmturl=Upload.uploadFile(serviceCoverImg);
-						service.setServiceCity(fmturl);
+						service.setServiceCoverImg(fmturl);
 					}
 					if(!serviceImgUrlOne.isEmpty()) {
 						String	xjturl1=Upload.uploadFile(serviceImgUrlOne);
@@ -353,7 +356,7 @@ public class ServicesAcion {
 				try {
 					if(!serviceCoverImg.isEmpty()) {
 						String	fmturl=Upload.uploadFile(serviceCoverImg);
-						service.setServiceCity(fmturl);
+						service.setServiceCoverImg(fmturl);
 					}
 					if(!serviceImgUrlOne.isEmpty()) {
 						String	xjturl1=Upload.uploadFile(serviceImgUrlOne);
@@ -485,6 +488,15 @@ public class ServicesAcion {
 	public String getUserBySjzx(HttpSession session,Model model) {
 		Integer userid = ((com.accp.pojo.User) session.getAttribute("userinfo")).getUserid();
 		User userID = biz.UserID(userid);
+		Advertisement Aimgpath=biz.queryAimgpath();
+		int orderScore=biz.selectOrderScore(userid);
+		int moneyScore=biz.selectMoneyScore(userid);
+		int collectCountScore=biz.selectCollectCountScore(userid);
+		int goodScore=biz.selectGoodScore(userid);
+		int merchantLevelScore=biz.selectMerchantLevelScore(userid);
+		int score=orderScore+moneyScore+collectCountScore+goodScore+merchantLevelScore;
+		model.addAttribute("Aimgpath", Aimgpath);
+		model.addAttribute("SCORE", score);
 		model.addAttribute("user", userID);
 		model.addAttribute("level", biz.querySerlevelName(userid));
 		model.addAttribute("orders", biz.queryUserOrder(userid, 0, -1, "", 1, 3));
@@ -1471,28 +1483,71 @@ public class ServicesAcion {
 		return map;
 	}
 	
-	@RequestMapping(value="/list",method=RequestMethod.GET)
+	/*@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String showAdvertisement(Model model,Integer aid) {
 		List<Advertisement> list = biz.findAvailableAdvertisement();
 		model.addAttribute("BLIST", list);
 		return "/smy/Html/addAdvert";
-	}
-	
-	@RequestMapping(value="/advertisementApply",method=RequestMethod.POST)
-	/*@PostMapping("advertisementApply")*/
+	}*/
+	//申请广告位
+	/*@RequestMapping(value="/advertisementApply",method=RequestMethod.POST)
+	@PostMapping("advertisementApply")
 	@ResponseBody
 	public Map<String,String> savePost(@RequestBody Advertisementapply advertisementapply,HttpSession session) {
-		//Integer userid = ((com.accp.pojo.User) session.getAttribute("userinfo")).getUserid();
-		
+		Integer userid = ((com.accp.pojo.User) session.getAttribute("userinfo")).getUserid();
+		User users = biz.UserID(userid);
+		advertisementapply.setUserid(users.getUserID());
 		//advertisementapply.setUserid(31);
-		com.accp.pojo.User user=new com.accp.pojo.User();
-		user.setUserid(24);
-		advertisementapply.setUserid(user.getUserid());
+		//com.accp.pojo.User user=new com.accp.pojo.User();
+		//user.setUserid(31);
+		//advertisementapply.setUserid(user.getUserid());
 		//User user=(User)session.getAttribute("userinfo");
 		//advertisementapply.setUserid(user.getUserid());
 		Map<String,String> map=new HashMap<String,String>();
 		int count=biz.addAdvertisementApply(advertisementapply);
-		System.out.println(count);
+		if(count>0) {
+			map.put("code", "200");
+		}else {
+			map.put("code", "400");
+		}
+		return map;
+	}*/
+	@RequestMapping(value="/queryLevel",method=RequestMethod.GET)
+	@ResponseBody
+	public String queryLevel(HttpSession session) {
+		Integer userid = ((com.accp.pojo.User) session.getAttribute("userinfo")).getUserid();
+		Level le=biz.queryLevel(userid);
+		float level=le.getXj();		
+		return level+"";
+	}
+	//获取可申请商家星级推荐位
+	@RequestMapping(value="/querystid",method=RequestMethod.GET)
+	public String querystid(HttpSession session, Model model) {
+		Integer userid = ((com.accp.pojo.User) session.getAttribute("userinfo")).getUserid();
+		User user=biz.UserID(userid);
+		List<Star> one=biz.queryStar(user.getFirstServiceID());
+		List<Star> two=biz.queryStar(user.getSecondServiceID());
+		model.addAttribute("one",one);
+		model.addAttribute("two",two);
+		return "/smy/Html/addAdvert";
+	}
+	
+	@RequestMapping(value="/queryPrice",method=RequestMethod.GET)
+	@ResponseBody
+	public String queryPrice(Model model,Star star,Integer sid) {
+		Star price=biz.queryPrice(sid);
+		Integer money=price.getPrice();
+		return money.toString();
+	}
+	//申请广告位
+	@RequestMapping(value="/addStarApply",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> addStarApply(@RequestBody StarApply starApply,HttpSession session) {
+		Integer userid = ((com.accp.pojo.User) session.getAttribute("userinfo")).getUserid();
+		User users = biz.UserID(userid);
+		starApply.setUserID(users.getUserID());
+		Map<String,String> map=new HashMap<String,String>();
+		int count=biz.addStarApply(starApply);
 		if(count>0) {
 			map.put("code", "200");
 		}else {

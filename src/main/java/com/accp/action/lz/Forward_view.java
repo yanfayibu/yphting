@@ -39,6 +39,58 @@ public class Forward_view {
 	@Autowired
 	private OrderBiz bizs;
 	
+	
+	
+	//跳转服务详情页面
+	@RequestMapping(value="detailsType")
+	public  String SkipServeDetails(int serviceID,int userID,int stid) {
+		System.out.println("类别："+stid);
+		String URL="";
+		switch (stid) {
+		
+		case 1:
+			URL= "/c/ydk/serviceDetailUrl?htmlUrl=fw-zjyXQ&sid="+serviceID+"&uid="+userID+"";
+			break;
+		case 2:
+			URL= "/c/ydk/serviceDetailUrl?htmlUrl=fw-wzxXQ&sid="+serviceID+"&uid="+userID+"";
+			break;
+		case 3:
+			URL= "/c/ydk/serviceDetailUrl?htmlUrl=fw-lxzjXQ&sid="+serviceID+"&uid="+userID+"";
+			break;
+		case 4:
+			URL= "/c/ydk/serviceDetailUrl?htmlUrl=fw-hyfyXQ&sid="+serviceID+"&uid="+userID+"";
+			break;
+		case 5:
+			URL= "/c/ydk/serviceDetailUrl?htmlUrl=fw-lxzjXQ&sid="+serviceID+"&uid="+userID+"";
+			break;
+		default:
+			URL= "/c/ydk/serviceDetailUrl?htmlUrl=fw-hyfyXQ&sid="+serviceID+"&uid="+userID+"";
+			break;
+		}
+		
+		return "redirect:"+URL;
+	}
+	
+	
+	
+	
+	
+	//跳转到全站搜索页面查询
+	@RequestMapping(value="/searchFW")
+	public String SkipServe(Model model,String service) {
+		model.addAttribute( "bottomadvo",biz.QueryBottomAdVO());
+		if(service!="null") {
+			model.addAttribute( "servicenames",service);
+		}
+		return "lz/Html/AllRetrieve";
+	}
+	
+	
+	
+	
+	
+	
+	
 	//修改密码
 	@RequestMapping(value="/user/updatePwd")
 	public String changePasswordView(Model model,HttpSession session) {

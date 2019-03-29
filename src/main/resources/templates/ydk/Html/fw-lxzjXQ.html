@@ -21,15 +21,15 @@
 
 		<!--header-->
 		<div class="header" id="botop">
-				<div class="h_top">
+			<div class="h_top">
 				<div class="b_box">
-					<div class="top_nav"><a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span><a href="/index.php/Home/Member/seller.html">商家入驻</a><span class="ht_line"></span><a href="/index.php/Home/About/help.html">帮助中心</a><span class="ht_line"></span><a href="/index.php/Home/About/index.html">关于韩汀</a><span class="ht_line"></span><a href="/index.php/Home/About/contact.html">联系我们</a></div>
-					
-					<div class="top_right login_right">
-											<a href="/index.php/Home/Seller/index.html">透</a>			<span class="ht_line"></span><a href="/index.php/Home/Member/logout.html">退出</a>
-		            <span class="ht_line"></span><a href="/index.php/Home/Member/sms.html"><img src="/Public/images/e_i.png" alt=""></a>
-
+					<div class="top_nav">
+						<a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span> <a
+							href="/view/sjrz">商家入驻</a><span class="ht_line"></span> <a href="">帮助中心</a><span
+							class="ht_line"></span> <a href="">关于韩汀</a><span class="ht_line"></span>
+						<a href="">联系我们</a>
 					</div>
+					<div class="top_right"></div>
 				</div>
 			</div>
 		    <div class="b_box nav_header community_header">
@@ -391,7 +391,7 @@
 	
 	<script type="text/javascript " th:src="@{/Public/js/jquery-1.8.3.min.js}"></script>
 	<script type="text/javascript " th:src="@{/Public/js/vue.js}"></script>
-	<script type="text/javascript " th:src="@{/Public/js/serviceCommons.js}"></script>
+	<!-- <script type="text/javascript " th:src="@{/Public/js/serviceCommons.js}"></script> -->
 	<script type="text/javascript" th:src="@{/Public/js/sessionHeader.js}"></script>
 	<script type="text/javascript" th:src="@{/Public/js/headLeftNav.js}"></script>
 	<script th:inline="javascript">
@@ -428,7 +428,7 @@
 		})
 		//提交举报
 		jQuery(".btn_jba").click(function(){
-			jQuery.getJSON("/c/szy/user/queryAUser",function(data){
+			jQuery.getJSON("/c/ydk/user/queryAUser",function(data){
 				if(data!=null){
 					var businessID = [[${serMerchantObj.userID}]];	//商家编号
 					var serviceID = [[${serDetailObj.serviceID}]];	//服务编号
@@ -556,7 +556,6 @@
 					if (result == "true") {
 
 						window.location.href = "/c/tsy/gologin";
-						alert("退出成功...");
 					}
 
 					else {
@@ -569,7 +568,20 @@
 			// alert("取消啦！");
 		});
 	});
-		
+	//收藏
+	function serviceCollection(sid){
+		jQuery.getJSON("/c/ydk/user/queryAUser",function(data){
+			if(data!=null){
+				jQuery.getJSON("/c/ydk/api/serviceCollection",{"sid":sid},function(result){
+					alert(result.msg);
+					location.reload();
+				});
+			}else{
+				location.href="/fw-loginHint.html";
+			}
+		});
+
+	}
 	</script>
 
 </html>

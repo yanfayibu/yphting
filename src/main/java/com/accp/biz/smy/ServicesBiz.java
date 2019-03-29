@@ -12,10 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.accp.dao.smy.ServicesDao;
 import com.accp.pojo.Advertisement;
 import com.accp.pojo.Advertisementapply;
+import com.accp.pojo.Star;
+import com.accp.pojo.StarApply;
 import com.accp.vo.smy.AppraisalApply;
 import com.accp.vo.smy.EvaluationVo;
 import com.accp.vo.smy.Goldnotes;
 import com.accp.vo.smy.LanguageType;
+import com.accp.vo.smy.Level;
 import com.accp.vo.smy.MajorType;
 import com.accp.vo.smy.Order;
 import com.accp.vo.smy.OrderInfoVo;
@@ -182,11 +185,40 @@ public class ServicesBiz {
 	public List<ServicesLevel> querySerlevelName(Integer userID) {
 		return dao.querySerlevelName(userID);
 	}
-	public List<Advertisement> findAvailableAdvertisement(){
-		return dao.findAvailableAdvertisement();
+	public Level queryLevel(Integer userID) {
+		return dao.queryLevel(userID);
+	}
+	public List<Star> queryStar(Integer stid){
+		return dao.queryStar(stid);
 	}
 	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
-	public int addAdvertisementApply(Advertisementapply advertisementapply) {
-		return dao.addAdvertisementApply(advertisementapply);
+	public int addStarApply(StarApply starApply) {
+		return dao.addStarApply(starApply);
+	}
+	public Star queryPrice(Integer sid){
+		return dao.queryPrice(sid);
+	}
+	
+	
+	
+	
+	
+	public int selectOrderScore(Integer userId) {
+		return dao.selectOrderScore(userId);
+	}
+	public int selectMoneyScore(Integer userId) {
+		return dao.selectMoneyScore(userId);
+	}
+	public int selectCollectCountScore(Integer userId) {
+		return dao.selectCollectCountScore(userId);
+	}
+	public int selectGoodScore(Integer userId) {
+		return dao.selectGoodScore(userId);
+	}
+	public int selectMerchantLevelScore(Integer userId) {
+		return dao.selectMerchantLevelScore(userId);
+	}
+	public Advertisement queryAimgpath() {
+		return dao.queryAimgpath();
 	}
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.accp.biz.zrb.ForumBiz;
+import com.accp.pojo.Complaint;
 import com.accp.pojo.Forummanagement;
 import com.accp.pojo.Post;
 import com.accp.pojo.Postcollection;
@@ -36,8 +37,8 @@ public class ForumAction {
 	private ForumBiz biz;
 
 	@GetMapping("column")
-	public String showColumn(Integer pid,@RequestParam(defaultValue="1")Integer page,@RequestParam(defaultValue="10")Integer size,@RequestParam(required=false)String title,@RequestParam(required=false)Integer forumId,Integer orderId,@RequestParam(required=false)Integer essence,Model model) {
-
+	public String showColumn(Integer pid,@RequestParam(defaultValue="1")Integer page,@RequestParam(defaultValue="10")Integer size,@RequestParam(required=false)String title,@RequestParam(required=false)Integer forumId,Integer orderId,@RequestParam(required=false)Integer essence,Model model,HttpSession session) {
+		User user = (User)session.getAttribute("userinfo");
 		//查询左侧栏板块
 		List<Forummanagement> list = biz.queryBlock();
 		model.addAttribute("BLIST", list);
@@ -53,6 +54,7 @@ public class ForumAction {
 		model.addAttribute("CLIST", smalllist);
 		model.addAttribute("FORUM", forumma);
 		model.addAttribute("PAGE_INFO", pageInfo);
+		model.addAttribute("user", user);
 		return "/zrb/Html/lt-forum";
 	}
 
@@ -88,7 +90,7 @@ public class ForumAction {
 	public String toAddForum(Integer pid,@RequestParam(required=false)Integer fmid,Model model,HttpSession session) {
 		User user = (User)session.getAttribute("userinfo");
 		if(user==null) {
-			return "/tsy/szy-login";
+			return "/zrb/Html/MSG";
 		}else {
 			//显示版块下拉框
 			List<Forummanagement> list = biz.queryBlock();
@@ -149,9 +151,9 @@ public class ForumAction {
 	@GetMapping("postDetail")
 	public String queryPostDetail(@RequestParam(defaultValue="1")Integer page,@RequestParam(defaultValue="5")Integer size,Integer postId,Integer fmid,Integer pfmid,String fmname,Model model,HttpSession session) {
 		User user = (User)session.getAttribute("userinfo");
-		if(user==null) {
-			return "/tsy/szy-login";
-		}else {
+//		if(user!=null) {
+//			return "/tsy/szy-login";
+//		}else {
 			//帖子详情
 			PostVo pv = biz.queryPostDetail(postId);
 			//详情内评论列表
@@ -170,7 +172,7 @@ public class ForumAction {
 			model.addAttribute("PAGE_INFO", pageInfo);
 			model.addAttribute("user", user);
 			return "/zrb/Html/lt-postDetail";
-		}
+//		}
 	}
 
 	/**
@@ -184,7 +186,7 @@ public class ForumAction {
 	public String toMyForum(Integer type,@RequestParam(defaultValue="1")Integer page,@RequestParam(required=false)String title,Model model,HttpSession session) {
 		User user = (User)session.getAttribute("userinfo");
 		if(user==null) {
-			return "/tsy/szy-login";
+			return "/zrb/Html/MSG";
 		}else {
 			PageInfo<PostVo> myPostList = null;
 			//显示版块
@@ -279,7 +281,13 @@ public class ForumAction {
 	@GetMapping("queryLastcomment")
 	@ResponseBody
 	public Postcomment queryLastComment(Integer userId,Integer postId) {
-		return biz.queryLastComment(userId,postId);
+		Postcomment p=biz.queryLastComment(userId,postId);
+		if(p==null) {
+			return new Postcomment(-1, null, null, null, null, null, null);
+		}else {
+			return p;
+		}
+		
 	}
 
 	/**
@@ -377,6 +385,44 @@ public class ForumAction {
 		User user = (User)session.getAttribute("userinfo");
 		List<ShareInfoVO> list = biz.showShareInfo(user.getUserid());
 		return list;
+	}
+	
+	
+	@PostMapping("addComplaint")
+	@ResponseBody
+	public Map<String,String> addComplaint(@RequestBody Complaint complaint,HttpSession session){
+		User user = (User)session.getAttribute("userinfo");
+		Map<String,String> map=new HashMap<String,String>();
+		if(user==null){
+			map.put("code", "100");
+		}else{
+			complaint.setUserid(user.getUserid());
+			//先验证是否举报自己
+			if(complaint.getUserid()==complaint.getPosting()) {
+				map.put("code", "600");
+			}else {
+				//验证是否当天举报次数超过5次
+				int complaintCount=biz.selectTodayCount(user.getUserid());
+				if(complaintCount<=5) {
+					//验证是否举报过该用户（正在审核中的）
+					int checkCount=biz.checkIsComplaint(user.getUserid(),complaint.getPcid());
+					if(checkCount>0) {
+						map.put("code", "200");
+					}else {
+						int count=biz.addComplaint(complaint);
+						if(count>0) {
+							map.put("code", "300");
+						}else {
+							map.put("code", "400");
+						}
+					}
+				}else {
+					//超过举报次数
+					map.put("code", "500");
+				}
+			}
+		}
+		return map;
 	}
 
 }

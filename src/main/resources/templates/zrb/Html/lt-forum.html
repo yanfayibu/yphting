@@ -27,17 +27,12 @@
 		<div class="h_top">
 			<div class="b_box">
 				<div class="top_nav">
-					<a th:href="@{/c/hzj/homeUrl}">首页</a><span class="ht_line"></span>
-					<a href="javascript:;">商家入驻</a><span class="ht_line"></span> <a
-						href="javascript:;">帮助中心</a><span class="ht_line"></span> <a
-						href="javascript:;">关于韩汀</a><span class="ht_line"></span>
-					<a href="javascript:;">联系我们</a>
+					<a href="/c/hzj/homeUrl">首页</a><span class="ht_line"></span> <a
+						href="/view/sjrz">商家入驻</a><span class="ht_line"></span> <a href="">帮助中心</a><span
+						class="ht_line"></span> <a href="">关于韩汀</a><span class="ht_line"></span>
+					<a href="">联系我们</a>
 				</div>
-
-				<div class="top_right">
-					<a href="/c/tsy/gologin" name="">登录</a><span class="ht_line"></span>
-					<a href="/c/tsy/gozuce">注册</a>
-				</div>
+				<div class="top_right"></div>
 			</div>
 		</div>
 		<div class="b_box nav_header community_header">
@@ -47,17 +42,20 @@
 						class="community_sp csp1"></span><br>自驾游</a></li>
 				<li><a th:href="@{/c/ydk/serviceUrl?htmlUrl=fw-wzxTAB&stid=2}"><span
 						class="community_sp csp2"></span><br>微整形</a></li>
-				<li><a th:href="@{/c/ydk/serviceUrl?htmlUrl=fw-lxzjTAB&stid=3}"><span
+				<li><a
+					th:href="@{/c/ydk/serviceUrl?htmlUrl=fw-lxzjTAB&stid=3}"><span
 						class="community_sp csp3"></span><br>留学中介</a></li>
-				<li><a th:href="@{/c/ydk/serviceUrl?htmlUrl=fw-hyfyTAB&stid=4}"><span
+				<li><a
+					th:href="@{/c/ydk/serviceUrl?htmlUrl=fw-hyfyTAB&stid=4}"><span
 						class="community_sp csp4"></span><br>韩语翻译</a></li>
-				<li><a href="javascript:;"><span class="community_sp csp5"></span><br>学习资源</a>
-				</li>
-				<li><a href="javascript:;"><span class="community_sp csp6"></span><br>韩汀物流</a>
+				<li><a
+					th:href="@{/c/ydk/serviceUrl?htmlUrl=fw-xxzyTAB&stid=5}"><span
+						class="community_sp csp5"></span><br>学习资源</a></li>
+				<li><a href="#"><span class="community_sp csp6"></span><br>韩汀物流</a>
 				</li>
 				<li class="cur"><a
 					th:href="@{/c/zrb/column?pid=1&page=1&orderId=1&essence=0}"><span
-						class="community_sp csp7"></span><br>韩汀·论坛</a></li>
+						class="community_sp csp7"></span><br>韩汀·论坛 中文</a></li>
 			</ul>
 		</div>
 	</div>
@@ -70,10 +68,10 @@
 				<h1 class="bbs_left_title">韩汀·论坛</h1>
 				<ul class="bbs_left_list">
 					<li data-pid=""><a
-						th:href="@{/c/zrb/hotPost(pid=${param.pid},page=1,title=${param.title})}"><span
+						th:href="@{/c/zrb/hotPost(pid=${param.pid},page=1,title=)}"><span
 							class="line"></span>热门话题</a></li>
 					<li><a
-						th:href="@{/c/zrb/myPost(type=1,page=1,title=${param.title})}"><span
+						th:href="@{/c/zrb/myPost(type=1,page=1,title=)}"><span
 							class="line"></span>我的韩汀论坛</a></li>
 					<!-- 版块列表 -->
 					<li th:data-pid="${temp.fmid}" th:each="temp,item : ${BLIST}">
@@ -206,7 +204,7 @@
 		</div>
 	</div>
 
-	<div class="b_box">
+	<div class="b_box"  th:if="${user==null}" >
 		<a href="javascript:;" class="footer_text">
 			<h2 class="index_h2_title c_0">
 				加入我们<span class="c_1">•</span>招募韩国商家、华人

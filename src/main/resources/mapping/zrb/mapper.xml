@@ -275,7 +275,6 @@
 		limit
 		0,1
 	</select>
-
 	<!-- 查询当天评论次数 -->
 	<select id="queryCommentCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM
@@ -344,5 +343,32 @@
 		GROUP BY o.serviceID
 		ORDER BY SUM(smallPlan) DESC
 		LIMIT 0,2
+	</select>
+	<!-- 帖子举报 -->
+	<insert id="addComplaint">
+		INSERT INTO `complaint` (`posting`,`pcID`,`userID`,`ctID`,`TimeOfComplaint`,`auditStatus`) 
+		VALUES (#{complaint.posting},#{complaint.pcid},#{complaint.userid},#{complaint.ctid},NOW(),'1');
+	</insert>
+	<!-- 查询用户当天举报的次数 -->
+	<select id="selectTodayCount" resultType="int">
+		SELECT COUNT(*) FROM complaint
+		WHERE userID=#{userID} AND TO_DAYS(TimeOfComplaint)=TO_DAYS(NOW())
+	</select>
+	<!-- 查询是否举报过同一个用户 -->
+	<select id="checkIsComplaint" resultType="int">
+		SELECT COUNT(*) FROM complaint
+		WHERE userID=#{userID} AND pcID=#{pcID} AND auditStatus=1
+	</select>
+	
+	<!-- 查询帖子列表页面顶部图片 -->
+	<select id="selectTopImg" resultType="String">
+		select aimgPath from advertisement
+		where atid=12
+	</select>
+	
+	<!-- 查询帖子详细页面右侧图片 -->
+	<select id="selectRightImg" resultType="String">
+		select aimgPath from advertisement
+		where atid=13
 	</select>
 </mapper>

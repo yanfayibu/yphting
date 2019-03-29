@@ -780,4 +780,81 @@
         #{advertisementapply.endtime},Now(),
         1);
    	</insert>
+   	
+   	<select id="queryLevel" resultType="com.accp.vo.smy.Level">
+   		SELECT merchantLevel xj FROM `user` 
+		WHERE `userID`=#{userID};
+   	</select>
+   	
+   	<select id="queryStar" resultType="star">
+   		<include refid="selectAll"/>
+   		star where stid=#{stid} AND `status`=0
+   	</select>
+   	<insert id="addStarApply">
+   		INSERT INTO `starapply` (`userID`,`sid`,`money`,
+  		`rentAMonth`,`startTime`,`endTime`,`applyTime`,`auditStatus`) 
+		VALUES(#{starApply.userID},#{starApply.sid},
+        #{starApply.money},
+        #{starApply.rentAMonth},#{starApply.startTime},
+        #{starApply.endTime},Now(),
+        1);
+   	</insert>
+   	<select id="queryPrice" resultType="star">
+   		<include refid="selectAll"/>
+   		star where sid=#{sid}
+   	</select>
+   	
+   	
+   	
+   	<select id="selectOrderScore" resultType="Integer">
+		SELECT score FROM
+		prestigerule
+		WHERE `name`='订单数' AND minnum &lt;=(SELECT orderCount FROM
+		`user` WHERE userID=#{userId})
+		AND maxnum&gt;=(SELECT orderCount FROM
+		`user` WHERE userID=#{userId})
+	</select>
+	<select id="selectMoneyScore" resultType="Integer">
+		SELECT score FROM
+		prestigerule
+		WHERE `name`='销售额'
+		AND (minnum &lt;=(SELECT SUM(firstServiceMoney+secondServiceMoney) FROM
+		`user` WHERE userID=#{userId})
+		AND maxnum&gt;=(SELECT
+		SUM(firstServiceMoney+secondServiceMoney) FROM `user` WHERE
+		userID=#{userId}))
+	</select>
+	<select id="selectCollectCountScore" resultType="Integer">
+		SELECT score
+		FROM prestigerule
+		WHERE `name`='收藏数' AND minnum &lt;=(SELECT
+		collectCount FROM `user` WHERE userID=#{userId})
+		AND maxnum&gt;=(SELECT
+		collectCount FROM `user` WHERE userID=#{userId})
+	</select>
+	<select id="selectGoodScore" resultType="Integer">
+		SELECT SUM(
+		(SELECT
+		COUNT(*) FROM EvaluationService
+		WHERE serviceAppraiseLevel&gt;2 AND
+		serviceID IN(SELECT serviceID FROM services WHERE userID=#{userId}))-
+		(SELECT COUNT(*) FROM EvaluationService
+		WHERE serviceAppraiseLevel &lt;=
+		3 AND serviceID IN(SELECT serviceID FROM services WHERE
+		userID=#{userId}))
+		)
+	</select>
+	<select id="selectMerchantLevelScore" resultType="Integer">
+		SELECT score
+		FROM prestigerule
+		WHERE `name`='店铺星级' AND minnum &lt;= (SELECT
+		merchantLevel FROM `user` WHERE userID=#{userId})
+		AND maxnum&gt;=(SELECT
+		merchantLevel FROM `user` WHERE userID=#{userId})
+	</select>
+	
+	<select id="queryAimgpath" resultType="advertisement">
+		<include refid="selectAll"/>
+		advertisement where aid=14
+	</select>
 </mapper>

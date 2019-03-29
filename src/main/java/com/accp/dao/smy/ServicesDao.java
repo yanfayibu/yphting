@@ -3,11 +3,13 @@ package com.accp.dao.smy;
 
 
 import com.accp.pojo.Advertisement;
-import com.accp.pojo.Advertisementapply;
+import com.accp.pojo.Star;
+import com.accp.pojo.StarApply;
 import com.accp.vo.smy.AppraisalApply;
 import com.accp.vo.smy.EvaluationVo;
 import com.accp.vo.smy.Goldnotes;
 import com.accp.vo.smy.LanguageType;
+import com.accp.vo.smy.Level;
 import com.accp.vo.smy.MajorType;
 import com.accp.vo.smy.Order;
 import com.accp.vo.smy.OrderInfoVo;
@@ -103,8 +105,24 @@ public interface ServicesDao {
 	public boolean updateUserMoney(@Param("userMoney")float userMoney,@Param("userID")Integer userID);
 	//查询商家头衔
 	public List<ServicesLevel> querySerlevelName(@Param("userID")Integer userID);
-	//查询待租广告位
-	public List<Advertisement> findAvailableAdvertisement();
-	//商家申请广告位
-	public int addAdvertisementApply(@Param("advertisementapply")Advertisementapply advertisementapply);
+	//
+	public Level queryLevel(@Param("userID")Integer userID);
+	//查询可申请的星级推荐位
+	public List<Star> queryStar(@Param("stid")Integer stid);
+	//商家申请星级服务推荐
+	public int addStarApply(@Param("starApply")StarApply starApply);
+	public Star queryPrice(@Param("sid")Integer sid);
+	
+	
+	//查询订单信誉积分
+	public Integer selectOrderScore(@Param("userId")Integer userId);
+	//查询销售额信誉分
+	public Integer selectMoneyScore(@Param("userId")Integer userId);
+	//查询服务收藏数信誉分
+	public Integer selectCollectCountScore(@Param("userId")Integer userId);
+	//查询商家服务受到好评数信誉分
+	public Integer selectGoodScore(@Param("userId")Integer userId);
+	//查询店铺星级
+	public Integer selectMerchantLevelScore(@Param("userId")Integer userId);
+	public Advertisement queryAimgpath();
 }

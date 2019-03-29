@@ -4,6 +4,7 @@ import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.accp.dao.zrb.IForumDao;
+import com.accp.pojo.Complaint;
 import com.accp.pojo.Forummanagement;
 import com.accp.pojo.Post;
 import com.accp.pojo.Postcollection;
@@ -85,6 +87,7 @@ public class ForumBiz {
 	 * @param forum
 	 * @return
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public int savePost(Post post) {
 		return dao.savePost(post);
 	}
@@ -102,6 +105,7 @@ public class ForumBiz {
 	 * 发帖加积分
 	 * @param userId
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void updateJIntegral(Integer userId) {
 		dao.updateJIntegral(userId);
 	}
@@ -197,6 +201,7 @@ public class ForumBiz {
 	 * 收藏
 	 * @param collec
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void saveCollection(Postcollection collec) {
 		dao.saveCollection(collec);
 	}
@@ -215,6 +220,7 @@ public class ForumBiz {
 	 * 点赞
 	 * @param fabu
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void saveFabulous(Postfabulous fabu) {
 		dao.saveFabulous(fabu);
 	}
@@ -232,6 +238,7 @@ public class ForumBiz {
 	 * 取消点赞
 	 * @param fabu
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void cancelFabulous(Postfabulous fabu) {
 		dao.cancelFabulous(fabu);
 	}
@@ -240,6 +247,7 @@ public class ForumBiz {
 	 * 评论
 	 * @param comm
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void saveComment(Postcomment comm) {
 		dao.saveComment(comm);
 	}
@@ -266,6 +274,7 @@ public class ForumBiz {
 	 * 回复评论加积分
 	 * @param comm
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void updateCommentJIntegral(Postcomment comm) {
 		dao.updateCommentJIntegral(comm);
 	}
@@ -274,6 +283,7 @@ public class ForumBiz {
 	 * 删除评论
 	 * @param pcid
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void removeComment(Integer pcid) {
 		dao.removeComment(pcid);
 	}
@@ -291,6 +301,7 @@ public class ForumBiz {
 	 * 编辑帖子
 	 * @param post
 	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
 	public void updatePost(Post post) {
 		dao.updatePost(post);
 	}
@@ -312,4 +323,50 @@ public class ForumBiz {
 	public List<ShareInfoVO> showShareInfo(Integer userId) {
 		return dao.showShareInfo(userId);
 	}
+	
+	/**
+	 * 帖子举报
+	 * @param complaint
+	 * @return
+	 */
+	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, readOnly = false)
+	public int addComplaint(Complaint complaint) {
+		return dao.addComplaint(complaint);
+	}
+	
+	/**
+	 * 查询当天举报次数
+	 * @param userID
+	 * @return
+	 */
+	public int selectTodayCount(Integer userID) {
+		return dao.selectTodayCount(userID);
+	}
+	
+	/**
+	 * 查询是否举报过该用户
+	 * @param userID
+	 * @param pcID
+	 * @return
+	 */
+	public int checkIsComplaint(Integer userID,Integer pcID) {
+		return dao.checkIsComplaint(userID, pcID);
+	}
+	
+	/**
+	 * 查询帖子列表页面顶部图片
+	 * @return
+	 */
+	public String selectTopImg() {
+		return dao.selectTopImg();
+	}
+	
+	/**
+	 * 查询帖子详细页面右侧图片
+	 * @return
+	 */
+	public String selectRightImg() {
+		return dao.selectRightImg();
+	}
+	
 } 

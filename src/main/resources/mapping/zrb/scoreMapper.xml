@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:接口完整限定名 -->
+<mapper namespace="com.accp.dao.zrb.IPrestigeDao">
+	<!-- 查询订单信誉分 -->
+	<select id="selectOrderScore" resultType="Integer">
+		SELECT score FROM
+		prestigerule
+		WHERE `name`='订单数' AND minnum &lt;=(SELECT orderCount FROM
+		`user` WHERE userID=#{userId})
+		AND maxnum>=(SELECT orderCount FROM
+		`user` WHERE userID=#{userId})
+	</select>
+
+	<!-- 查询销售额信誉分 -->
+	<select id="selectMoneyScore" resultType="Integer">
+		SELECT score FROM
+		prestigerule
+		WHERE `name`='销售额'
+		AND (minnum &lt;=(SELECT SUM(firstServiceMoney+secondServiceMoney) FROM
+		`user` WHERE userID=#{userId})
+		AND maxnum>=(SELECT
+		SUM(firstServiceMoney+secondServiceMoney) FROM `user` WHERE
+		userID=#{userId}))
+	</select>
+
+	<!-- 查询服务收藏数信誉分 -->
+	<select id="selectCollectCountScore" resultType="Integer">
+		SELECT score
+		FROM prestigerule
+		WHERE `name`='收藏数' AND minnum &lt;= (SELECT
+		collectCount FROM `user` WHERE userID=#{userId})
+		AND maxnum>=(SELECT
+		collectCount FROM `user` WHERE userID=#{userId})
+	</select>
+
+	<!-- 查询商家的服务的好评数信誉分 -->
+	<select id="selectGoodScore" resultType="Integer">
+		SELECT SUM(
+		(SELECT
+		COUNT(*) FROM EvaluationService
+		WHERE serviceAppraiseLevel>2 AND
+		serviceID IN(SELECT serviceID FROM services WHERE userID=#{userId}))-
+		(SELECT COUNT(*) FROM EvaluationService
+		WHERE serviceAppraiseLevel &lt;=
+		3 AND serviceID IN(SELECT serviceID FROM services WHERE
+		userID=#{userId}))
+		)
+	</select>
+
+	<!-- 查询店铺星级 -->
+	<select id="selectMerchantLevelScore" resultType="Integer">
+		SELECT score
+		FROM prestigerule
+		WHERE `name`='店铺星级' AND minnum &lt;= (SELECT
+		merchantLevel FROM `user` WHERE userID=#{userId})
+		AND maxnum>=(SELECT
+		merchantLevel FROM `user` WHERE userID=#{userId})
+	</select>
+
+</mapper>

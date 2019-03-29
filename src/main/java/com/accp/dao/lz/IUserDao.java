@@ -13,6 +13,7 @@ import com.accp.pojo.Lotteryrecord;
 import com.accp.pojo.Majortype;
 import com.accp.pojo.News;
 import com.accp.pojo.Prize;
+import com.accp.pojo.Services;
 import com.accp.pojo.Sharea;
 import com.accp.pojo.System;
 import com.accp.pojo.User;
@@ -32,6 +33,7 @@ import com.accp.vo.lz.FavoriteProductVO;
 import com.accp.vo.lz.NewVO;
 import com.accp.vo.lz.RecommendVO;
 import com.accp.vo.lz.ServiceTypeVO;
+import com.accp.vo.lz.TotalRetrieveVo;
 public interface IUserDao {
 
 
@@ -148,4 +150,13 @@ public interface IUserDao {
 	
 	//查询系统配置信息
 	public System Querysysteminfo();
+	
+	//搜索自动补全服务推荐
+	public  List<Services> QueryrecommendList();
+	
+	//查询所有服务
+	public  List<TotalRetrieveVo> SelectTotalRetrieveVo();
+	
+	//修改第一个第二个交易额
+	public  void  updateOneANDtwosum(@Param("u")User u,@Param("stid") int stid);
 }

@@ -10,6 +10,7 @@ import com.accp.pojo.Languagetype;
 import com.accp.pojo.Majortype;
 import com.accp.pojo.Post;
 import com.accp.pojo.Resouroe;
+import com.accp.pojo.Rgzn;
 import com.accp.pojo.Servicecollection;
 import com.accp.pojo.Servicedes;
 import com.accp.pojo.Servicelevel;
@@ -18,6 +19,7 @@ import com.accp.pojo.Servicetype;
 import com.accp.pojo.Sharea;
 import com.accp.pojo.User;
 import com.accp.vo.ydk.AdvertisementVO;
+import com.accp.vo.ydk.Artificiaiintelligence;
 import com.accp.vo.ydk.EsLevelVO;
 import com.accp.vo.ydk.EvaluationserviceVO;
 import com.accp.vo.ydk.HomePostVO;
@@ -189,6 +191,24 @@ public interface MerchantEnterAndServiceDao {
 	 * @param recordInAndOut 收入支出
 	 * @param auditStatus 记录状态
 	 * @return
+	 * 
 	 */
 	public int saveGoldNotes(@Param("userID")Integer userID,@Param("acquisitionMode")Integer acquisitionMode,@Param("recordDescribe")String recordDescribe,@Param("recordInAndOut")float recordInAndOut,@Param("auditStatus")Integer auditStatus);
+	/**
+	 * 根据userid查询你看过什么商品
+	 */
+	public List<Rgzn> queryRgznByUserid(@Param("userid")Integer userid,@Param("stid")Integer stid);
+	/**
+	 * 用查到的人工智能数据中的stid来查询相似商品
+	 */
+	public List<Services> queryXiangSiServices(@Param("oftenid")Integer oftenid);
+	
+	//人工分析 查询
+	public List<Services> selectAI(@Param("userId")Integer userId,@Param("stid")Integer stid);
+		
+	//人工分析 添加
+	public int insertAI(@Param("ai") Artificiaiintelligence ai);
+	
+	//查询当前用户
+	public User queryUser(@Param("userID")Integer  userID);
 }

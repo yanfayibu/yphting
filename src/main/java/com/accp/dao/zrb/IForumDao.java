@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.accp.pojo.Complaint;
 import com.accp.pojo.Forummanagement;
 import com.accp.pojo.Post;
 import com.accp.pojo.Postcollection;
@@ -229,4 +230,38 @@ public interface IForumDao {
 	 */
 	public List<ShareInfoVO> showShareInfo(@Param("userId")Integer userId);
 	
+	/**
+	 * 帖子举报
+	 * @param complaint
+	 * @return
+	 */
+	public int addComplaint(@Param("complaint")Complaint complaint);
+	
+	/**
+	 * 查询当天举报次数
+	 * @param userID
+	 * @return
+	 */
+	public int selectTodayCount(@Param("userID")Integer userID);
+	
+	/**
+	 * 查询是否举报过该用户                   
+	 * @param userID
+	 * @param pcID
+	 * @return
+	 */
+	public int checkIsComplaint(@Param("userID")Integer userID,@Param("pcID")Integer pcID);
+	
+	/**
+	 * 查询帖子列表页面顶部图片
+	 * @return
+	 */
+	public String selectTopImg();
+	
+	/**
+	 * 查询帖子详细页面右侧图片
+	 * @return
+	 */
+	public String selectRightImg();
 }
+

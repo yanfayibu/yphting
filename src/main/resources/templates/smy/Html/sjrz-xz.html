@@ -135,14 +135,12 @@
 		<!--right nav end-->
 	</body>
 	<script type="text/javascript" src="/Public/js/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="/Public/js/sessionHeader.js"></script>
-	<!-- <script type="text/javascript" src="/Public/js/headLeftNav.js"></script> -->
 	<script type="text/javascript">
 	function bond(){
 		$.ajax({
 			url:"/c/smy/getMoney",
 			type:"get",
-			dataType:"text",
+			dataType:"json",
 			success:function(txt){
 				if(txt<500){
 					alert("金币不足请充值!");
@@ -181,7 +179,6 @@
 					if (result == "true") {
 
 						window.location.href = "/c/tsy/gologin";
-						alert("退出成功...");
 					}
 
 					else {
